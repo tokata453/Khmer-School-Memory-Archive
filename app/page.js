@@ -38,106 +38,50 @@ const entries = [
   },
 ];
 
-const styles = {
-  wrap: {
-    maxWidth: 720,
-    margin: "0 auto",
-    padding: "80px 24px",
-  },
-  kicker: {
-    fontFamily: "'Courier New', monospace",
-    color: "#2EE6A8",
-    fontSize: 14,
-    letterSpacing: 1,
-  },
-  title: {
-    fontSize: 48,
-    fontWeight: 700,
-    margin: "16px 0 12px",
-    lineHeight: 1.1,
-  },
-  description: {
-    fontSize: 18,
-    color: "#97A1B3",
-    lineHeight: 1.6,
-    margin: 0,
-  },
-  card: {
-    marginTop: 48,
-    padding: 24,
-    backgroundColor: "#1C222C",
-    border: "1px solid #2E3644",
-    borderRadius: 10,
-  },
-  cardLabel: {
-    fontFamily: "'Courier New', monospace",
-    fontSize: 12,
-    color: "#97A1B3",
-    margin: 0,
-  },
-  cardValue: {
-    fontSize: 16,
-    margin: "6px 0 0",
-  },
-  notice: {
-    marginTop: 32,
-    padding: 16,
-    backgroundColor: "#26311F",
-    border: "1px solid #526B34",
-    borderRadius: 10,
-    color: "#D7E8BE",
-    fontSize: 14,
-    lineHeight: 1.6,
-  },
-  count: {
-    fontFamily: "'Courier New', monospace",
-    fontSize: 14,
-    color: "#2EE6A8",
-    marginTop: 48,
-  },
-  footer: {
-    marginTop: 64,
-    paddingTop: 24,
-    borderTop: "1px solid #2E3644",
-    fontSize: 13,
-    color: "#5A6373",
-  },
-};
-
 export default function Home() {
   return (
-    <main style={styles.wrap}>
-      <p style={styles.kicker}>KHMER LIVING ARCHIVE</p>
-      <h1 style={styles.title}>{collection.name}</h1>
-      <p style={styles.description}>{collection.description}</p>
+    <main className="page-shell">
+      <header className="archive-hero">
+        <p className="eyebrow">Khmer Living Archive / Field Notebook</p>
+        <h1 className="archive-title">{collection.name}</h1>
+        <p className="archive-description">{collection.description}</p>
 
-      <div style={styles.card}>
-        <p style={styles.cardLabel}>CURATED BY</p>
-        <p style={styles.cardValue}>{collection.curator}</p>
-      </div>
-      <div style={styles.card}>
-        <p style={styles.cardLabel}>SOURCE</p>
-        <p style={styles.cardValue}>{collection.source}</p>
-      </div>
+        <div className="archive-meta" aria-label="Archive details">
+          <div className="meta-card">
+            <p className="meta-label">Curated by</p>
+            <p className="meta-value">{collection.curator}</p>
+          </div>
+          <div className="meta-card">
+            <p className="meta-label">Source</p>
+            <p className="meta-value">{collection.source}</p>
+          </div>
+          <div className="meta-card">
+            <p className="meta-label">Records</p>
+            <p className="meta-value">{entries.length} prototype entries</p>
+          </div>
+        </div>
+      </header>
 
-      <p style={styles.notice}>
-        These two cards are temporary research-informed fictional demo profiles.
-        They show the archive format and will be replaced with two real interview
-        entries after fieldwork.
-      </p>
+      <aside className="fieldwork-notice">
+        <p className="notice-label">Fieldwork status</p>
+        <p className="notice-text">
+          These two cards are temporary research-informed fictional demo profiles.
+          They show the archive format and will be replaced with two real
+          interview entries after fieldwork.
+        </p>
+      </aside>
 
-      {entries.map((entry) => (
-        <EntryCard key={entry.title} entry={entry} />
-      ))}
+      <section className="entries-list" aria-label="Archive entries">
+        {entries.map((entry, index) => (
+          <EntryCard key={entry.title} entry={entry} recordNumber={index + 1} />
+        ))}
+      </section>
 
-      <p style={styles.count}>
-        entries in the archive: {entries.length} (for now)
-      </p>
-
-      <footer style={styles.footer}>
-        Built in ICT 340 — Vibe Coding, American University of Phnom Penh, Fall
-        2026. This archive is under construction all semester. Come back in
-        December.
+      <footer className="archive-footer">
+        <p className="footer-note">
+          Built in ICT 340 - Vibe Coding, American University of Phnom Penh,
+          Fall 2026. This archive is under construction all semester.
+        </p>
       </footer>
     </main>
   );

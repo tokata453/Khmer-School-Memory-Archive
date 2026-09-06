@@ -81,22 +81,6 @@ const entries = [
       "The memory highlights cooperation and pressure. Students had fewer resources, so sharing and time management became important parts of learning.",
     isDemo: true,
   },
-  {
-    title: "Radio, Family Advice, and Homework",
-    category: "Home Study",
-    contributor: "Maly - fictional demo profile",
-    place: "Kandal Province",
-    period: "1989-1995",
-    featuredObject:
-      "A homework notebook kept beside a small household radio and a kerosene lamp.",
-    memory:
-      "Homework was finished at night after helping with family responsibilities. Without internet search, students relied on classroom notes first, then asked parents, siblings, or neighbors for advice when they did not understand a question.",
-    learningMethod:
-      "Home study required patience and routine. Students reread notes, rewrote exercises, memorized key facts, and used family knowledge when formal materials were not enough.",
-    reflection:
-      "This entry connects school learning with family life and shows how studying before digital tools often depended on household support.",
-    isDemo: true,
-  },
 ];
 
 export default entries;

@@ -1,6 +1,6 @@
 import collection from "../collection.config.js";
 import entries from "../data/entries.js";
-import EntryCard from "../components/EntryCard.js";
+import EntryBrowser from "../components/EntryBrowser.js";
 
 export default function Home() {
   return (
@@ -35,11 +35,7 @@ export default function Home() {
         </p>
       </aside>
 
-      <section className="entries-list" aria-label="Archive entries">
-        {entries.map((entry, index) => (
-          <EntryCard key={entry.title} entry={entry} recordNumber={index + 1} />
-        ))}
-      </section>
+      <EntryBrowser entries={entries} />
 
       <footer className="archive-footer">
         <p className="footer-note">

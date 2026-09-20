@@ -115,6 +115,19 @@ a {
   border-color: var(--vermilion);
 }
 
+.auth-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  color: var(--muted);
+}
+
+.logout-button {
+  padding: 5px 8px;
+  font-size: 0.68rem;
+}
+
 .hero-section {
   display: grid;
   grid-template-columns: 1.45fr 0.55fr;

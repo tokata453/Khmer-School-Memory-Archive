@@ -1,13 +1,18 @@
 import Link from "next/link";
 import collection from "../collection.config.js";
+import LogoutButton from "./LogoutButton.js";
+import { createClient } from "../lib/supabase/server.js";
 
-export default function SiteHeader() {
+export default async function SiteHeader() {
   const links = [
     ["Home", "/"],
     ["Archive", "/archive"],
     ["About", "/about"],
     ["Interviews", "/interviews"],
   ];
+  const supabase = await createClient();
+  const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
+  const user = data.user;
 
   return (
     <header className="site-header">
@@ -21,6 +26,17 @@ export default function SiteHeader() {
             {label}
           </Link>
         ))}
+        {user ? (
+          <span className="auth-status">
+            <span>{user.email}</span>
+            <LogoutButton />
+          </span>
+        ) : (
+          <span className="auth-status">
+            <Link href="/login">Log in</Link>
+            <Link href="/signup">Sign up</Link>
+          </span>
+        )}
       </nav>
     </header>
   );

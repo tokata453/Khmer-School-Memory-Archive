@@ -1,48 +1,58 @@
 import collection from "../collection.config.js";
 import entries from "../data/entries.js";
-import EntryBrowser from "../components/EntryBrowser.js";
+import EntryCard from "../components/EntryCard.js";
+import Link from "next/link";
 
 export default function Home() {
+  const featuredEntries = entries.slice(0, 3);
+
   return (
-    <main className="page-shell">
-      <header className="archive-hero">
-        <p className="eyebrow">Khmer Living Archive / Field Notebook</p>
-        <h1 className="archive-title">{collection.name}</h1>
-        <p className="archive-description">{collection.description}</p>
-
-        <div className="archive-meta" aria-label="Archive details">
-          <div className="meta-card">
-            <p className="meta-label">Curated by</p>
-            <p className="meta-value">{collection.curator}</p>
-          </div>
-          <div className="meta-card">
-            <p className="meta-label">Source</p>
-            <p className="meta-value">{collection.source}</p>
-          </div>
-          <div className="meta-card">
-            <p className="meta-label">Records</p>
-            <p className="meta-value">{entries.length} prototype entries</p>
-          </div>
+    <main>
+      <section className="hero-section page-shell">
+        <div className="hero-copy">
+          <p className="eyebrow">01 / Oral history archive</p>
+          <h1 className="archive-title">Khmer School Memories Before Digital Learning</h1>
         </div>
-      </header>
+        <div className="hero-intro">
+          <p className="archive-description">{collection.description}</p>
+          <Link className="primary-link" href="/archive">
+            Enter archive
+          </Link>
+        </div>
+      </section>
 
-      <aside className="fieldwork-notice">
-        <p className="notice-label">Fieldwork status</p>
-        <p className="notice-text">
-          These five cards are temporary research-informed fictional demo
-          profiles. They show the archive format and will be replaced with five
-          real interview entries after fieldwork.
-        </p>
-      </aside>
+      <section className="page-shell section-block">
+        <div className="section-heading">
+          <p className="eyebrow">Selected records</p>
+          <h2>Start with three memories</h2>
+        </div>
+        <div className="record-list">
+          {featuredEntries.map((entry, index) => (
+            <EntryCard key={entry.slug} entry={entry} recordNumber={index + 1} />
+          ))}
+        </div>
+      </section>
 
-      <EntryBrowser entries={entries} />
-
-      <footer className="archive-footer">
-        <p className="footer-note">
-          Built in ICT 340 - Vibe Coding, American University of Phnom Penh,
-          Fall 2026. This archive is under construction all semester.
-        </p>
-      </footer>
+      <section className="page-shell museum-split">
+        <div className="archive-panel">
+          <p className="eyebrow">Why this archive</p>
+          <h2>School memories treated like cultural records.</h2>
+          <p>
+            This project collects memories about Cambodian learning before
+            smartphones, search engines, online classrooms, and AI tools became
+            common. Each record keeps attention on people, places, learning
+            materials, and study habits.
+          </p>
+        </div>
+        <aside className="fieldwork-notice">
+          <p className="notice-label">Current fieldwork</p>
+          <p className="notice-text">
+            Current records are temporary research-informed fictional demo
+            profiles. They show the archive format and will be replaced with
+            approved notes from real interviews.
+          </p>
+        </aside>
+      </section>
     </main>
   );
 }

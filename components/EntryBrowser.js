@@ -16,6 +16,7 @@ export default function EntryBrowser({ entries }) {
           entry.place,
           entry.period,
           entry.featuredObject,
+          entry.excerpt,
           entry.memory,
           entry.learningMethod,
           entry.reflection,
@@ -73,11 +74,7 @@ export default function EntryBrowser({ entries }) {
       {filteredEntries.length > 0 ? (
         <div className="entries-list" aria-label="Archive entries">
           {filteredEntries.map((entry, index) => (
-            <EntryCard
-              key={`${entry.title}-${entry.period}`}
-              entry={entry}
-              recordNumber={index + 1}
-            />
+            <EntryCard key={entry.slug} entry={entry} recordNumber={index + 1} />
           ))}
         </div>
       ) : (

@@ -1,11 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EntryCard from "./EntryCard.js";
 
 export default function EntryBrowser({ entries }) {
   const [query, setQuery] = useState("");
   const normalizedQuery = query.trim().toLowerCase();
+
+  useEffect(() => {
+    if (window.location.hash === "#entry-search") {
+      document.getElementById("entry-search")?.focus();
+    }
+  }, []);
 
   const filteredEntries = normalizedQuery
     ? entries.filter((entry) => {

@@ -49,9 +49,6 @@ export default async function MemoryDetailPage({ params }) {
                 <dd>{entry.category}</dd>
               </div>
             </dl>
-            {entry.isDemo ? (
-              <p className="demo-banner">Research-informed fictional demo profile.</p>
-            ) : null}
             <section className="object-box">
               <h2>Featured object</h2>
               <p>{entry.featuredObject}</p>

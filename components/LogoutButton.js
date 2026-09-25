@@ -1,5 +1,6 @@
 "use client";
 
+import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createClient } from "../lib/supabase/client.js";
@@ -18,6 +19,7 @@ export default function LogoutButton() {
 
   return (
     <button className="logout-button" type="button" onClick={handleLogout} disabled={isLoggingOut}>
+      <LogOut size={17} strokeWidth={2.2} aria-hidden="true" />
       {isLoggingOut ? "Logging out..." : "Log out"}
     </button>
   );

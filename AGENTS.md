@@ -10,13 +10,13 @@ One student's Khmer Living Archive, built in ICT 340 at AUPP. Every student buil
 
 - Next.js 15, App Router, React 19.
 - JavaScript only. No TypeScript, no .ts or .tsx files, ever.
-- Plain React. No CSS frameworks, no component libraries, no state libraries.
+- Plain React. No CSS frameworks, no state libraries, no component libraries. Lucide React is approved for icons only.
 - Styling follows the existing pattern: inline style objects (see `app/page.js`) or a plain CSS file.
 - `collection.config.js` is the single source of the archive's identity (name, description, curator, source). Read from it; never hard-code those values.
 
 ## Hard rules
 
-1. Do not add dependencies. The three in `package.json` are the whole list. If a task seems to need a package, stop and say so instead of installing it.
+1. Do not add dependencies unless explicitly approved below. If a task seems to need another package, stop and say so instead of installing it.
 2. Do not touch `package.json`, `package-lock.json`, `next.config.mjs`, or `.gitignore` unless the task explicitly names them.
 3. Never write an API key, token, or password into any file. This repository is public.
 4. Keep diffs scoped to what was asked. If completing the task honestly requires touching another file, say which file and why before editing it.
@@ -31,9 +31,10 @@ One student's Khmer Living Archive, built in ICT 340 at AUPP. Every student buil
 
 ## Sprint 2 amendment (added week 5)
 
-Two dependencies are approved for Sprint 2, and only these two:
+Three dependencies are approved for Sprint 2, and only these three:
 - @supabase/supabase-js
 - @supabase/ssr
+- lucide-react — icons only
 
 Everything else in the hard rules stands, especially rule 3:
 no keys, tokens, or passwords in any committed file, ever.

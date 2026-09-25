@@ -1,14 +1,16 @@
 import Link from "next/link";
+import { LogIn, Search, User } from "lucide-react";
 import collection from "../collection.config.js";
 import LogoutButton from "./LogoutButton.js";
+import MobileNav from "./MobileNav.js";
+import ThemeToggle from "./ThemeToggle.js";
 import { createClient } from "../lib/supabase/server.js";
 
 export default async function SiteHeader() {
   const links = [
-    ["Home", "/"],
     ["Archive", "/archive"],
-    ["About", "/about"],
     ["Interviews", "/interviews"],
+    ["About", "/about"],
   ];
   const supabase = await createClient();
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
@@ -16,28 +18,41 @@ export default async function SiteHeader() {
 
   return (
     <header className="site-header">
-      <Link className="site-mark" href="/" aria-label="Home">
-        <span>KM / Archive</span>
-        <strong>{collection.name}</strong>
+      <Link className="site-mark" href="/" aria-label={`${collection.name} home`}>
+        <img className="site-logo-image" src="/logo.png" alt="" width="48" height="48" />
+        <strong>School Memories</strong>
       </Link>
-      <nav className="site-nav" aria-label="Main navigation">
+
+      <nav className="site-nav" aria-label="Explore archive">
         {links.map(([label, href]) => (
           <Link key={href} href={href}>
             {label}
           </Link>
         ))}
+      </nav>
+
+      <section className="header-tools" aria-label="Archive tools and account">
+        <Link className="icon-button" href="/archive#entry-search" aria-label="Search archive">
+          <Search size={20} strokeWidth={2.2} aria-hidden="true" />
+        </Link>
         {user ? (
           <span className="auth-status">
-            <span>{user.email}</span>
+            <span className="account-chip" title={user.email}>
+              <User size={18} strokeWidth={2.2} aria-hidden="true" />
+              <span>{user.email}</span>
+            </span>
             <LogoutButton />
           </span>
         ) : (
-          <span className="auth-status">
-            <Link href="/login">Log in</Link>
-            <Link href="/signup">Sign up</Link>
-          </span>
+          <Link className="account-button" href="/login">
+            <LogIn size={18} strokeWidth={2.2} aria-hidden="true" />
+            Log in
+          </Link>
         )}
-      </nav>
+        <ThemeToggle />
+      </section>
+
+      <MobileNav links={links} userEmail={user?.email || ""} />
     </header>
   );
 }

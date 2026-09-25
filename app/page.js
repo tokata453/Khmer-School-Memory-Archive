@@ -11,13 +11,18 @@ export default function Home() {
       <section className="hero-section page-shell">
         <div className="hero-copy">
           <p className="eyebrow">01 / Oral history archive</p>
-          <h1 className="archive-title">Khmer School Memories Before Digital Learning</h1>
+          <h1 className="archive-title">{collection.name}</h1>
         </div>
         <div className="hero-intro">
           <p className="archive-description">{collection.description}</p>
           <Link className="primary-link" href="/archive">
             Enter archive
           </Link>
+        </div>
+        <div className="hero-media" aria-hidden="true">
+          <div className="hero-media-stack">
+            <span className="hero-play-shape" />
+          </div>
         </div>
       </section>
 
@@ -33,7 +38,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="page-shell museum-split">
+      <section className="page-shell section-block">
         <div className="archive-panel">
           <p className="eyebrow">Why this archive</p>
           <h2>School memories treated like cultural records.</h2>
@@ -44,14 +49,6 @@ export default function Home() {
             materials, and study habits.
           </p>
         </div>
-        <aside className="fieldwork-notice">
-          <p className="notice-label">Current fieldwork</p>
-          <p className="notice-text">
-            Current records are temporary research-informed fictional demo
-            profiles. They show the archive format and will be replaced with
-            approved notes from real interviews.
-          </p>
-        </aside>
       </section>
     </main>
   );

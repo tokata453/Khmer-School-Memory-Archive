@@ -34,7 +34,6 @@ export default function InterviewsPage() {
                 <dd>{entry.place}</dd>
               </div>
             </dl>
-            {entry.isDemo ? <span className="demo-pill">Demo profile</span> : null}
             <Link className="text-link" href={`/archive/${entry.slug}`}>
               Read memory →
             </Link>

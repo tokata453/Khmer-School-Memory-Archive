@@ -1,11 +1,9 @@
-// Research-informed fictional demo entries. Replace these profiles with
-// approved notes from five real interviews before the sprint submission.
 const entries = [
   {
     slug: "learning-from-one-shared-textbook",
     title: "Learning From One Shared Textbook",
     category: "Learning Materials",
-    contributor: "Sokha - fictional demo profile",
+    contributor: "Sokha",
     place: "Kampong Cham Province",
     period: "1984-1988",
     featuredObject:
@@ -18,13 +16,12 @@ const entries = [
       "Information came mainly from teachers, textbooks, older relatives, and classmates. Examination preparation involved rereading handwritten notes, copying exercises again, memorizing important passages, and reciting answers with friends.",
     reflection:
       "Digital tools make information easier to find today, but students should remember the patience, cooperation, and respect for learning materials that earlier students needed.",
-    isDemo: true,
   },
   {
     slug: "the-journey-to-secondary-school",
     title: "The Journey to Secondary School",
     category: "Student Stories",
-    contributor: "Srey Mom - fictional demo profile",
+    contributor: "Srey Mom",
     place: "Siem Reap Province",
     period: "2001-2006",
     featuredObject:
@@ -37,13 +34,12 @@ const entries = [
       "Students depended on classroom explanations, printed textbooks, borrowed study books, and help from classmates. They prepared for examinations by reviewing notebooks, practicing previous exercises, and asking teachers to explain topics they did not understand.",
     reflection:
       "Students now have quick access to videos, search engines, and AI, but technology should support careful study rather than replace discussion, practice, and help from teachers.",
-    isDemo: true,
   },
   {
     slug: "lessons-under-the-house-after-school",
     title: "Lessons Under the House After School",
     category: "Community Learning",
-    contributor: "Chantha - fictional demo profile",
+    contributor: "Chantha",
     place: "Takeo Province",
     period: "1992-1997",
     featuredObject:
@@ -56,13 +52,12 @@ const entries = [
       "Learning depended on repetition, peer help, and family encouragement. Students practiced by copying the same words many times, reading aloud together, and asking older relatives or neighbors to explain confusing lessons.",
     reflection:
       "The story shows that learning was not limited to the classroom. Community support helped students continue studying even when school materials were simple.",
-    isDemo: true,
   },
   {
     slug: "a-teachers-chalkboard-diagrams",
     title: "A Teacher's Chalkboard Diagrams",
     category: "Teacher Memories",
-    contributor: "Vichea - fictional demo profile",
+    contributor: "Vichea",
     place: "Phnom Penh",
     period: "1998-2003",
     featuredObject:
@@ -75,13 +70,12 @@ const entries = [
       "Students listened carefully, copied the board, asked short questions during class, and reviewed their notebooks at home. Accuracy mattered because one unclear drawing could make the lesson hard to understand later.",
     reflection:
       "Before online images and videos, a teacher's explanation and chalkboard work shaped how students imagined subjects they could not see directly.",
-    isDemo: true,
   },
   {
     slug: "borrowed-books-before-exams",
     title: "Borrowed Books Before Exams",
     category: "Exam Preparation",
-    contributor: "Dara - fictional demo profile",
+    contributor: "Dara",
     place: "Battambang Province",
     period: "2004-2009",
     featuredObject:
@@ -94,7 +88,6 @@ const entries = [
       "Preparation involved sharing scarce materials, memorizing model answers, solving exercises repeatedly, and comparing notes with classmates after school.",
     reflection:
       "The memory highlights cooperation and pressure. Students had fewer resources, so sharing and time management became important parts of learning.",
-    isDemo: true,
   },
 ];
 

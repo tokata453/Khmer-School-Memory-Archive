@@ -3,6 +3,7 @@ import { LogIn, Search, User } from "lucide-react";
 import collection from "../collection.config.js";
 import LogoutButton from "./LogoutButton.js";
 import MobileNav from "./MobileNav.js";
+import NavLink from "./NavLink.js";
 import ThemeToggle from "./ThemeToggle.js";
 import { createClient } from "../lib/supabase/server.js";
 
@@ -25,9 +26,9 @@ export default async function SiteHeader() {
 
       <nav className="site-nav" aria-label="Explore archive">
         {links.map(([label, href]) => (
-          <Link key={href} href={href}>
+          <NavLink key={href} href={href}>
             {label}
-          </Link>
+          </NavLink>
         ))}
       </nav>
 

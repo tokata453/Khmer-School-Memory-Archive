@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { LogIn, Menu, Search, User, X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
+import NavLink from "./NavLink.js";
 import LogoutButton from "./LogoutButton.js";
 import ThemeToggle from "./ThemeToggle.js";
 
@@ -57,9 +58,9 @@ export default function MobileNav({ links, userEmail }) {
 
             <nav className="mobile-drawer-links" aria-label="Explore archive">
               {links.map(([label, href]) => (
-                <Link key={href} href={href} onClick={closeDrawer}>
+                <NavLink key={href} href={href} onClick={closeDrawer}>
                   {label}
-                </Link>
+                </NavLink>
               ))}
             </nav>
 

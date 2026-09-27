@@ -6,7 +6,7 @@
   --vermilion: #c33d2e;
   --indigo: #18314a;
   --rule: #bdb2a0;
-  --wide: min(1180px, calc(100% - 40px));
+  --wide: min(1580px, calc(100% - 40px));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -344,7 +344,7 @@ a {
 
 .hero-section {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(230px, 0.56fr);
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.38fr);
   gap: 34px 44px;
   min-height: 390px;
   margin-top: 18px;
@@ -399,9 +399,9 @@ a {
 }
 
 .hero-section .archive-title {
-  max-width: 760px;
+  max-width: 1120px;
   color: #f7f4ec;
-  font-size: clamp(2.7rem, 6.5vw, 6.7rem);
+  font-size: clamp(2.7rem, 5.2vw, 5.4rem);
   line-height: 0.94;
 }
 
@@ -439,7 +439,7 @@ a {
 }
 
 .hero-section .archive-description {
-  max-width: 34rem;
+  max-width: 46rem;
   color: rgba(247, 244, 236, 0.74);
 }
 
@@ -632,6 +632,15 @@ a {
 .compact-hero p:not(.eyebrow) {
   max-width: 720px;
   margin: 24px 0 0;
+}
+
+.archive-hero {
+  display: block;
+}
+
+.archive-hero h1 {
+  max-width: 920px;
+  font-size: clamp(3rem, 6vw, 5.8rem);
 }
 
 .browser-panel {

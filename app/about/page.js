@@ -7,8 +7,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <main className="page-shell">
-      <header className="page-hero compact-hero">
-        <p className="eyebrow">About project</p>
+      <header className="page-hero compact-hero archive-hero">
         <h1>Why preserve school memories before digital learning?</h1>
         <p>{collection.description}</p>
       </header>

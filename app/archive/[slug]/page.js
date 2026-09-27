@@ -1,25 +1,26 @@
 import { notFound } from "next/navigation";
 import EntryCard from "../../../components/EntryCard.js";
-import entries from "../../../data/entries.js";
+import { getEntries, getEntryBySlug } from "../../../lib/entries.js";
 
 export function generateStaticParams() {
-  return entries.map((entry) => ({ slug: entry.slug }));
+  return [];
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const entry = entries.find((item) => item.slug === slug);
+  const entry = await getEntryBySlug(slug);
   return { title: entry ? entry.title : "Memory not found" };
 }
 
 export default async function MemoryDetailPage({ params }) {
   const { slug } = await params;
-  const entry = entries.find((item) => item.slug === slug);
+  const entry = await getEntryBySlug(slug);
 
   if (!entry) {
     notFound();
   }
 
+  const entries = await getEntries();
   const relatedEntries = entries
     .filter((item) => item.slug !== entry.slug)
     .slice(0, 2);
@@ -27,7 +28,6 @@ export default async function MemoryDetailPage({ params }) {
   return (
     <main className="page-shell detail-shell">
       <article className="memory-detail">
-        <p className="eyebrow">Memory detail / {entry.category}</p>
         <h1>{entry.title}</h1>
         <div className="detail-grid">
           <aside className="detail-rail">
@@ -74,7 +74,6 @@ export default async function MemoryDetailPage({ params }) {
 
       <section className="section-block">
         <div className="section-heading">
-          <p className="eyebrow">Related memories</p>
           <h2>Continue reading</h2>
         </div>
         <div className="record-list compact-list">

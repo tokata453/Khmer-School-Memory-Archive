@@ -41,7 +41,6 @@ export default function AuthForm({ mode }) {
   return (
     <main className="page-shell auth-shell">
       <section className="auth-panel" aria-labelledby="auth-title">
-        <p className="eyebrow">Contributor accounts</p>
         <h1 id="auth-title">{isSignup ? "Create your archive account." : "Log in to your account."}</h1>
         <p>
           {isSignup

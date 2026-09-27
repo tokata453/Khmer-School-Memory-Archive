@@ -1,15 +1,16 @@
 import Link from "next/link";
-import entries from "../../data/entries.js";
+import { getEntries } from "../../lib/entries.js";
 
 export const metadata = {
   title: "Interview Collection",
 };
 
-export default function InterviewsPage() {
+export default async function InterviewsPage() {
+  const entries = await getEntries();
+
   return (
     <main className="page-shell">
-      <header className="page-hero compact-hero">
-        <p className="eyebrow">Interview collection</p>
+      <header className="page-hero compact-hero archive-hero">
         <h1>People behind the memories.</h1>
         <p>
           This page groups archive records by contributor so future interview

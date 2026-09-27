@@ -1,19 +1,20 @@
 import EntryBrowser from "../../components/EntryBrowser.js";
-import entries from "../../data/entries.js";
+import { getEntries } from "../../lib/entries.js";
 
 export const metadata = {
   title: "Archive Memories",
 };
 
-export default function ArchivePage() {
+export default async function ArchivePage() {
+  const entries = await getEntries();
+
   return (
     <main className="page-shell">
-      <header className="page-hero compact-hero">
-        <p className="eyebrow">Archive index / {entries.length} records</p>
-        <h1>Browse Cambodian school memories before digital learning.</h1>
+      <header className="page-hero compact-hero archive-hero">
+        <h1>Browse school memories before digital learning.</h1>
         <p>
-          Search by name, province, object, school memory, period, or topic. This
-          page is the main reading room for the archive.
+          Search {entries.length} archive records by name, province, object,
+          school memory, period, or topic.
         </p>
       </header>
       <EntryBrowser entries={entries} />

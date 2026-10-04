@@ -11,12 +11,13 @@ export default async function Home() {
     <main>
       <section className="hero-section page-shell">
         <div className="hero-copy">
+          <p className="eyebrow">Khmer school memories archive</p>
           <h1 className="archive-title">{collection.name}</h1>
         </div>
         <div className="hero-intro">
           <p className="archive-description">{collection.description}</p>
           <Link className="primary-link" href="/archive">
-            Enter archive
+            Browse memories
           </Link>
         </div>
         <div className="hero-media" aria-hidden="true">

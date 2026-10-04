@@ -32,6 +32,7 @@ Khmer Modernist Archive: a Cambodian oral-history site shaped by strong geometry
 - Notebook-paper backgrounds.
 - Ruled paper lines.
 - Gradients used as decoration.
+- Gradient colors on components unless explicitly needed.
 - Rounded card grids.
 - Heavy shadows.
 - Pills and badges as default UI language.

@@ -10,6 +10,7 @@ import { createClient } from "../lib/supabase/server.js";
 export default async function SiteHeader() {
   const links = [
     ["Archive", "/archive"],
+    ["Contribute", "/contribute"],
     ["Interviews", "/interviews"],
     ["About", "/about"],
   ];

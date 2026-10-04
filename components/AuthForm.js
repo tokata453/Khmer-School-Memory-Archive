@@ -25,7 +25,8 @@ export default function AuthForm({ mode }) {
         : await supabase.auth.signInWithPassword({ email, password });
 
       if (error) {
-        setMessage(isSignup ? error.message : "Invalid email or password");
+        console.error(isSignup ? "Could not create account" : "Could not log in", error);
+        setMessage(isSignup ? "We could not create your account. Check your details and try again." : "Invalid email or password");
         return;
       }
 

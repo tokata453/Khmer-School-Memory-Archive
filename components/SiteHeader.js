@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { LogIn, Search, User } from "lucide-react";
+import { LogIn, Search } from "lucide-react";
 import collection from "../collection.config.js";
-import LogoutButton from "./LogoutButton.js";
+import AccountMenu from "./AccountMenu.js";
 import MobileNav from "./MobileNav.js";
 import NavLink from "./NavLink.js";
 import ThemeToggle from "./ThemeToggle.js";
@@ -38,13 +38,7 @@ export default async function SiteHeader() {
           <Search size={20} strokeWidth={2.2} aria-hidden="true" />
         </Link>
         {user ? (
-          <span className="auth-status">
-            <span className="account-chip" title={user.email}>
-              <User size={18} strokeWidth={2.2} aria-hidden="true" />
-              <span>{user.email}</span>
-            </span>
-            <LogoutButton />
-          </span>
+          <AccountMenu userEmail={user.email} />
         ) : (
           <Link className="account-button" href="/login">
             <LogIn size={18} strokeWidth={2.2} aria-hidden="true" />

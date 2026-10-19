@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import EntryCard from "./EntryCard.js";
 
-export default function EntryBrowser({ entries }) {
+export default function EntryBrowser({ entries, labels }) {
   const [query, setQuery] = useState("");
   const normalizedQuery = query.trim().toLowerCase();
 
@@ -36,16 +36,16 @@ export default function EntryBrowser({ entries }) {
 
   const resultLabel =
     filteredEntries.length === 1
-      ? "1 matching entry"
-      : `${filteredEntries.length} matching entries`;
+      ? labels.oneResult
+      : labels.manyResults.replace("{count}", filteredEntries.length);
 
   return (
     <section className="browser-panel" aria-labelledby="browse-heading">
       <div className="browser-header">
         <div>
-          <p className="browser-kicker">Browse the archive</p>
+          <p className="browser-kicker">{labels.kicker}</p>
           <h2 id="browse-heading" className="browser-title">
-            Search entries
+            {labels.searchTitle}
           </h2>
         </div>
         <p className="result-count" aria-live="polite">
@@ -55,7 +55,7 @@ export default function EntryBrowser({ entries }) {
 
       <div className="search-row">
         <label className="search-label" htmlFor="entry-search">
-          Search by name, place, object, memory, or year
+          {labels.searchLabel}
         </label>
         <div className="search-controls">
           <input
@@ -64,7 +64,7 @@ export default function EntryBrowser({ entries }) {
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Try Kampong Cham, textbook, notes..."
+            placeholder={labels.placeholder}
           />
           <button
             className="clear-search"
@@ -72,24 +72,21 @@ export default function EntryBrowser({ entries }) {
             onClick={() => setQuery("")}
             disabled={!query}
           >
-            Clear
+            {labels.clear}
           </button>
         </div>
       </div>
 
       {filteredEntries.length > 0 ? (
-        <div className="entries-list" aria-label="Archive entries">
+        <div className="entries-list" aria-label={labels.entries}>
           {filteredEntries.map((entry, index) => (
-            <EntryCard key={entry.slug} entry={entry} recordNumber={index + 1} />
+            <EntryCard key={entry.slug} entry={entry} recordNumber={index + 1} labels={labels.entryCard} />
           ))}
         </div>
       ) : (
         <div className="empty-state" role="status">
-          <p className="empty-title">No entries found</p>
-          <p className="empty-text">
-            Try a different name, province, object, memory, or year. Clearing the
-            search will show every archive entry again.
-          </p>
+          <p className="empty-title">{labels.emptyTitle}</p>
+          <p className="empty-text">{labels.emptyText}</p>
         </div>
       )}
     </section>

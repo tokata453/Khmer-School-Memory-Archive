@@ -1,21 +1,22 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { getEntries } from "../../lib/entries.js";
+import { normalizeLanguage } from "../../lib/language.js";
+import { getTranslation } from "../../lib/translations.js";
 
 export const metadata = {
   title: "Interview Collection",
 };
 
 export default async function InterviewsPage() {
-  const entries = await getEntries();
+  const [entries, cookieStore] = await Promise.all([getEntries(), cookies()]);
+  const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value));
 
   return (
     <main className="page-shell">
       <header className="page-hero compact-hero archive-hero">
-        <h1>People behind the memories.</h1>
-        <p>
-          This page groups archive records by contributor so future interview
-          notes, photos, and audio can grow from the same structure.
-        </p>
+        <h1>{t.interviews.title}</h1>
+        <p>{t.interviews.intro}</p>
       </header>
 
       <div className="interview-grid">
@@ -27,16 +28,16 @@ export default async function InterviewsPage() {
             <p>{entry.excerpt}</p>
             <dl>
               <div>
-                <dt>Period</dt>
+                <dt>{t.interviews.period}</dt>
                 <dd>{entry.period}</dd>
               </div>
               <div>
-                <dt>Location</dt>
+                <dt>{t.interviews.location}</dt>
                 <dd>{entry.place}</dd>
               </div>
             </dl>
             <Link className="text-link" href={`/archive/${entry.slug}`}>
-              Read memory →
+              {t.interviews.read}
             </Link>
           </article>
         ))}

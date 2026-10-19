@@ -1,6 +1,8 @@
 import collection from "../collection.config.js";
+import { cookies } from "next/headers";
 import SiteFooter from "../components/SiteFooter.js";
 import SiteHeader from "../components/SiteHeader.js";
+import { normalizeLanguage } from "../lib/language.js";
 import "./globals.css";
 
 export const metadata = {
@@ -8,13 +10,16 @@ export const metadata = {
   description: collection.description,
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const cookieStore = await cookies();
+  const language = normalizeLanguage(cookieStore.get("language")?.value);
+
   return (
-    <html lang="en">
+    <html lang={language}>
       <body>
-        <SiteHeader />
+        <SiteHeader language={language} />
         {children}
-        <SiteFooter />
+        <SiteFooter language={language} />
       </body>
     </html>
   );

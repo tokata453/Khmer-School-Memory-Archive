@@ -1,12 +1,14 @@
 import collection from "../collection.config.js";
+import { getTranslation } from "../lib/translations.js";
 
-export default function SiteFooter() {
+export default function SiteFooter({ language }) {
+  const t = getTranslation(language);
+
   return (
     <footer className="site-footer">
-      <p>KM / Oral History Archive</p>
+      <p>{t.footer.archive}</p>
       <p>
-        Curated by {collection.curator}. Built in ICT 340 - Vibe Coding,
-        American University of Phnom Penh, Fall 2026.
+        {t.footer.curated} {collection.curator}. {t.footer.built}
       </p>
     </footer>
   );

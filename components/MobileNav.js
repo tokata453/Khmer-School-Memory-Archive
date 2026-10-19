@@ -4,10 +4,11 @@ import Link from "next/link";
 import { LogIn, Menu, Search, User, X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import NavLink from "./NavLink.js";
+import LanguageToggle from "./LanguageToggle.js";
 import LogoutButton from "./LogoutButton.js";
 import ThemeToggle from "./ThemeToggle.js";
 
-export default function MobileNav({ links, userEmail }) {
+export default function MobileNav({ links, userEmail, language, labels }) {
   const [isOpen, setIsOpen] = useState(false);
   const drawerId = useId();
   const closeButtonRef = useRef(null);
@@ -30,11 +31,11 @@ export default function MobileNav({ links, userEmail }) {
   }
 
   return (
-    <section className="mobile-nav" aria-label="Mobile menu">
+    <section className="mobile-nav" aria-label={labels.mobileMenu}>
       <button
         className="icon-button mobile-menu-button"
         type="button"
-        aria-label="Open menu"
+        aria-label={labels.openMenu}
         aria-expanded={isOpen}
         aria-controls={drawerId}
         onClick={() => setIsOpen(true)}
@@ -44,19 +45,19 @@ export default function MobileNav({ links, userEmail }) {
 
       {isOpen ? (
         <>
-          <button className="mobile-drawer-backdrop" type="button" aria-label="Close menu" onClick={closeDrawer} />
-          <aside className="mobile-drawer" id={drawerId} role="dialog" aria-modal="true" aria-label="Site menu">
+          <button className="mobile-drawer-backdrop" type="button" aria-label={labels.closeMenu} onClick={closeDrawer} />
+          <aside className="mobile-drawer" id={drawerId} role="dialog" aria-modal="true" aria-label={labels.siteMenu}>
             <button
               className="icon-button mobile-close-button"
               type="button"
-              aria-label="Close menu"
+              aria-label={labels.closeMenu}
               onClick={closeDrawer}
               ref={closeButtonRef}
             >
               <X size={22} strokeWidth={2.2} aria-hidden="true" />
             </button>
 
-            <nav className="mobile-drawer-links" aria-label="Explore archive">
+            <nav className="mobile-drawer-links" aria-label={labels.explore}>
               {links.map(([label, href]) => (
                 <NavLink key={href} href={href} onClick={closeDrawer}>
                   {label}
@@ -64,10 +65,10 @@ export default function MobileNav({ links, userEmail }) {
               ))}
             </nav>
 
-            <div className="mobile-drawer-tools" aria-label="Archive tools and account">
+            <div className="mobile-drawer-tools" aria-label={labels.tools}>
               <Link className="account-button" href="/archive#entry-search" onClick={closeDrawer}>
                 <Search size={18} strokeWidth={2.2} aria-hidden="true" />
-                Search archive
+                {labels.search}
               </Link>
               {userEmail ? (
                 <span className="auth-status">
@@ -80,9 +81,10 @@ export default function MobileNav({ links, userEmail }) {
               ) : (
                 <Link className="account-button" href="/login" onClick={closeDrawer}>
                   <LogIn size={18} strokeWidth={2.2} aria-hidden="true" />
-                  Log in
+                  {labels.login}
                 </Link>
               )}
+              <LanguageToggle language={language} />
               <ThemeToggle />
             </div>
           </aside>

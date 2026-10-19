@@ -1,35 +1,31 @@
 import collection from "../../collection.config.js";
+import { cookies } from "next/headers";
+import { normalizeLanguage } from "../../lib/language.js";
+import { getTranslation } from "../../lib/translations.js";
 
 export const metadata = {
   title: "About Project",
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const cookieStore = await cookies();
+  const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value));
+
   return (
     <main className="page-shell">
       <header className="page-hero compact-hero archive-hero">
-        <h1>Why preserve school memories before digital learning?</h1>
+        <h1>{t.about.title}</h1>
         <p>{collection.description}</p>
       </header>
 
       <div className="about-stack">
         <section className="archive-panel">
-          <h2>Purpose</h2>
-          <p>
-            Before smartphones and online learning, Cambodian students relied on
-            teachers, textbooks, handwritten notes, classmates, family members,
-            and memory. This archive preserves those learning experiences as
-            part of Khmer educational history.
-          </p>
+          <h2>{t.about.purpose}</h2>
+          <p>{t.about.purposeBody}</p>
         </section>
 
-        <section className="process-grid" aria-label="How data is collected">
-          {[
-            "Interview people",
-            "Record school memories",
-            "Organize archive records",
-            "Publish reviewed entries",
-          ].map((step, index) => (
+        <section className="process-grid" aria-label={t.about.processLabel}>
+          {t.about.steps.map((step, index) => (
             <div key={step}>
               <span>{String(index + 1).padStart(2, "0")}</span>
               <p>{step}</p>
@@ -38,21 +34,17 @@ export default function AboutPage() {
         </section>
 
         <section className="archive-panel">
-          <h2>Research method</h2>
-          <p>
-            This is an interview-based oral history project. Records are written
-            from memories shared by students, families, teachers, and community
-            members, then organized for browsing and future review.
-          </p>
+          <h2>{t.about.method}</h2>
+          <p>{t.about.methodBody}</p>
         </section>
 
         <section className="archive-panel">
-          <h2>Credits</h2>
+          <h2>{t.about.credits}</h2>
           <p>
-            Created by {collection.curator} for ICT 340 - Vibe Coding at the
+            {t.about.created} {collection.curator} for ICT 340 - Vibe Coding at the
             American University of Phnom Penh.
           </p>
-          <p>Knowledge source: {collection.source}.</p>
+          <p>{t.about.source}: {collection.source}.</p>
         </section>
       </div>
     </main>

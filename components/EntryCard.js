@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function EntryCard({ entry, recordNumber }) {
+export default function EntryCard({ entry, recordNumber, labels = { credit: "Contributed by", open: "Open ↗" } }) {
   return (
     <article className="entry-card">
       <p className="entry-number">{String(recordNumber).padStart(2, "0")}</p>
@@ -10,7 +10,7 @@ export default function EntryCard({ entry, recordNumber }) {
           <Link href={`/archive/${entry.slug}`}>{entry.title}</Link>
         </h2>
         <p className="entry-excerpt">{entry.excerpt}</p>
-        <p className="record-credit">Contributed by / ផ្តល់ដោយ {entry.contributor}</p>
+        <p className="record-credit">{labels.credit} {entry.contributor}</p>
       </div>
       <div className="entry-meta">
         <span>{entry.place}</span>
@@ -18,7 +18,7 @@ export default function EntryCard({ entry, recordNumber }) {
       </div>
       <div className="entry-action">
         <Link className="text-link" href={`/archive/${entry.slug}`}>
-          Open ↗
+          {labels.open}
         </Link>
       </div>
     </article>

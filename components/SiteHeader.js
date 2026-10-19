@@ -2,17 +2,20 @@ import Link from "next/link";
 import { LogIn, Search } from "lucide-react";
 import collection from "../collection.config.js";
 import AccountMenu from "./AccountMenu.js";
+import LanguageToggle from "./LanguageToggle.js";
 import MobileNav from "./MobileNav.js";
 import NavLink from "./NavLink.js";
 import ThemeToggle from "./ThemeToggle.js";
 import { createClient } from "../lib/supabase/server.js";
+import { getTranslation } from "../lib/translations.js";
 
-export default async function SiteHeader() {
+export default async function SiteHeader({ language }) {
+  const t = getTranslation(language);
   const links = [
-    ["Archive", "/archive"],
-    ["Contribute", "/contribute"],
-    ["Interviews", "/interviews"],
-    ["About", "/about"],
+    [t.header.archive, "/archive"],
+    [t.header.contribute, "/contribute"],
+    [t.header.interviews, "/interviews"],
+    [t.header.about, "/about"],
   ];
   const supabase = await createClient();
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
@@ -20,12 +23,12 @@ export default async function SiteHeader() {
 
   return (
     <header className="site-header">
-      <Link className="site-mark" href="/" aria-label={`${collection.name} home`}>
+      <Link className="site-mark" href="/" aria-label={`${collection.name} ${t.header.home}`}>
         <img className="site-logo-image" src="/logo.png" alt="" width="48" height="48" />
-        <strong>School Memories</strong>
+        <strong>{t.header.home}</strong>
       </Link>
 
-      <nav className="site-nav" aria-label="Explore archive">
+      <nav className="site-nav" aria-label={t.header.explore}>
         {links.map(([label, href]) => (
           <NavLink key={href} href={href}>
             {label}
@@ -33,8 +36,8 @@ export default async function SiteHeader() {
         ))}
       </nav>
 
-      <section className="header-tools" aria-label="Archive tools and account">
-        <Link className="icon-button" href="/archive#entry-search" aria-label="Search archive">
+      <section className="header-tools" aria-label={t.header.tools}>
+        <Link className="icon-button" href="/archive#entry-search" aria-label={t.header.search}>
           <Search size={20} strokeWidth={2.2} aria-hidden="true" />
         </Link>
         {user ? (
@@ -42,13 +45,14 @@ export default async function SiteHeader() {
         ) : (
           <Link className="account-button" href="/login">
             <LogIn size={18} strokeWidth={2.2} aria-hidden="true" />
-            Log in
+            {t.header.login}
           </Link>
         )}
+        <LanguageToggle language={language} />
         <ThemeToggle />
       </section>
 
-      <MobileNav links={links} userEmail={user?.email || ""} />
+      <MobileNav links={links} userEmail={user?.email || ""} language={language} labels={t.header} />
     </header>
   );
 }

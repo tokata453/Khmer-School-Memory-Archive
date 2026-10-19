@@ -11,7 +11,7 @@ export default function EntryActions({ id, slug }) {
   const [message, setMessage] = useState("");
 
   async function handleDelete() {
-    if (!window.confirm("Delete this entry? This cannot be undone.")) return;
+    if (!window.confirm("Delete this entry? This cannot be undone. / លុបឯកសារនេះ? មិនអាចត្រឡប់វិញបានទេ។")) return;
     setDeleting(true);
     setMessage("");
     try {
@@ -19,14 +19,14 @@ export default function EntryActions({ id, slug }) {
       if (error) throw error;
       if (!data) {
         console.error("Entry delete returned no row; RLS may have refused it.");
-        setMessage("That change wasn't saved");
+        setMessage("That change wasn't saved. / ការកែប្រែមិនត្រូវបានរក្សាទុកទេ។");
         return;
       }
       router.push("/archive");
       router.refresh();
     } catch (error) {
       console.error("Could not delete entry", error);
-      setMessage("We could not delete this entry. Check your connection and try again.");
+      setMessage("We could not delete this entry. Check your connection and try again. / មិនអាចលុបបានទេ។ សូមពិនិត្យការតភ្ជាប់ ហើយព្យាយាមម្តងទៀត។");
     } finally {
       setDeleting(false);
     }
@@ -34,8 +34,8 @@ export default function EntryActions({ id, slug }) {
 
   return (
     <div className="entry-actions">
-      <Link className="secondary-button" href={`/archive/${slug}/edit`}>Edit</Link>
-      <button className="danger-button" type="button" onClick={handleDelete} disabled={deleting}>{deleting ? "Deleting…" : "Delete"}</button>
+      <Link className="secondary-button" href={`/archive/${slug}/edit`}>Edit / កែប្រែ</Link>
+      <button className="danger-button" type="button" onClick={handleDelete} disabled={deleting}>{deleting ? "Deleting… / កំពុងលុប…" : "Delete / លុប"}</button>
       {message ? <p className="form-message" role="alert">{message}</p> : null}
     </div>
   );

@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../lib/supabase/client.js";
-import { entryFields, makeSlug, validateEntry } from "../lib/entry-form.js";
+import { entryValues, makeSlug, validateEntry } from "../lib/entry-form.js";
 import EntryFields from "./EntryFields.js";
 
 export default function EntryForm({ entry = null }) {
   const router = useRouter();
-  const [values, setValues] = useState(() => Object.fromEntries(entryFields.map(([name]) => [name, entry?.[name] || ""])));
+  const [values, setValues] = useState(() => entryValues(entry));
   const [photo, setPhoto] = useState(null);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
@@ -63,14 +63,14 @@ export default function EntryForm({ entry = null }) {
       if (error) throw error;
       if (!data) {
         console.error("Entry change returned no row; RLS may have refused it.");
-        setMessage("That change wasn't saved");
+        setMessage("That change wasn't saved. / ការកែប្រែមិនត្រូវបានរក្សាទុកទេ។");
         return;
       }
       router.push(`/archive/${data.slug}`);
       router.refresh();
     } catch (error) {
       console.error("Could not save entry", error);
-      setMessage("We could not save this entry. Check your connection and try again.");
+      setMessage("We could not save this entry. Check your connection and try again. / មិនអាចរក្សាទុកបានទេ។ សូមពិនិត្យការតភ្ជាប់ ហើយព្យាយាមម្តងទៀត។");
     } finally {
       setSaving(false);
     }
@@ -80,15 +80,15 @@ export default function EntryForm({ entry = null }) {
     <form className="entry-form" onSubmit={handleSubmit} noValidate>
       <EntryFields values={values} errors={errors} onChange={updateValue} />
       <div className="form-field">
-        <label htmlFor="photo">Photo {entry ? "(optional)" : ""}</label>
+        <label htmlFor="photo">Photo / រូបថត {entry ? "(optional / ស្រេចចិត្ត)" : ""}</label>
         <input id="photo" type="file" accept="image/jpeg,image/png,image/webp" required={!entry}
           aria-invalid={Boolean(errors.photo)} aria-describedby={errors.photo ? "photo-error" : "photo-help"}
           onChange={(event) => setPhoto(event.target.files?.[0] || null)} />
-        <p className="field-help" id="photo-help">JPEG, PNG, or WebP. Maximum 5 MB.</p>
+        <p className="field-help" id="photo-help">JPEG, PNG, or WebP. Maximum 5 MB. / អតិបរមា 5 MB។</p>
         {errors.photo ? <p className="field-error" id="photo-error">{errors.photo}</p> : null}
       </div>
       {message ? <p className="form-message" role="alert">{message}</p> : null}
-      <button className="primary-button" type="submit" disabled={saving}>{saving ? "Saving…" : entry ? "Save changes" : "Add entry"}</button>
+      <button className="primary-button" type="submit" disabled={saving}>{saving ? "Saving… / កំពុងរក្សាទុក…" : entry ? "Save changes / រក្សាទុកការកែប្រែ" : "Add entry / បន្ថែមឯកសារ"}</button>
     </form>
   );
 }

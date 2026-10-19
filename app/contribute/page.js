@@ -10,11 +10,11 @@ export default async function ContributePage() {
   return (
     <main className="page-shell form-shell">
       <p className="eyebrow">Contributor archive</p>
-      <h1>Add a school memory</h1>
+      <h1>Add a school memory / បន្ថែមអនុស្សាវរីយ៍សាលារៀន</h1>
       {data.user ? <EntryForm /> : (
         <section className="form-notice">
-          <p>Log in before adding an entry.</p>
-          <Link className="primary-link" href="/login?next=/contribute">Log in</Link>
+          <p>Log in before adding an entry. / សូមចូលគណនីមុនពេលបន្ថែមឯកសារ។</p>
+          <Link className="primary-link" href="/login?next=/contribute">Log in / ចូលគណនី</Link>
         </section>
       )}
     </main>

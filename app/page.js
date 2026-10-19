@@ -10,21 +10,21 @@ export default async function Home() {
   return (
     <main>
       <section className="hero-section page-shell">
-        <div className="hero-copy">
+        <div className="hero-content">
           <p className="eyebrow">Khmer school memories archive</p>
           <h1 className="archive-title">{collection.name}</h1>
-        </div>
-        <div className="hero-intro">
           <p className="archive-description">{collection.description}</p>
           <Link className="primary-link" href="/archive">
             Browse memories
           </Link>
         </div>
-        <div className="hero-media" aria-hidden="true">
-          <div className="hero-media-stack">
-            <span className="hero-play-shape" />
-          </div>
-        </div>
+        <figure className="hero-media">
+          <img
+            src="/hero-image.jpg"
+            alt="Cambodian students gathered in a classroom"
+          />
+          <figcaption>School life, preserved through shared memory</figcaption>
+        </figure>
       </section>
 
       <section className="page-shell section-block">

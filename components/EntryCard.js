@@ -10,6 +10,7 @@ export default function EntryCard({ entry, recordNumber }) {
           <Link href={`/archive/${entry.slug}`}>{entry.title}</Link>
         </h2>
         <p className="entry-excerpt">{entry.excerpt}</p>
+        <p className="record-credit">Contributed by / ផ្តល់ដោយ {entry.contributor}</p>
       </div>
       <div className="entry-meta">
         <span>{entry.place}</span>

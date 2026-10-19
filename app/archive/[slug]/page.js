@@ -36,39 +36,39 @@ export default async function MemoryDetailPage({ params }) {
           <aside className="detail-rail">
             <dl className="catalog-grid">
               <div>
-                <dt>Interviewee</dt>
+                <dt>Interviewee / អ្នកផ្តល់បទសម្ភាសន៍</dt>
                 <dd>{entry.contributor}</dd>
               </div>
               <div>
-                <dt>Period</dt>
+                <dt>Period / អំឡុងពេល</dt>
                 <dd>{entry.period}</dd>
               </div>
               <div>
-                <dt>Location</dt>
+                <dt>Location / ទីតាំង</dt>
                 <dd>{entry.place}</dd>
               </div>
               <div>
-                <dt>Topic</dt>
+                <dt>Topic / ប្រធានបទ</dt>
                 <dd>{entry.category}</dd>
               </div>
             </dl>
             <section className="object-box">
-              <h2>Featured object</h2>
+              <h2>Featured object / វត្ថុសំខាន់</h2>
               <p>{entry.featuredObject}</p>
             </section>
           </aside>
 
           <div className="detail-story">
             <section className="story-section">
-              <h2>Story</h2>
+              <h2>Story / រឿងរ៉ាវ</h2>
               <p>{entry.memory}</p>
             </section>
             <section className="story-section">
-              <h2>Learning without internet</h2>
+              <h2>Learning without internet / ការសិក្សាដោយគ្មានអ៊ីនធឺណិត</h2>
               <p>{entry.learningMethod}</p>
             </section>
             <section className="story-section">
-              <h2>Looking back</h2>
+              <h2>Looking back / ការរំលឹកឡើងវិញ</h2>
               <p>{entry.reflection}</p>
             </section>
           </div>

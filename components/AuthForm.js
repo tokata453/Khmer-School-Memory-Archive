@@ -42,15 +42,15 @@ export default function AuthForm({ mode }) {
   return (
     <main className="page-shell auth-shell">
       <section className="auth-panel" aria-labelledby="auth-title">
-        <h1 id="auth-title">{isSignup ? "Create your archive account." : "Log in to your account."}</h1>
+        <h1 id="auth-title">{isSignup ? "Create your archive account. / បង្កើតគណនីបណ្ណសារ។" : "Log in to your account. / ចូលគណនីរបស់អ្នក។"}</h1>
         <p>
           {isSignup
-            ? "Sign up with email and password. Contribution tools arrive next sprint."
-            : "Return to the archive front door with your contributor account."}
+            ? "Sign up with email and password to contribute. / ចុះឈ្មោះដោយប្រើអ៊ីមែល និងពាក្យសម្ងាត់ ដើម្បីចូលរួមចំណែក។"
+            : "Use your contributor account to return to the archive. / ប្រើគណនីអ្នកចូលរួម ដើម្បីត្រឡប់ទៅបណ្ណសារ។"}
         </p>
 
         <form className="auth-form" onSubmit={handleSubmit}>
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">Email / អ៊ីមែល</label>
           <input
             id="email"
             name="email"
@@ -61,7 +61,7 @@ export default function AuthForm({ mode }) {
             required
           />
 
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Password / ពាក្យសម្ងាត់</label>
           <input
             id="password"
             name="password"

@@ -36,3 +36,24 @@ alter table public.entries drop constraint if exists entries_learning_method_len
 alter table public.entries add constraint entries_learning_method_length check (char_length(trim(learning_method)) between 20 and 5000);
 alter table public.entries drop constraint if exists entries_reflection_length;
 alter table public.entries add constraint entries_reflection_length check (char_length(trim(reflection)) between 20 and 5000);
+
+-- Limit Data API privileges before RLS decides which rows each role may use.
+revoke all on table public.entries from anon, authenticated;
+grant select on table public.entries to anon, authenticated;
+grant insert, update, delete on table public.entries to authenticated;
+grant usage, select on sequence public.entries_id_seq to authenticated;
+
+-- Console requests must obey same basic shape rules as form requests.
+alter table public.entries drop constraint if exists entries_slug_length;
+alter table public.entries add constraint entries_slug_length
+  check (char_length(trim(slug)) between 1 and 80);
+alter table public.entries drop constraint if exists entries_photo_url_format;
+alter table public.entries add constraint entries_photo_url_format
+  check (
+    photo_url is null or (
+      char_length(photo_url) <= 2048 and
+      photo_url ~ '^https://[^/]+/storage/v1/object/public/photos/'
+    )
+  );
+
+create index if not exists entries_owner_id_idx on public.entries (owner_id);

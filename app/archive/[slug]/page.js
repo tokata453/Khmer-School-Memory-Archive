@@ -1,8 +1,11 @@
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import EntryCard from "../../../components/EntryCard.js";
 import EntryActions from "../../../components/EntryActions.js";
 import { createClient } from "../../../lib/supabase/server.js";
 import { getEntries, getEntryBySlug } from "../../../lib/entries.js";
+import { normalizeLanguage } from "../../../lib/language.js";
+import { getTranslation } from "../../../lib/translations.js";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -12,11 +15,12 @@ export async function generateMetadata({ params }) {
 
 export default async function MemoryDetailPage({ params }) {
   const { slug } = await params;
-  const [entry, supabase] = await Promise.all([getEntryBySlug(slug), createClient()]);
+  const [entry, supabase, cookieStore] = await Promise.all([getEntryBySlug(slug), createClient(), cookies()]);
 
   if (!entry) {
     notFound();
   }
+  const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value)).detail;
 
   const [{ data }, entries] = await Promise.all([
     supabase ? supabase.auth.getUser() : { data: { user: null } },
@@ -36,39 +40,39 @@ export default async function MemoryDetailPage({ params }) {
           <aside className="detail-rail">
             <dl className="catalog-grid">
               <div>
-                <dt>Interviewee / អ្នកផ្តល់បទសម្ភាសន៍</dt>
+                <dt>{t.interviewee}</dt>
                 <dd>{entry.contributor}</dd>
               </div>
               <div>
-                <dt>Period / អំឡុងពេល</dt>
+                <dt>{t.period}</dt>
                 <dd>{entry.period}</dd>
               </div>
               <div>
-                <dt>Location / ទីតាំង</dt>
+                <dt>{t.location}</dt>
                 <dd>{entry.place}</dd>
               </div>
               <div>
-                <dt>Topic / ប្រធានបទ</dt>
+                <dt>{t.topic}</dt>
                 <dd>{entry.category}</dd>
               </div>
             </dl>
             <section className="object-box">
-              <h2>Featured object / វត្ថុសំខាន់</h2>
+              <h2>{t.featuredObject}</h2>
               <p>{entry.featuredObject}</p>
             </section>
           </aside>
 
           <div className="detail-story">
             <section className="story-section">
-              <h2>Story / រឿងរ៉ាវ</h2>
+              <h2>{t.story}</h2>
               <p>{entry.memory}</p>
             </section>
             <section className="story-section">
-              <h2>Learning without internet / ការសិក្សាដោយគ្មានអ៊ីនធឺណិត</h2>
+              <h2>{t.learning}</h2>
               <p>{entry.learningMethod}</p>
             </section>
             <section className="story-section">
-              <h2>Looking back / ការរំលឹកឡើងវិញ</h2>
+              <h2>{t.reflection}</h2>
               <p>{entry.reflection}</p>
             </section>
           </div>
@@ -77,7 +81,7 @@ export default async function MemoryDetailPage({ params }) {
 
       <section className="section-block">
         <div className="section-heading">
-          <h2>Continue reading</h2>
+          <h2>{t.continue}</h2>
         </div>
         <div className="record-list compact-list">
           {relatedEntries.map((relatedEntry, index) => (

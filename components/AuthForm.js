@@ -4,10 +4,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createClient } from "../lib/supabase/client.js";
+import { getTranslation } from "../lib/translations.js";
 
-export default function AuthForm({ mode }) {
+export default function AuthForm({ mode, language }) {
   const router = useRouter();
   const isSignup = mode === "signup";
+  const t = getTranslation(language).auth;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -26,14 +28,14 @@ export default function AuthForm({ mode }) {
 
       if (error) {
         console.error(isSignup ? "Could not create account" : "Could not log in", error);
-        setMessage(isSignup ? "We could not create your account. Check your details and try again." : "Invalid email or password");
+        setMessage(isSignup ? t.signupError : t.loginError);
         return;
       }
 
       router.push("/");
       router.refresh();
     } catch {
-      setMessage("Auth service is not configured.");
+      setMessage(t.unavailable);
     } finally {
       setIsSubmitting(false);
     }
@@ -42,15 +44,15 @@ export default function AuthForm({ mode }) {
   return (
     <main className="page-shell auth-shell">
       <section className="auth-panel" aria-labelledby="auth-title">
-        <h1 id="auth-title">{isSignup ? "Create your archive account. / បង្កើតគណនីបណ្ណសារ។" : "Log in to your account. / ចូលគណនីរបស់អ្នក។"}</h1>
+        <h1 id="auth-title">{isSignup ? t.signupTitle : t.loginTitle}</h1>
         <p>
           {isSignup
-            ? "Sign up with email and password to contribute. / ចុះឈ្មោះដោយប្រើអ៊ីមែល និងពាក្យសម្ងាត់ ដើម្បីចូលរួមចំណែក។"
-            : "Use your contributor account to return to the archive. / ប្រើគណនីអ្នកចូលរួម ដើម្បីត្រឡប់ទៅបណ្ណសារ។"}
+            ? t.signupIntro
+            : t.loginIntro}
         </p>
 
         <form className="auth-form" onSubmit={handleSubmit}>
-          <label htmlFor="email">Email / អ៊ីមែល</label>
+          <label htmlFor="email">{t.email}</label>
           <input
             id="email"
             name="email"
@@ -61,7 +63,7 @@ export default function AuthForm({ mode }) {
             required
           />
 
-          <label htmlFor="password">Password / ពាក្យសម្ងាត់</label>
+          <label htmlFor="password">{t.password}</label>
           <input
             id="password"
             name="password"
@@ -76,13 +78,13 @@ export default function AuthForm({ mode }) {
           {message ? <p className="auth-message" role="alert">{message}</p> : null}
 
           <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? "Working..." : isSignup ? "Sign up" : "Log in"}
+            {isSubmitting ? t.working : isSignup ? t.signup : t.login}
           </button>
         </form>
 
         <p className="auth-switch">
-          {isSignup ? "Already have an account? " : "Need an account? "}
-          <Link href={isSignup ? "/login" : "/signup"}>{isSignup ? "Log in" : "Sign up"}</Link>
+          {isSignup ? `${t.haveAccount} ` : `${t.needAccount} `}
+          <Link href={isSignup ? "/login" : "/signup"}>{isSignup ? t.login : t.signup}</Link>
         </p>
       </section>
     </main>

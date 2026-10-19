@@ -1,20 +1,27 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 import EntryForm from "../../components/EntryForm.js";
+import { normalizeLanguage } from "../../lib/language.js";
 import { createClient } from "../../lib/supabase/server.js";
+import { getTranslation } from "../../lib/translations.js";
 
 export const metadata = { title: "Contribute" };
 
 export default async function ContributePage() {
   const supabase = await createClient();
-  const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
+  const [{ data }, cookieStore] = await Promise.all([
+    supabase ? supabase.auth.getUser() : { data: { user: null } },
+    cookies(),
+  ]);
+  const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value)).contributor;
   return (
     <main className="page-shell form-shell">
-      <p className="eyebrow">Contributor archive</p>
-      <h1>Add a school memory / បន្ថែមអនុស្សាវរីយ៍សាលារៀន</h1>
+      <p className="eyebrow">{t.eyebrow}</p>
+      <h1>{t.addTitle}</h1>
       {data.user ? <EntryForm /> : (
         <section className="form-notice">
-          <p>Log in before adding an entry. / សូមចូលគណនីមុនពេលបន្ថែមឯកសារ។</p>
-          <Link className="primary-link" href="/login?next=/contribute">Log in / ចូលគណនី</Link>
+          <p>{t.loginFirst}</p>
+          <Link className="primary-link" href="/login?next=/contribute">{getTranslation(normalizeLanguage(cookieStore.get("language")?.value)).auth.login}</Link>
         </section>
       )}
     </main>

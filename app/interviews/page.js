@@ -23,17 +23,17 @@ export default async function InterviewsPage() {
         {entries.map((entry, index) => (
           <article key={entry.slug} className="interview-card">
             <p className="entry-number">{String(index + 1).padStart(2, "0")}</p>
-            <p className="record-kicker">{entry.category}</p>
-            <h2>{entry.contributor}</h2>
-            <p>{entry.excerpt}</p>
+            <p className="record-kicker">{entry.school_level?.replace("_", " ")}</p>
+            <h2>{entry.display_name || t.entryCard.anonymous}</h2>
+            <p>{entry.image_description}</p>
             <dl>
               <div>
                 <dt>{t.interviews.period}</dt>
-                <dd>{entry.period}</dd>
+                <dd>{entry.memory_year}</dd>
               </div>
               <div>
                 <dt>{t.interviews.location}</dt>
-                <dd>{entry.place}</dd>
+                <dd>{entry.province}</dd>
               </div>
             </dl>
             <Link className="text-link" href={`/archive/${entry.slug}`}>

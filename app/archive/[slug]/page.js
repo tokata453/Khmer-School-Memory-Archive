@@ -34,46 +34,35 @@ export default async function MemoryDetailPage({ params }) {
     <main className="page-shell detail-shell">
       <article className="memory-detail">
         <h1>{entry.title}</h1>
-        {entry.photo_url ? <img className="entry-photo" src={entry.photo_url} alt={`Photo for ${entry.title}`} /> : null}
+        {entry.photo_url ? <img className="entry-photo" src={entry.photo_url} alt={entry.image_description} /> : null}
         {data.user?.id === entry.owner_id ? <EntryActions id={entry.id} slug={entry.slug} /> : null}
         <div className="detail-grid">
           <aside className="detail-rail">
             <dl className="catalog-grid">
               <div>
-                <dt>{t.interviewee}</dt>
-                <dd>{entry.contributor}</dd>
+                <dt>{t.sharedBy}</dt>
+                <dd>{entry.display_name || t.anonymous}</dd>
               </div>
               <div>
-                <dt>{t.period}</dt>
-                <dd>{entry.period}</dd>
+                <dt>{t.year}</dt>
+                <dd>{entry.memory_year}</dd>
               </div>
               <div>
-                <dt>{t.location}</dt>
-                <dd>{entry.place}</dd>
+                <dt>{t.province}</dt>
+                <dd>{entry.province}</dd>
               </div>
               <div>
-                <dt>{t.topic}</dt>
-                <dd>{entry.category}</dd>
+                <dt>{t.schoolLevel}</dt>
+                <dd>{entry.school_level?.replace("_", " ")}</dd>
               </div>
             </dl>
-            <section className="object-box">
-              <h2>{t.featuredObject}</h2>
-              <p>{entry.featuredObject}</p>
-            </section>
+            {entry.place_time_details ? <section className="object-box"><h2>{t.moreDetails}</h2><p>{entry.place_time_details}</p></section> : null}
           </aside>
 
           <div className="detail-story">
             <section className="story-section">
-              <h2>{t.story}</h2>
-              <p>{entry.memory}</p>
-            </section>
-            <section className="story-section">
-              <h2>{t.learning}</h2>
-              <p>{entry.learningMethod}</p>
-            </section>
-            <section className="story-section">
-              <h2>{t.reflection}</h2>
-              <p>{entry.reflection}</p>
+              <h2>{t.memory}</h2>
+              <p>{entry.story}</p>
             </section>
           </div>
         </div>

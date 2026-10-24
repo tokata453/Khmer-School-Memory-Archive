@@ -8,11 +8,11 @@
 
 const collection = {
   // What does your archive collect? e.g. "Khmer Proverbs"
-  name: "Khmer School Memories Before Digital Learning",
+  name: "Khmer School Memory Archive",
 
   // One sentence: what is this archive, and why does it matter?
   description:
-    "An archive preserving Cambodian school memories from the years before smartphones, Google, online learning, and AI became common.",
+    "An image-first archive preserving personal Cambodian school memories across generations.",
 
   // Who is building this archive? Your name, as you want it shown.
   curator: "Panhaseth SUY",

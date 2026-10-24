@@ -2,9 +2,13 @@
 
 import { useEffect, useState } from "react";
 import EntryCard from "./EntryCard.js";
+import { provinces, schoolLevels } from "../lib/entry-form.js";
 
 export default function EntryBrowser({ entries, labels }) {
   const [query, setQuery] = useState("");
+  const [province, setProvince] = useState("");
+  const [schoolLevel, setSchoolLevel] = useState("");
+  const [decade, setDecade] = useState("");
   const normalizedQuery = query.trim().toLowerCase();
 
   useEffect(() => {
@@ -13,26 +17,25 @@ export default function EntryBrowser({ entries, labels }) {
     }
   }, []);
 
-  const filteredEntries = normalizedQuery
-    ? entries.filter((entry) => {
+  const filteredEntries = entries.filter((entry) => {
+        const matchesQuery = !normalizedQuery || (() => {
         const searchableText = [
           entry.title,
-          entry.category,
-          entry.contributor,
-          entry.place,
-          entry.period,
-          entry.featuredObject,
-          entry.excerpt,
-          entry.memory,
-          entry.learningMethod,
-          entry.reflection,
+          entry.image_description,
+          entry.story,
+          entry.province,
+          entry.school_level,
+          entry.memory_year,
+          entry.place_time_details,
+          entry.display_name,
         ]
           .join(" ")
           .toLowerCase();
 
         return searchableText.includes(normalizedQuery);
-      })
-    : entries;
+        })();
+        return matchesQuery && (!province || entry.province === province) && (!schoolLevel || entry.school_level === schoolLevel) && (!decade || Math.floor(entry.memory_year / 10) * 10 === Number(decade));
+      });
 
   const resultLabel =
     filteredEntries.length === 1
@@ -75,6 +78,12 @@ export default function EntryBrowser({ entries, labels }) {
             {labels.clear}
           </button>
         </div>
+      </div>
+
+      <div className="filter-row">
+        <label>Province<select value={province} onChange={(event) => setProvince(event.target.value)}><option value="">All provinces</option>{provinces.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
+        <label>School level<select value={schoolLevel} onChange={(event) => setSchoolLevel(event.target.value)}><option value="">All school levels</option>{schoolLevels.map(([value, text]) => <option key={value} value={value}>{text}</option>)}</select></label>
+        <label>Decade<select value={decade} onChange={(event) => setDecade(event.target.value)}><option value="">All decades</option>{[...new Set(entries.map((entry) => Math.floor(entry.memory_year / 10) * 10))].sort().map((value) => <option key={value} value={value}>{value}s</option>)}</select></label>
       </div>
 
       {filteredEntries.length > 0 ? (

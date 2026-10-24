@@ -29,7 +29,7 @@ export default function EntryForm({ entry = null }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const nextErrors = validateEntry(values, photo, !entry);
+    const nextErrors = validateEntry(values, photo, !entry?.photo_url);
     setErrors(nextErrors);
     setMessage("");
     if (Object.keys(nextErrors).length) return;
@@ -40,15 +40,13 @@ export default function EntryForm({ entry = null }) {
       if (authError || !user) throw authError || new Error("No authenticated user");
       const entryData = {
         title: values.title.trim(),
-        category: values.category.trim(),
-        contributor: values.contributor.trim(),
-        place: values.place.trim(),
-        period: values.period.trim(),
-        featured_object: values.featured_object.trim(),
-        excerpt: values.excerpt.trim(),
-        memory: values.memory.trim(),
-        learning_method: values.learning_method.trim(),
-        reflection: values.reflection.trim(),
+        image_description: values.image_description.trim(),
+        story: values.story.trim(),
+        province: values.province,
+        school_level: values.school_level,
+        memory_year: Number(values.memory_year),
+        place_time_details: values.place_time_details.trim() || null,
+        display_name: values.display_name.trim() || null,
       };
       const photoUrl = await uploadPhoto(supabase, user.id);
       const query = entry
@@ -80,11 +78,11 @@ export default function EntryForm({ entry = null }) {
     <form className="entry-form" onSubmit={handleSubmit} noValidate>
       <EntryFields values={values} errors={errors} onChange={updateValue} />
       <div className="form-field">
-        <label htmlFor="photo">Photo / រូបថត {entry ? "(optional / ស្រេចចិត្ត)" : ""}</label>
-        <input id="photo" type="file" accept="image/jpeg,image/png,image/webp" required={!entry}
+        <label htmlFor="photo">Image connected to your school memory / រូបភាពដែលទាក់ទងនឹងអនុស្សាវរីយ៍សាលារៀនរបស់អ្នក * {entry?.photo_url ? "(replace optional / ប្តូររូបភាពស្រេចចិត្ត)" : ""}</label>
+        <input id="photo" type="file" accept="image/jpeg,image/png,image/webp" required={!entry?.photo_url}
           aria-invalid={Boolean(errors.photo)} aria-describedby={errors.photo ? "photo-error" : "photo-help"}
           onChange={(event) => setPhoto(event.target.files?.[0] || null)} />
-        <p className="field-help" id="photo-help">JPEG, PNG, or WebP. Maximum 5 MB. / អតិបរមា 5 MB។</p>
+        <p className="field-help" id="photo-help">Use an image you own or have permission to share. Do not share private student information without permission. JPEG, PNG, or WebP. Maximum 5 MB. / ប្រើរូបភាពដែលអ្នកជាម្ចាស់ ឬមានសិទ្ធិចែករំលែក។ កុំចែករំលែកព័ត៌មានឯកជនរបស់សិស្សដោយគ្មានការអនុញ្ញាត។ អតិបរមា 5 MB។</p>
         {errors.photo ? <p className="field-error" id="photo-error">{errors.photo}</p> : null}
       </div>
       {message ? <p className="form-message" role="alert">{message}</p> : null}

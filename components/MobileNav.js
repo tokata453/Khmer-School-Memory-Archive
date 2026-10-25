@@ -71,13 +71,16 @@ export default function MobileNav({ links, userEmail, language, labels }) {
                 {labels.search}
               </Link>
               {userEmail ? (
-                <span className="auth-status">
-                  <span className="account-chip" title={userEmail}>
-                    <User size={18} strokeWidth={2.2} aria-hidden="true" />
-                    <span>{userEmail}</span>
+                <>
+                  <span className="auth-status">
+                    <span className="account-chip" title={userEmail}>
+                      <User size={18} strokeWidth={2.2} aria-hidden="true" />
+                      <span>{userEmail}</span>
+                    </span>
+                    <LogoutButton />
                   </span>
-                  <LogoutButton />
-                </span>
+                  <ThemeToggle variant="menu" />
+                </>
               ) : (
                 <Link className="account-button" href="/login" onClick={closeDrawer}>
                   <LogIn size={18} strokeWidth={2.2} aria-hidden="true" />
@@ -85,7 +88,6 @@ export default function MobileNav({ links, userEmail, language, labels }) {
                 </Link>
               )}
               <LanguageToggle language={language} />
-              <ThemeToggle />
             </div>
           </aside>
         </>

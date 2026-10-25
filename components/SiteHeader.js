@@ -5,7 +5,6 @@ import AccountMenu from "./AccountMenu.js";
 import LanguageToggle from "./LanguageToggle.js";
 import MobileNav from "./MobileNav.js";
 import NavLink from "./NavLink.js";
-import ThemeToggle from "./ThemeToggle.js";
 import { createClient } from "../lib/supabase/server.js";
 import { getTranslation } from "../lib/translations.js";
 
@@ -50,7 +49,6 @@ export default async function SiteHeader({ language }) {
           </Link>
         )}
         <LanguageToggle language={language} />
-        <ThemeToggle />
       </section>
 
       <MobileNav links={links} userEmail={user?.email || ""} language={language} labels={t.header} />

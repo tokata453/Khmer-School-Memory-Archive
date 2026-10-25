@@ -3,6 +3,7 @@
 import { User } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import LogoutButton from "./LogoutButton.js";
+import ThemeToggle from "./ThemeToggle.js";
 
 export default function AccountMenu({ userEmail }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,6 +52,7 @@ export default function AccountMenu({ userEmail }) {
             <User size={18} strokeWidth={2.2} aria-hidden="true" />
             <span>{userEmail}</span>
           </span>
+          <ThemeToggle variant="menu" />
           <LogoutButton />
         </div>
       ) : null}

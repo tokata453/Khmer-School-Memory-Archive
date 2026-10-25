@@ -372,12 +372,23 @@ a {
 }
 
 .account-menu-panel .account-chip,
-.account-menu-panel .logout-button {
+.account-menu-panel .logout-button,
+.account-menu-panel .theme-toggle-menu {
   width: 100%;
 }
 
-.account-menu-panel .logout-button {
+.account-menu-panel .logout-button,
+.theme-toggle-menu {
   justify-content: flex-start;
+}
+
+.theme-toggle-menu {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  padding: 0 18px;
+  font-size: 0.86rem;
+  font-weight: 800;
 }
 
 .account-chip span {
@@ -464,7 +475,8 @@ a {
 .mobile-drawer-tools .auth-status,
 .mobile-drawer-tools .account-chip,
 .mobile-drawer-tools .language-toggle,
-.mobile-drawer-tools .logout-button {
+.mobile-drawer-tools .logout-button,
+.mobile-drawer-tools .theme-toggle-menu {
   width: 100%;
 }
 

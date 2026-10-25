@@ -10,12 +10,14 @@ alter table public.entries alter column status set default 'pending';
 alter table public.entries add constraint entries_status_check
   check (status in ('pending', 'published', 'returned'));
 
--- SQL Editor manages this list. Data API roles have no table access.
+-- SQL Editor manages this list. Authenticated INSERT reaches RLS but has no
+-- matching policy, so contributors cannot add themselves as reviewers.
 create table if not exists public.reviewers (
   user_id uuid primary key references auth.users (id)
 );
 alter table public.reviewers enable row level security;
 revoke all on table public.reviewers from public, anon, authenticated;
+grant insert on table public.reviewers to authenticated;
 insert into public.reviewers (user_id)
 values ('7870004e-7f84-4440-bb7c-b9daaaf066ca')
 on conflict (user_id) do nothing;
@@ -62,14 +64,15 @@ create policy "Owners can update their entries"
     and (status = 'pending' or (select public.is_reviewer()))
   );
 
--- Owners keep edit access, but every non-reviewer edit returns to the queue.
+-- Owners editing content without changing status return to the queue. An
+-- explicit status escalation stays visible to the UPDATE policy and is denied.
 create or replace function public.queue_non_reviewer_entry_edit()
 returns trigger
 language plpgsql
 set search_path = ''
 as $$
 begin
-  if not public.is_reviewer() then
+  if not public.is_reviewer() and new.status is not distinct from old.status then
     new.status := 'pending';
   end if;
   return new;
@@ -116,4 +119,5 @@ where conrelid = 'public.entries'::regclass and conname = 'entries_status_check'
 
 select has_table_privilege('anon', 'public.reviewers', 'select') as anon_can_read_reviewers,
        has_table_privilege('authenticated', 'public.reviewers', 'select') as authenticated_can_read_reviewers,
+       has_table_privilege('authenticated', 'public.reviewers', 'insert') as authenticated_insert_reaches_rls,
        has_function_privilege('authenticated', 'public.review_entry(bigint, text)', 'execute') as authenticated_can_review;

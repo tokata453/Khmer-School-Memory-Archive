@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "../lib/supabase/client.js";
 import { entryRedirectPath, entryValues, makeSlug, validateEntry } from "../lib/entry-form.js";
 import EntryFields from "./EntryFields.js";
+import PhotoUpload from "./PhotoUpload.js";
 
 export default function EntryForm({ entry = null }) {
   const router = useRouter();
@@ -78,14 +79,16 @@ export default function EntryForm({ entry = null }) {
 
   return (
     <form className="entry-form" onSubmit={handleSubmit} noValidate>
-      <EntryFields values={values} errors={errors} onChange={updateValue} />
-      <div className="form-field">
-        <label htmlFor="photo">Image connected to your school memory / រូបភាពដែលទាក់ទងនឹងអនុស្សាវរីយ៍សាលារៀនរបស់អ្នក * {entry?.photo_url ? "(replace optional / ប្តូររូបភាពស្រេចចិត្ត)" : ""}</label>
-        <input id="photo" type="file" accept="image/jpeg,image/png,image/webp" required={!entry?.photo_url}
-          aria-invalid={Boolean(errors.photo)} aria-describedby={errors.photo ? "photo-error" : "photo-help"}
-          onChange={(event) => setPhoto(event.target.files?.[0] || null)} />
-        <p className="field-help" id="photo-help">Use an image you own or have permission to share. Do not share private student information without permission. JPEG, PNG, or WebP. Maximum 5 MB. / ប្រើរូបភាពដែលអ្នកជាម្ចាស់ ឬមានសិទ្ធិចែករំលែក។ កុំចែករំលែកព័ត៌មានឯកជនរបស់សិស្សដោយគ្មានការអនុញ្ញាត។ អតិបរមា 5 MB។</p>
-        {errors.photo ? <p className="field-error" id="photo-error">{errors.photo}</p> : null}
+      <PhotoUpload entry={entry} error={errors.photo} onChange={setPhoto} />
+      <div className="contribute-grid">
+        <aside className="contribute-rail">
+          <p className="form-section-label">Archive details / ព័ត៌មានបណ្ណសារ</p>
+          <EntryFields values={values} errors={errors} onChange={updateValue} names={["province", "school_level", "memory_year", "place_time_details", "display_name"]} />
+        </aside>
+        <div className="contribute-story">
+          <p className="form-section-label">Your memory / អនុស្សាវរីយ៍របស់អ្នក</p>
+          <EntryFields values={values} errors={errors} onChange={updateValue} names={["title", "image_description", "story"]} />
+        </div>
       </div>
       {message ? <p className="form-message" role="alert">{message}</p> : null}
       <button className="primary-button" type="submit" disabled={saving}>{saving ? "Saving… / កំពុងរក្សាទុក…" : entry ? "Save changes / រក្សាទុកការកែប្រែ" : "Add entry / បន្ថែមឯកសារ"}</button>

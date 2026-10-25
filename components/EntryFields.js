@@ -1,7 +1,7 @@
 import { entryFields, provinces, schoolLevels } from "../lib/entry-form.js";
 
-export default function EntryFields({ values, errors, onChange }) {
-  return entryFields.map(([name, label, max, kind, required, help]) => {
+export default function EntryFields({ values, errors, onChange, names }) {
+  return entryFields.filter(([name]) => !names || names.includes(name)).map(([name, label, max, kind, required, help]) => {
     const props = { id: name, name, value: values[name] ?? "", required, "aria-invalid": Boolean(errors[name]), "aria-describedby": errors[name] ? `${name}-error` : help ? `${name}-help` : undefined, onChange };
     const options = name === "province" ? provinces.map((value) => [value, value]) : schoolLevels;
     return (

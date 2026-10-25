@@ -7,7 +7,8 @@ import { getTranslation } from "../../lib/translations.js";
 
 export const metadata = { title: "Contribute" };
 
-export default async function ContributePage() {
+export default async function ContributePage({ searchParams }) {
+  const { submitted } = await searchParams;
   const supabase = await createClient();
   const [{ data }, cookieStore] = await Promise.all([
     supabase ? supabase.auth.getUser() : { data: { user: null } },
@@ -18,6 +19,7 @@ export default async function ContributePage() {
     <main className="page-shell form-shell">
       <p className="eyebrow">{t.eyebrow}</p>
       <h1>{t.addTitle}</h1>
+      {submitted === "1" ? <p className="form-notice" role="status">{t.submitted}</p> : null}
       {data.user ? <EntryForm /> : (
         <section className="form-notice">
           <p>{t.loginFirst}</p>

@@ -7,6 +7,10 @@ import { getEntries, getEntryBySlug } from "../../../lib/entries.js";
 import { normalizeLanguage } from "../../../lib/language.js";
 import { getTranslation } from "../../../lib/translations.js";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const entry = await getEntryBySlug(slug);
@@ -15,17 +19,19 @@ export async function generateMetadata({ params }) {
 
 export default async function MemoryDetailPage({ params }) {
   const { slug } = await params;
-  const [entry, supabase, cookieStore] = await Promise.all([getEntryBySlug(slug), createClient(), cookies()]);
+  const [supabase, cookieStore] = await Promise.all([createClient(), cookies()]);
+  const [{ data: { user } }, { data: reviewer }] = await Promise.all([
+    supabase ? supabase.auth.getUser() : { data: { user: null } },
+    supabase ? supabase.rpc("is_reviewer") : { data: false },
+  ]);
+  const entries = await getEntries(supabase);
+  const entry = entries.find((item) => item.slug.normalize("NFC") === slug.normalize("NFC"));
 
   if (!entry) {
     notFound();
   }
   const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value)).detail;
 
-  const [{ data }, entries] = await Promise.all([
-    supabase ? supabase.auth.getUser() : { data: { user: null } },
-    getEntries(),
-  ]);
   const relatedEntries = entries
     .filter((item) => item.slug !== entry.slug)
     .slice(0, 2);
@@ -35,7 +41,7 @@ export default async function MemoryDetailPage({ params }) {
       <article className="memory-detail">
         <h1>{entry.title}</h1>
         {entry.photo_url ? <img className="entry-photo" src={entry.photo_url} alt={entry.image_description} /> : null}
-        {data.user?.id === entry.owner_id ? <EntryActions id={entry.id} slug={entry.slug} /> : null}
+        {user?.id === entry.owner_id ? <EntryActions id={entry.id} slug={entry.slug} /> : null}
         <div className="detail-grid">
           <aside className="detail-rail">
             <dl className="catalog-grid">

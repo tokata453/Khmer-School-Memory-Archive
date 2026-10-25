@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../lib/supabase/client.js";
-import { entryValues, makeSlug, validateEntry } from "../lib/entry-form.js";
+import { entryRedirectPath, entryValues, makeSlug, validateEntry } from "../lib/entry-form.js";
 import EntryFields from "./EntryFields.js";
 
 export default function EntryForm({ entry = null }) {
@@ -50,13 +50,13 @@ export default function EntryForm({ entry = null }) {
       };
       const photoUrl = await uploadPhoto(supabase, user.id);
       const query = entry
-        ? supabase.from("entries").update({ ...entryData, photo_url: photoUrl }).eq("id", entry.id).select("slug")
+        ? supabase.from("entries").update({ ...entryData, photo_url: photoUrl }).eq("id", entry.id).select("slug, status")
         : supabase.from("entries").insert({
             owner_id: user.id,
             slug: makeSlug(entryData.title),
             ...entryData,
             photo_url: photoUrl,
-          }).select("slug");
+          }).select("slug, status");
       const { data, error } = await query.maybeSingle();
       if (error) throw error;
       if (!data) {
@@ -64,7 +64,7 @@ export default function EntryForm({ entry = null }) {
         setMessage("That change wasn't saved. / ការកែប្រែមិនត្រូវបានរក្សាទុកទេ។");
         return;
       }
-      router.push(`/archive/${data.slug}`);
+      router.push(entryRedirectPath(data));
       router.refresh();
     } catch (error) {
       console.error("Could not save entry", error);

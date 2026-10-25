@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import EntryForm from "../../../../components/EntryForm.js";
 import { getEntryBySlug } from "../../../../lib/entries.js";
 import { normalizeLanguage } from "../../../../lib/language.js";
@@ -12,7 +12,7 @@ export const metadata = { title: "Edit entry" };
 export default async function EditEntryPage({ params }) {
   const { slug } = await params;
   const [entry, supabase, cookieStore] = await Promise.all([getEntryBySlug(slug), createClient(), cookies()]);
-  if (!entry) notFound();
+  if (!entry) redirect("/archive");
   const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value)).contributor;
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
   if (!data.user || data.user.id !== entry.owner_id) {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { getEntries } from "../../lib/entries.js";
+import { getPublishedEntries } from "../../lib/entries.js";
 import { normalizeLanguage } from "../../lib/language.js";
 import { getTranslation } from "../../lib/translations.js";
 
@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function InterviewsPage() {
-  const [entries, cookieStore] = await Promise.all([getEntries(), cookies()]);
+  const [entries, cookieStore] = await Promise.all([getPublishedEntries(), cookies()]);
   const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value));
 
   return (

@@ -2,12 +2,12 @@ import collection from "../collection.config.js";
 import EntryCard from "../components/EntryCard.js";
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { getEntries } from "../lib/entries.js";
+import { getPublishedEntries } from "../lib/entries.js";
 import { normalizeLanguage } from "../lib/language.js";
 import { getTranslation } from "../lib/translations.js";
 
 export default async function Home() {
-  const [entries, cookieStore] = await Promise.all([getEntries(), cookies()]);
+  const [entries, cookieStore] = await Promise.all([getPublishedEntries(), cookies()]);
   const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value));
   const featuredEntries = entries.slice(0, 3);
 

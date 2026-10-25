@@ -33,7 +33,7 @@ export default async function MemoryDetailPage({ params }) {
   const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value)).detail;
 
   const relatedEntries = entries
-    .filter((item) => item.slug !== entry.slug)
+    .filter((item) => item.slug !== entry.slug && item.status === "published")
     .slice(0, 2);
 
   return (

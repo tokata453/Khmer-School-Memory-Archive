@@ -49,8 +49,10 @@ export default function EntryForm({ entry = null }) {
         display_name: values.display_name.trim() || null,
       };
       const photoUrl = await uploadPhoto(supabase, user.id);
+      const { data: reviewer, error: reviewerError } = entry ? await supabase.rpc("is_reviewer") : { data: false };
+      if (reviewerError) throw reviewerError;
       const query = entry
-        ? supabase.from("entries").update({ ...entryData, photo_url: photoUrl }).eq("id", entry.id).select("slug, status")
+        ? supabase.from("entries").update({ ...entryData, photo_url: photoUrl, ...(reviewer ? {} : { status: "pending" }) }).eq("id", entry.id).select("slug, status")
         : supabase.from("entries").insert({
             owner_id: user.id,
             slug: makeSlug(entryData.title),

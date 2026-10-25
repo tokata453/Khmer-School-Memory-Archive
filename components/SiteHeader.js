@@ -11,15 +11,16 @@ import { getTranslation } from "../lib/translations.js";
 
 export default async function SiteHeader({ language }) {
   const t = getTranslation(language);
-  const links = [
-    [t.header.archive, "/archive"],
-    [t.header.contribute, "/contribute"],
-    [t.header.interviews, "/interviews"],
-    [t.header.about, "/about"],
-  ];
   const supabase = await createClient();
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
   const user = data.user;
+  const links = [
+    [t.header.archive, "/archive"],
+    [t.header.contribute, "/contribute"],
+    ...(user ? [[t.header.myEntries, "/my-entries"]] : []),
+    [t.header.interviews, "/interviews"],
+    [t.header.about, "/about"],
+  ];
 
   return (
     <header className="site-header">

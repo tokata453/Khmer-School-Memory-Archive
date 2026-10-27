@@ -15,7 +15,6 @@ export default async function Home() {
     <main>
       <section className="hero-section page-shell">
         <div className="hero-content">
-          <p className="eyebrow">{t.home.eyebrow}</p>
           <h1 className="archive-title">{collection.name}</h1>
           <p className="archive-description">{collection.description}</p>
           <Link className="primary-link" href="/archive">

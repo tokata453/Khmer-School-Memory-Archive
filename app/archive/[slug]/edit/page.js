@@ -18,5 +18,5 @@ export default async function EditEntryPage({ params }) {
   if (!data.user || data.user.id !== entry.owner_id) {
     return <main className="page-shell form-shell"><h1>{t.entryUnavailable}</h1><p>{t.ownerOnly}</p><Link href={`/archive/${slug}`}>{t.returnToEntry}</Link></main>;
   }
-  return <main className="page-shell form-shell"><p className="eyebrow">{t.yourEntry}</p><h1>{t.editTitle}</h1><EntryForm entry={entry} /></main>;
+  return <main className="page-shell form-shell"><h1>{t.editTitle}</h1><EntryForm entry={entry} /></main>;
 }

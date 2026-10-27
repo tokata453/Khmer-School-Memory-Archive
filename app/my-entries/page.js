@@ -26,7 +26,7 @@ export default async function MyEntriesPage() {
       </header>
       <section className="record-list" aria-label={t.myEntriesTitle}>
         {entries.length ? entries.map((entry, index) => (
-          <article className="entry-card" key={entry.id}>
+          <article className="my-entry-card" key={entry.id}>
             <p className="entry-number">{String(index + 1).padStart(2, "0")}</p>
             <div>
               <p className="record-kicker">{entry.school_level?.replace("_", " ")}</p>

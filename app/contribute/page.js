@@ -17,7 +17,6 @@ export default async function ContributePage({ searchParams }) {
   const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value)).contributor;
   return (
     <main className="page-shell form-shell">
-      <p className="eyebrow">{t.eyebrow}</p>
       <h1>{t.addTitle}</h1>
       {submitted === "1" ? <p className="form-notice" role="status">{t.submitted}</p> : null}
       {data.user ? <EntryForm /> : (

@@ -9,7 +9,7 @@ import EntryFields from "./EntryFields.js";
 import PhotoUpload from "./PhotoUpload.js";
 
 const styles = {
-  grid: { display: "grid", gridTemplateColumns: "var(--layout-rail) minmax(0, 1fr)", gap: "calc(var(--space-8) + 10px)", borderTop: "var(--border-thin) solid var(--rule)", paddingTop: "28px" }, rail: { display: "grid", alignContent: "start", gap: "var(--space-5)", paddingRight: "28px", borderRight: "1px solid var(--rule)" }, story: { display: "grid", alignContent: "start", gap: "var(--space-5)", maxWidth: "var(--layout-reading)" }, label: { margin: 0, fontFamily: "var(--font-interface)", fontSize: "var(--text-label)", fontWeight: 700, letterSpacing: "0.045em", textTransform: "uppercase" }, message: { margin: 0, fontSize: "0.9rem", color: "var(--vermilion)" }, button: { width: "fit-content", minHeight: "var(--control-height)", padding: "11px 18px", border: "var(--border-thin) solid var(--carbon)", borderRadius: 0, color: "var(--paper)", background: "var(--carbon)", font: "inherit", fontWeight: 700, cursor: "pointer", textDecoration: "none" },
+  grid: { display: "grid", gridTemplateColumns: "minmax(320px, 7fr) minmax(0, 13fr)", gap: "var(--space-8)", borderTop: "var(--border-thin) solid var(--rule)", paddingTop: "28px" }, column: { display: "grid", alignContent: "start", gap: "var(--space-5)" }, leftColumn: { gap: "var(--space-4)", padding: "var(--space-5)", border: "1px solid var(--rule)", background: "var(--paper)" }, label: { margin: 0, fontFamily: "var(--font-interface)", fontSize: "var(--text-label)", fontWeight: 700, letterSpacing: "0.045em", textTransform: "uppercase" }, message: { margin: 0, fontSize: "0.9rem", color: "var(--vermilion)" }, button: { width: "fit-content", minHeight: "var(--control-height)", padding: "11px 18px", border: "var(--border-thin) solid var(--carbon)", borderRadius: 0, color: "var(--paper)", background: "var(--carbon)", font: "inherit", fontWeight: 700, cursor: "pointer", textDecoration: "none" },
 };
 
 export default function EntryForm({ entry = null, language }) {
@@ -85,19 +85,20 @@ export default function EntryForm({ entry = null, language }) {
 
   return (
     <form className="entry-form" onSubmit={handleSubmit} noValidate>
-      <PhotoUpload entry={entry} error={errors.photo} form={form} onChange={setPhoto} />
       <div className="contribute-grid" style={styles.grid}>
-        <aside className="contribute-rail" style={styles.rail}>
+        <aside className="contribute-column contribute-left-column" style={{ ...styles.column, ...styles.leftColumn }}>
+          <PhotoUpload entry={entry} error={errors.photo} form={form} onChange={setPhoto} />
+          <EntryFields values={values} errors={errors} form={form} onChange={updateValue} names={["image_description"]} />
           <p className="form-section-label" style={styles.label}>{form.archiveDetails}</p>
-          <EntryFields values={values} errors={errors} form={form} onChange={updateValue} names={["province", "school_level", "memory_year", "place_time_details", "display_name"]} />
+          <EntryFields className="archive-details" values={values} errors={errors} form={form} onChange={updateValue} names={["province", "school_level", "memory_year", "place_time_details", "display_name"]} />
         </aside>
-        <div className="contribute-story" style={styles.story}>
+        <div className="contribute-column contribute-story" style={styles.column}>
           <p className="form-section-label" style={styles.label}>{form.yourMemory}</p>
-          <EntryFields values={values} errors={errors} form={form} onChange={updateValue} names={["title", "image_description", "story"]} />
+          <EntryFields values={values} errors={errors} form={form} onChange={updateValue} names={["title", "story"]} />
+          {message ? <p className="form-message" style={styles.message} role="alert">{message}</p> : null}
+          <button className="primary-button" style={styles.button} type="submit" disabled={saving}>{saving ? form.saving : entry ? form.saveChanges : form.addEntry}</button>
         </div>
       </div>
-      {message ? <p className="form-message" style={styles.message} role="alert">{message}</p> : null}
-      <button className="primary-button" style={styles.button} type="submit" disabled={saving}>{saving ? form.saving : entry ? form.saveChanges : form.addEntry}</button>
     </form>
   );
 }

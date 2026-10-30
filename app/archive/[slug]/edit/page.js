@@ -8,7 +8,7 @@ import { createClient } from "../../../../lib/supabase/server.js";
 import { getTranslation } from "../../../../lib/translations.js";
 
 const styles = {
-  shell: { maxWidth: "var(--layout-form)", paddingBottom: "80px" },
+  shell: { paddingBottom: "80px" },
   header: { padding: "54px 0 36px" },
   title: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 800, lineHeight: .82, letterSpacing: ".015em" },
 };

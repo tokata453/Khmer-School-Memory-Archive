@@ -6,7 +6,7 @@ import { createClient } from "../../lib/supabase/server.js";
 import { getTranslation } from "../../lib/translations.js";
 
 const styles = {
-  shell: { maxWidth: "var(--layout-form)", paddingBottom: "80px" }, header: { padding: "54px 0 36px" }, title: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 800, lineHeight: .82, letterSpacing: ".015em" }, notice: { padding: "24px 0", borderTop: "1px solid var(--rule)" }, link: { display: "inline-block", marginTop: "28px", padding: "12px 0 8px", color: "var(--carbon)", borderBottom: "3px solid var(--carbon)", textDecoration: "none" },
+  shell: { paddingBottom: "80px" }, header: { padding: "54px 0 36px" }, title: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 800, lineHeight: .82, letterSpacing: ".015em" }, notice: { padding: "24px 0", borderTop: "1px solid var(--rule)" }, link: { display: "inline-block", marginTop: "28px", padding: "12px 0 8px", color: "var(--carbon)", borderBottom: "3px solid var(--carbon)", textDecoration: "none" },
 };
 
 export const metadata = { title: "Contribute" };

@@ -27,7 +27,7 @@ export default async function MyEntriesPage() {
         <h1 style={styles.heroTitle}>{translation.contributor.myEntriesTitle}</h1>
         <p style={styles.intro}>{translation.contributor.myEntriesIntro}</p>
       </header>
-      <MyEntriesBrowser entries={entries} labels={translation.contributor} form={translation.form} cardLabels={translation.entryCard} />
+      <MyEntriesBrowser entries={entries} labels={translation.contributor} form={translation.form} cardLabels={translation.entryCard} comboBox={translation.comboBox} />
     </main>
   );
 }

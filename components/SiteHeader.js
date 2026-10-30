@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LogIn, Search } from "lucide-react";
+import { LogIn } from "lucide-react";
 import collection from "../collection.config.js";
 import AccountMenu from "./AccountMenu.js";
 import LanguageToggle from "./LanguageToggle.js";
@@ -9,7 +9,7 @@ import { createClient } from "../lib/supabase/server.js";
 import { getTranslation } from "../lib/translations.js";
 
 const styles = {
-  header: { width: "var(--layout-wide)", margin: "0 auto", display: "grid", gridTemplateColumns: "auto minmax(0, 1fr) auto", gap: "28px", alignItems: "center", minHeight: "76px", padding: "12px 0", borderBottom: "2px solid var(--carbon)" }, mark: { display: "inline-flex", minWidth: 0, gap: "10px", alignItems: "center", textDecoration: "none", fontFamily: "var(--font-interface)" }, logo: { display: "block", width: "40px", height: "40px", objectFit: "contain" }, name: { fontFamily: "var(--font-display)", fontSize: "1.3rem", fontWeight: 800, lineHeight: 1, letterSpacing: ".015em", whiteSpace: "nowrap" }, nav: { display: "flex", minWidth: 0, flexWrap: "nowrap", gap: "24px", alignItems: "center", justifyContent: "center", color: "var(--muted)", fontFamily: "var(--font-interface)", fontSize: "var(--text-nav)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.025em" }, tools: { display: "flex", minWidth: 0, flexWrap: "nowrap", gap: "6px", alignItems: "center", justifyContent: "flex-end" }, iconButton: { display: "grid", width: "40px", minHeight: "40px", placeItems: "center", border: "1px solid transparent", borderRadius: 0, background: "transparent", color: "var(--carbon)", font: "inherit", cursor: "pointer", textDecoration: "none" }, account: { display: "inline-flex", minWidth: 0, minHeight: "40px", gap: "8px", alignItems: "center", padding: "0 13px", borderRadius: 0, background: "var(--carbon)", color: "var(--paper)", fontSize: "0.8rem", fontWeight: 800, textDecoration: "none" },
+  header: { width: "var(--layout-wide)", margin: "0 auto", display: "grid", gridTemplateColumns: "auto minmax(0, 1fr) auto", gap: "28px", alignItems: "center", minHeight: "76px", padding: "12px 0", borderBottom: "2px solid var(--carbon)" }, mark: { display: "inline-flex", minWidth: 0, gap: "10px", alignItems: "center", textDecoration: "none", fontFamily: "var(--font-interface)" }, logo: { display: "block", width: "40px", height: "40px", objectFit: "contain" }, name: { fontFamily: "var(--font-display)", fontSize: "1.3rem", fontWeight: 800, lineHeight: 1, letterSpacing: ".015em", whiteSpace: "nowrap" }, nav: { display: "flex", minWidth: 0, flexWrap: "nowrap", gap: "24px", alignItems: "center", justifyContent: "center", color: "var(--muted)", fontFamily: "var(--font-interface)", fontSize: "var(--text-nav)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.025em" }, tools: { display: "flex", minWidth: 0, flexWrap: "nowrap", gap: "6px", alignItems: "center", justifyContent: "flex-end" }, account: { display: "inline-flex", minWidth: 0, minHeight: "40px", gap: "8px", alignItems: "center", padding: "0 13px", borderRadius: 0, background: "var(--carbon)", color: "var(--paper)", fontSize: "0.8rem", fontWeight: 800, textDecoration: "none" },
 };
 
 export default async function SiteHeader({ language }) {
@@ -40,9 +40,6 @@ export default async function SiteHeader({ language }) {
       </nav>
 
       <section className="header-tools" style={styles.tools} aria-label={t.header.tools}>
-        <Link className="icon-button" style={styles.iconButton} href="/archive#entry-search" aria-label={t.header.search}>
-          <Search size={20} strokeWidth={2.2} aria-hidden="true" />
-        </Link>
         {user ? (
           <AccountMenu userEmail={user.email} />
         ) : (

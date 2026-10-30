@@ -22,7 +22,7 @@ export default async function ArchivePage() {
         <h1 style={styles.title}>{t.archive.title}</h1>
         <p style={styles.intro}>{t.archive.intro.replace("{count}", entries.length)}</p>
       </header>
-      <EntryBrowser entries={entries} labels={{ ...t.archive, entryCard: t.entryCard }} form={t.form} />
+      <EntryBrowser entries={entries} labels={{ ...t.archive, entryCard: t.entryCard }} form={t.form} comboBox={t.comboBox} />
     </main>
   );
 }

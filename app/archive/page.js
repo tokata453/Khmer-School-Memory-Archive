@@ -5,7 +5,26 @@ import { normalizeLanguage } from "../../lib/language.js";
 import { getTranslation } from "../../lib/translations.js";
 
 const styles = {
-  hero: { display: "block", padding: "54px 0 36px", borderBottom: "1px solid var(--rule)" }, title: { maxWidth: "none", margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 800, lineHeight: .82, letterSpacing: ".015em" }, intro: { maxWidth: "720px", margin: "24px 0 0", color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 },
+  hero: {
+    display: "block",
+    padding: "34px 0 16px",
+  },
+  title: {
+    maxWidth: "none",
+    margin: 0,
+    fontFamily: "var(--font-display)",
+    fontSize: "var(--text-display)",
+    fontWeight: 800,
+    lineHeight: 0.82,
+    letterSpacing: ".015em",
+  },
+  intro: {
+    maxWidth: "720px",
+    margin: "14px 0 0",
+    color: "var(--muted)",
+    fontSize: "var(--text-lead)",
+    lineHeight: 1.75,
+  },
 };
 
 export const metadata = {
@@ -13,16 +32,31 @@ export const metadata = {
 };
 
 export default async function ArchivePage() {
-  const [entries, cookieStore] = await Promise.all([getPublishedEntries(), cookies()]);
-  const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value));
+  const [entries, cookieStore] = await Promise.all([
+    getPublishedEntries(),
+    cookies(),
+  ]);
+  const t = getTranslation(
+    normalizeLanguage(cookieStore.get("language")?.value),
+  );
 
   return (
     <main className="page-shell">
-      <header className="page-hero compact-hero archive-hero" style={styles.hero}>
+      <header
+        className="page-hero compact-hero archive-hero"
+        style={styles.hero}
+      >
         <h1 style={styles.title}>{t.archive.title}</h1>
-        <p style={styles.intro}>{t.archive.intro.replace("{count}", entries.length)}</p>
+        <p style={styles.intro}>
+          {t.archive.intro.replace("{count}", entries.length)}
+        </p>
       </header>
-      <EntryBrowser entries={entries} labels={{ ...t.archive, entryCard: t.entryCard }} form={t.form} comboBox={t.comboBox} />
+      <EntryBrowser
+        entries={entries}
+        labels={{ ...t.archive, entryCard: t.entryCard }}
+        form={t.form}
+        comboBox={t.comboBox}
+      />
     </main>
   );
 }

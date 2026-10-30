@@ -7,7 +7,7 @@ import { getTranslation } from "../lib/translations.js";
 import HomeSearch from "../components/HomeSearch.js";
 
 const styles = {
-  block: { paddingTop: "64px" }, heading: { display: "flex", justifyContent: "space-between", gap: "20px", alignItems: "center", marginBottom: "20px" }, sectionTitle: { margin: 0, color: "var(--indigo)", fontFamily: "var(--font-display)", fontSize: "var(--text-section)", fontWeight: 700, lineHeight: 1.08 }, list: {}, panel: { display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(260px, .6fr)", gap: "40px", padding: "32px", border: "1px solid var(--rule)", borderRadius: "2px", background: "var(--paper)" }, panelTitle: { margin: 0, color: "var(--indigo)", fontFamily: "var(--font-display)", fontSize: "var(--text-section)", fontWeight: 700, lineHeight: 1.08 }, panelText: { maxWidth: "560px", margin: 0, color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 },
+  block: { paddingTop: "64px" }, heading: { display: "flex", justifyContent: "space-between", gap: "20px", alignItems: "center", marginBottom: "20px" }, sectionTitle: { margin: 0, color: "var(--indigo)", fontFamily: "var(--font-display)", fontSize: "var(--text-section)", fontWeight: 700, lineHeight: 1.08 }, list: {}, panel: { display: "grid", gap: "14px", padding: "32px", border: "1px solid var(--rule)", borderRadius: "2px", background: "var(--paper)" }, panelTitle: { margin: 0, color: "var(--indigo)", fontFamily: "var(--font-display)", fontSize: "var(--text-section)", fontWeight: 700, lineHeight: 1.08 }, panelText: { maxWidth: "720px", margin: 0, color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 },
 };
 
 export default async function Home() {

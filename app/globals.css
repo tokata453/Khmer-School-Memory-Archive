@@ -11,7 +11,7 @@
   --text-nav: 0.875rem;
   --text-body: 1rem;
   --text-lead: clamp(1rem, 1.4vw, 1.125rem);
-  --text-section: clamp(1.45rem, 2.2vw, 2rem);
+  --text-section: clamp(1.15rem, 2vw, 1.5rem);
   --text-display: clamp(2rem, 3.5vw, 3.5rem);
   --space-1: 4px;
   --space-2: 8px;
@@ -320,6 +320,13 @@ button {
 .page-hero {
   border-bottom-color: var(--rule) !important;
 }
+.archive-hero {
+  padding: 34px 0 16px !important;
+}
+.archive-hero p {
+  max-width: 720px;
+  margin-top: 14px !important;
+}
 .page-hero p,
 .archive-panel p,
 .detail-story p {
@@ -386,6 +393,28 @@ button {
 .my-entries-filter-row {
   border-color: var(--rule) !important;
   background: rgba(255, 248, 232, 0.62);
+}
+.my-entries-controls {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 12px !important;
+  align-items: flex-end;
+}
+.my-entries-controls > label {
+  flex: 2 1 360px;
+  min-width: min(100%, 260px);
+}
+.my-entries-filter-row {
+  display: flex !important;
+  flex: 3 1 600px;
+  flex-wrap: wrap;
+  gap: 12px;
+  border: 0 !important;
+  background: transparent !important;
+}
+.my-entries-filter-row label {
+  flex: 1 1 150px;
+  min-width: 140px;
 }
 .filter-row label,
 .my-entries-filter-row label {
@@ -462,18 +491,25 @@ button {
   padding: 20px !important;
 }
 .auth-shell {
-  min-height: calc(100vh - 220px) !important;
-  padding: 64px 0 !important;
+  min-height: 0 !important;
+  display: block !important;
+  padding: 0 0 80px !important;
 }
 .auth-panel {
+  width: min(100%, 520px) !important;
+  margin: 28px 0 0 !important;
   border-top: 3px double var(--gold) !important;
   box-shadow: 4px 5px 0 rgba(117, 100, 77, 0.13) !important;
 }
+.auth-hero h1,
 .auth-panel h1 {
   color: var(--carbon) !important;
   font-family: var(--font-display) !important;
   line-height: 1 !important;
   letter-spacing: -0.025em !important;
+}
+.auth-hero h1 {
+  margin: 0 !important;
 }
 .auth-form button {
   border: 0 !important;
@@ -548,6 +584,13 @@ button {
   .contribute-left-column {
     padding: var(--space-5) !important;
   }
+  .process-grid > div {
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--rule);
+  }
+  .process-grid > div:last-child {
+    border-bottom: 0;
+  }
   .my-entries-filter-row {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
@@ -597,9 +640,12 @@ button {
     display: grid !important;
     grid-template-columns: 1fr !important;
     gap: 12px;
+    justify-items: center;
+    text-align: center;
   }
   .site-footer p:last-child {
-    text-align: left;
+    max-width: 620px;
+    text-align: center;
   }
 }
 @media (prefers-reduced-motion: reduce) {

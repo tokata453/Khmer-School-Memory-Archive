@@ -27,7 +27,7 @@ export default function MyEntriesBrowser({ entries, labels, form, cardLabels, co
 
   return (
     <section aria-label={labels.myEntriesTitle}>
-      <div className="my-entries-controls" style={styles.controls}>
+      <div className="my-entries-controls search-row" style={styles.controls}>
         <label style={styles.label} htmlFor="my-entries-search">
           {labels.searchLabel}
           <input id="my-entries-search" style={styles.input} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder={labels.searchPlaceholder} />

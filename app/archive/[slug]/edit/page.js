@@ -23,7 +23,7 @@ export default async function EditEntryPage({ params }) {
   const t = getTranslation(language).contributor;
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
   if (!data.user || data.user.id !== entry.owner_id) {
-    return <main className="page-shell form-shell" style={styles.shell}><header style={styles.header}><h1 style={styles.title}>{t.entryUnavailable}</h1></header><p>{t.ownerOnly}</p><Link href={`/archive/${slug}`}>{t.returnToEntry}</Link></main>;
+    return <main className="page-shell form-shell" style={styles.shell}><header className="page-hero compact-hero archive-hero form-hero" style={styles.header}><h1 style={styles.title}>{t.entryUnavailable}</h1></header><p>{t.ownerOnly}</p><Link href={`/archive/${slug}`}>{t.returnToEntry}</Link></main>;
   }
-  return <main className="page-shell form-shell" style={styles.shell}><header style={styles.header}><h1 style={styles.title}>{t.editTitle}</h1></header><EntryForm entry={entry} language={language} /></main>;
+  return <main className="page-shell form-shell" style={styles.shell}><header className="page-hero compact-hero archive-hero form-hero" style={styles.header}><h1 style={styles.title}>{t.editTitle}</h1></header><EntryForm entry={entry} language={language} /></main>;
 }

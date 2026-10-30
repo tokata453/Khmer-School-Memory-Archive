@@ -19,7 +19,7 @@ const styles = {
     letterSpacing: ".015em",
   },
   intro: {
-    maxWidth: "720px",
+    maxWidth: "1000px",
     margin: "14px 0 0",
     color: "var(--muted)",
     fontSize: "var(--text-lead)",

@@ -14,15 +14,16 @@ export default async function ContributePage({ searchParams }) {
     supabase ? supabase.auth.getUser() : { data: { user: null } },
     cookies(),
   ]);
-  const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value)).contributor;
+  const language = normalizeLanguage(cookieStore.get("language")?.value);
+  const t = getTranslation(language).contributor;
   return (
     <main className="page-shell form-shell">
       <h1>{t.addTitle}</h1>
       {submitted === "1" ? <p className="form-notice" role="status">{t.submitted}</p> : null}
-      {data.user ? <EntryForm /> : (
+      {data.user ? <EntryForm language={language} /> : (
         <section className="form-notice">
           <p>{t.loginFirst}</p>
-          <Link className="primary-link" href="/login?next=/contribute">{getTranslation(normalizeLanguage(cookieStore.get("language")?.value)).auth.login}</Link>
+          <Link className="primary-link" href="/login?next=/contribute">{getTranslation(language).auth.login}</Link>
         </section>
       )}
     </main>

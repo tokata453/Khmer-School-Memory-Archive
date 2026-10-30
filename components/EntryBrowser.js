@@ -8,7 +8,7 @@ const styles = {
   panel: { paddingTop: "34px" }, header: { display: "grid", gridTemplateColumns: "1fr auto", gap: "20px", alignItems: "start" }, kicker: { display: "none" }, title: { margin: "18px 0 0", fontSize: "var(--text-display)", fontWeight: 600, lineHeight: 0.83, letterSpacing: "-0.045em" }, count: { color: "var(--indigo)", fontFamily: "var(--font-interface)", fontSize: "var(--text-label)", fontWeight: 700, letterSpacing: "0.045em", textTransform: "uppercase" }, searchRow: { margin: "28px 0 34px", padding: "18px 0", borderTop: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)" }, searchLabel: { display: "block", marginBottom: "10px", color: "var(--carbon)", fontFamily: "var(--font-interface)", fontSize: "0.9rem", fontWeight: 700 }, controls: { display: "grid", gridTemplateColumns: "1fr auto", gap: "14px" }, searchInput: { width: "100%", minHeight: "52px", padding: "10px 0", border: 0, borderBottom: "2px solid var(--carbon)", borderRadius: 0, color: "var(--carbon)", background: "transparent", font: "inherit" }, clear: { minHeight: "52px", padding: "0 18px", border: 0, borderRadius: 0, color: "var(--paper)", background: "var(--carbon)", font: "inherit", fontFamily: "var(--font-interface)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.045em", cursor: "pointer" }, filters: { display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "16px", marginTop: "20px" }, filterLabel: { display: "grid", gap: "8px", fontWeight: 700 }, select: { width: "100%", padding: "13px", border: "1px solid var(--rule)", borderRadius: 0, color: "var(--carbon)", background: "var(--paper)", font: "inherit" }, list: { borderTop: "1px solid var(--carbon)" }, empty: { padding: "28px 0", borderTop: "2px solid var(--carbon)", borderBottom: "1px solid var(--rule)" }, emptyTitle: { margin: "0 0 8px", fontSize: "var(--text-section)" }, emptyText: { color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 },
 };
 
-export default function EntryBrowser({ entries, labels }) {
+export default function EntryBrowser({ entries, labels, form }) {
   const [query, setQuery] = useState("");
   const [province, setProvince] = useState("");
   const [schoolLevel, setSchoolLevel] = useState("");
@@ -87,15 +87,15 @@ export default function EntryBrowser({ entries, labels }) {
       </div>
 
       <div className="filter-row" style={styles.filters}>
-        <label style={styles.filterLabel}>Province<select style={styles.select} value={province} onChange={(event) => setProvince(event.target.value)}><option value="">All provinces</option>{provinces.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
-        <label style={styles.filterLabel}>School level<select style={styles.select} value={schoolLevel} onChange={(event) => setSchoolLevel(event.target.value)}><option value="">All school levels</option>{schoolLevels.map(([value, text]) => <option key={value} value={value}>{text}</option>)}</select></label>
-        <label style={styles.filterLabel}>Decade<select style={styles.select} value={decade} onChange={(event) => setDecade(event.target.value)}><option value="">All decades</option>{[...new Set(entries.map((entry) => Math.floor(entry.memory_year / 10) * 10))].sort().map((value) => <option key={value} value={value}>{value}s</option>)}</select></label>
+        <label style={styles.filterLabel}>{labels.province}<select style={styles.select} value={province} onChange={(event) => setProvince(event.target.value)}><option value="">{labels.allProvinces}</option>{provinces.map((value) => <option key={value} value={value}>{value}</option>)}</select></label>
+        <label style={styles.filterLabel}>{labels.schoolLevel}<select style={styles.select} value={schoolLevel} onChange={(event) => setSchoolLevel(event.target.value)}><option value="">{labels.allSchoolLevels}</option>{schoolLevels.map((value) => <option key={value} value={value}>{form.levels[value]}</option>)}</select></label>
+        <label style={styles.filterLabel}>{labels.decade}<select style={styles.select} value={decade} onChange={(event) => setDecade(event.target.value)}><option value="">{labels.allDecades}</option>{[...new Set(entries.map((entry) => Math.floor(entry.memory_year / 10) * 10))].sort().map((value) => <option key={value} value={value}>{value}s</option>)}</select></label>
       </div>
 
       {filteredEntries.length > 0 ? (
         <div className="entries-list" style={styles.list} aria-label={labels.entries}>
           {filteredEntries.map((entry, index) => (
-            <EntryCard key={entry.slug} entry={entry} recordNumber={index + 1} labels={labels.entryCard} />
+            <EntryCard key={entry.slug} entry={entry} recordNumber={index + 1} labels={labels.entryCard} form={form} />
           ))}
         </div>
       ) : (

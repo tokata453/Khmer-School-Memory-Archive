@@ -37,7 +37,7 @@ export default async function Home() {
         <div className="record-list">
           {featuredEntries.length > 0 ? (
             featuredEntries.map((entry, index) => (
-              <EntryCard key={entry.slug} entry={entry} recordNumber={index + 1} labels={t.entryCard} />
+              <EntryCard key={entry.slug} entry={entry} recordNumber={index + 1} labels={t.entryCard} form={t.form} />
             ))
           ) : (
             <p>{t.home.empty}</p>

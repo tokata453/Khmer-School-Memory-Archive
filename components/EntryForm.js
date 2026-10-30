@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../lib/supabase/client.js";
 import { entryRedirectPath, entryValues, makeSlug, validateEntry } from "../lib/entry-form.js";
+import { getTranslation } from "../lib/translations.js";
 import EntryFields from "./EntryFields.js";
 import PhotoUpload from "./PhotoUpload.js";
 
@@ -11,8 +12,9 @@ const styles = {
   grid: { display: "grid", gridTemplateColumns: "var(--layout-rail) minmax(0, 1fr)", gap: "calc(var(--space-8) + 10px)", borderTop: "var(--border-thin) solid var(--rule)", paddingTop: "28px" }, rail: { display: "grid", alignContent: "start", gap: "var(--space-5)", paddingRight: "28px", borderRight: "1px solid var(--rule)" }, story: { display: "grid", alignContent: "start", gap: "var(--space-5)", maxWidth: "var(--layout-reading)" }, label: { margin: 0, fontFamily: "var(--font-interface)", fontSize: "var(--text-label)", fontWeight: 700, letterSpacing: "0.045em", textTransform: "uppercase" }, message: { margin: 0, fontSize: "0.9rem", color: "var(--vermilion)" }, button: { width: "fit-content", minHeight: "var(--control-height)", padding: "11px 18px", border: "var(--border-thin) solid var(--carbon)", borderRadius: 0, color: "var(--paper)", background: "var(--carbon)", font: "inherit", fontWeight: 700, cursor: "pointer", textDecoration: "none" },
 };
 
-export default function EntryForm({ entry = null }) {
+export default function EntryForm({ entry = null, language }) {
   const router = useRouter();
+  const form = getTranslation(language).form;
   const [values, setValues] = useState(() => entryValues(entry));
   const [photo, setPhoto] = useState(null);
   const [errors, setErrors] = useState({});
@@ -34,7 +36,7 @@ export default function EntryForm({ entry = null }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const nextErrors = validateEntry(values, photo, !entry?.photo_url);
+    const nextErrors = validateEntry(values, photo, !entry?.photo_url, form);
     setErrors(nextErrors);
     setMessage("");
     if (Object.keys(nextErrors).length) return;
@@ -68,14 +70,14 @@ export default function EntryForm({ entry = null }) {
       if (error) throw error;
       if (!data) {
         console.error("Entry change returned no row; RLS may have refused it.");
-        setMessage("That change wasn't saved. / ការកែប្រែមិនត្រូវបានរក្សាទុកទេ។");
+        setMessage(form.notSaved);
         return;
       }
       router.push(entryRedirectPath(data));
       router.refresh();
     } catch (error) {
       console.error("Could not save entry", error);
-      setMessage("We could not save this entry. Check your connection and try again. / មិនអាចរក្សាទុកបានទេ។ សូមពិនិត្យការតភ្ជាប់ ហើយព្យាយាមម្តងទៀត។");
+      setMessage(form.saveFailed);
     } finally {
       setSaving(false);
     }
@@ -83,19 +85,19 @@ export default function EntryForm({ entry = null }) {
 
   return (
     <form className="entry-form" onSubmit={handleSubmit} noValidate>
-      <PhotoUpload entry={entry} error={errors.photo} onChange={setPhoto} />
+      <PhotoUpload entry={entry} error={errors.photo} form={form} onChange={setPhoto} />
       <div className="contribute-grid" style={styles.grid}>
         <aside className="contribute-rail" style={styles.rail}>
-          <p className="form-section-label" style={styles.label}>Archive details / ព័ត៌មានបណ្ណសារ</p>
-          <EntryFields values={values} errors={errors} onChange={updateValue} names={["province", "school_level", "memory_year", "place_time_details", "display_name"]} />
+          <p className="form-section-label" style={styles.label}>{form.archiveDetails}</p>
+          <EntryFields values={values} errors={errors} form={form} onChange={updateValue} names={["province", "school_level", "memory_year", "place_time_details", "display_name"]} />
         </aside>
         <div className="contribute-story" style={styles.story}>
-          <p className="form-section-label" style={styles.label}>Your memory / អនុស្សាវរីយ៍របស់អ្នក</p>
-          <EntryFields values={values} errors={errors} onChange={updateValue} names={["title", "image_description", "story"]} />
+          <p className="form-section-label" style={styles.label}>{form.yourMemory}</p>
+          <EntryFields values={values} errors={errors} form={form} onChange={updateValue} names={["title", "image_description", "story"]} />
         </div>
       </div>
       {message ? <p className="form-message" style={styles.message} role="alert">{message}</p> : null}
-      <button className="primary-button" style={styles.button} type="submit" disabled={saving}>{saving ? "Saving… / កំពុងរក្សាទុក…" : entry ? "Save changes / រក្សាទុកការកែប្រែ" : "Add entry / បន្ថែមឯកសារ"}</button>
+      <button className="primary-button" style={styles.button} type="submit" disabled={saving}>{saving ? form.saving : entry ? form.saveChanges : form.addEntry}</button>
     </form>
   );
 }

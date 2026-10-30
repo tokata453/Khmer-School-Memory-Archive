@@ -6,7 +6,7 @@ This file is approved design direction. Ask the user for explicit permission bef
 
 ## Direction
 
-Khmer Modernist Archive: a Cambodian oral-history site shaped by strong geometry, editorial restraint, and bilingual-ready typography. The interface should feel like a professional cultural institution, not a blog, dashboard, or generic AI landing page.
+Khmer Modernist Archive: a Cambodian oral-history site shaped by strong geometry, editorial restraint, and typography. The interface should feel like a professional cultural institution, not a blog, dashboard, or generic AI landing page.
 
 ## Principles
 
@@ -29,14 +29,10 @@ Khmer Modernist Archive: a Cambodian oral-history site shaped by strong geometry
 
 ## Avoid
 
-- Notebook-paper backgrounds.
-- Ruled paper lines.
 - Gradients used as decoration.
 - Gradient colors on components unless explicitly needed.
-- Rounded card grids.
 - Heavy shadows.
 - Pills and badges as default UI language.
-- Fake image placeholders.
 - Dashboard statistics unless supported by meaningful project data.
 - Generic hero art, blobs, or repeated AI-looking containers.
 

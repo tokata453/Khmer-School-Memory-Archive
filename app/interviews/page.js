@@ -23,7 +23,7 @@ export default async function InterviewsPage() {
         {entries.map((entry, index) => (
           <article key={entry.slug} className="interview-card">
             <p className="entry-number">{String(index + 1).padStart(2, "0")}</p>
-            <p className="record-kicker">{entry.school_level?.replace("_", " ")}</p>
+            <p className="record-kicker">{t.form.levels[entry.school_level] || entry.school_level?.replace("_", " ")}</p>
             <h2>{entry.display_name || t.entryCard.anonymous}</h2>
             <p>{entry.image_description}</p>
             <dl>

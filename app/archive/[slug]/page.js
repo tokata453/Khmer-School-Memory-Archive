@@ -30,7 +30,9 @@ export default async function MemoryDetailPage({ params }) {
   if (!entry) {
     notFound();
   }
-  const t = getTranslation(normalizeLanguage(cookieStore.get("language")?.value)).detail;
+  const language = normalizeLanguage(cookieStore.get("language")?.value);
+  const translation = getTranslation(language);
+  const t = translation.detail;
 
   const relatedEntries = entries
     .filter((item) => item.slug !== entry.slug && item.status === "published")
@@ -41,7 +43,7 @@ export default async function MemoryDetailPage({ params }) {
       <article className="memory-detail">
         <h1>{entry.title}</h1>
         {entry.photo_url ? <img className="entry-photo" src={entry.photo_url} alt={entry.image_description} /> : null}
-        {user?.id === entry.owner_id ? <EntryActions id={entry.id} slug={entry.slug} /> : null}
+        {user?.id === entry.owner_id ? <EntryActions id={entry.id} slug={entry.slug} language={language} /> : null}
         <div className="detail-grid">
           <aside className="detail-rail">
             <dl className="catalog-grid">
@@ -59,7 +61,7 @@ export default async function MemoryDetailPage({ params }) {
               </div>
               <div>
                 <dt>{t.schoolLevel}</dt>
-                <dd>{entry.school_level?.replace("_", " ")}</dd>
+                <dd>{translation.form.levels[entry.school_level] || entry.school_level?.replace("_", " ")}</dd>
               </div>
             </dl>
             {entry.place_time_details ? <section className="object-box"><h2>{t.moreDetails}</h2><p>{entry.place_time_details}</p></section> : null}
@@ -84,6 +86,8 @@ export default async function MemoryDetailPage({ params }) {
               key={relatedEntry.slug}
               entry={relatedEntry}
               recordNumber={index + 1}
+              labels={translation.entryCard}
+              form={translation.form}
             />
           ))}
         </div>

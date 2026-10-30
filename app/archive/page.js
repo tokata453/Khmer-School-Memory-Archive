@@ -18,7 +18,7 @@ export default async function ArchivePage() {
         <h1>{t.archive.title}</h1>
         <p>{t.archive.intro.replace("{count}", entries.length)}</p>
       </header>
-      <EntryBrowser entries={entries} labels={{ ...t.archive, entryCard: t.entryCard }} />
+      <EntryBrowser entries={entries} labels={{ ...t.archive, entryCard: t.entryCard }} form={t.form} />
     </main>
   );
 }

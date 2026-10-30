@@ -11,7 +11,7 @@ const styles = {
   action: { alignSelf: "start", textAlign: "right" }, textLink: { color: "var(--carbon)", borderBottom: "2px solid var(--carbon)", fontFamily: "var(--font-interface)", fontSize: "var(--text-label)", fontWeight: 700, letterSpacing: "0.045em", textTransform: "uppercase", textDecoration: "none" },
 };
 
-export default function EntryCard({ entry, recordNumber, labels = { credit: "Shared by", open: "Open ↗", anonymous: "Anonymous" } }) {
+export default function EntryCard({ entry, recordNumber, labels = { credit: "Shared by", open: "Open ↗", anonymous: "Anonymous" }, form }) {
   return (
     <article className="entry-card" style={{ ...styles.card, ...(entry.photo_url ? {} : styles.cardWithoutImage) }}>
       <p className="entry-number" style={styles.number}>{String(recordNumber).padStart(2, "0")}</p>
@@ -21,7 +21,7 @@ export default function EntryCard({ entry, recordNumber, labels = { credit: "Sha
         </Link>
       ) : null}
       <div className="entry-content" style={styles.content}>
-        <p className="record-kicker">{entry.school_level?.replace("_", " ")} · {entry.memory_year}</p>
+        <p className="record-kicker">{form?.levels[entry.school_level] || entry.school_level?.replace("_", " ")} · {entry.memory_year}</p>
         <h2 className="entry-title" style={styles.title}>
           <Link href={`/archive/${entry.slug}`}>{entry.title}</Link>
         </h2>

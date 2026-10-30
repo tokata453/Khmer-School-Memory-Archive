@@ -12,11 +12,9 @@ export default async function MyEntriesPage() {
   const [supabase, cookieStore] = await Promise.all([createClient(), cookies()]);
   const { data: { user } } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
   if (!user) redirect("/login");
+  const translation = getTranslation(normalizeLanguage(cookieStore.get("language")?.value));
 
-  const [entries, t] = await Promise.all([
-    getEntriesByOwner(user.id, supabase),
-    Promise.resolve(getTranslation(normalizeLanguage(cookieStore.get("language")?.value)).contributor),
-  ]);
+  const [entries, t] = [await getEntriesByOwner(user.id, supabase), translation.contributor];
 
   return (
     <main className="page-shell">
@@ -29,7 +27,7 @@ export default async function MyEntriesPage() {
           <article className="my-entry-card" key={entry.id}>
             <p className="entry-number">{String(index + 1).padStart(2, "0")}</p>
             <div>
-              <p className="record-kicker">{entry.school_level?.replace("_", " ")}</p>
+              <p className="record-kicker">{translation.form.levels[entry.school_level] || entry.school_level?.replace("_", " ")}</p>
               <h2 className="entry-title"><Link href={`/archive/${entry.slug}`}>{entry.title}</Link></h2>
               <p className="entry-excerpt">{entry.image_description}</p>
               <p><strong>{t.status}:</strong> {t[entry.status]}</p>

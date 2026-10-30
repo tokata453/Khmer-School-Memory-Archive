@@ -5,6 +5,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../lib/supabase/client.js";
 
+const styles = {
+  actions: { display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center", marginTop: "24px" }, button: { width: "fit-content", minHeight: "var(--control-height)", padding: "11px 18px", border: "var(--border-thin) solid var(--carbon)", borderRadius: 0, font: "inherit", fontWeight: 700, cursor: "pointer", textDecoration: "none" }, secondary: { color: "var(--carbon)", background: "transparent" }, danger: { color: "var(--paper)", background: "var(--vermilion)", borderColor: "var(--vermilion)" }, message: { flexBasis: "100%", margin: 0, fontSize: "0.9rem", color: "var(--vermilion)" },
+};
+
 export default function EntryActions({ id, slug }) {
   const router = useRouter();
   const [deleting, setDeleting] = useState(false);
@@ -33,10 +37,10 @@ export default function EntryActions({ id, slug }) {
   }
 
   return (
-    <div className="entry-actions">
-      <Link className="secondary-button" href={`/archive/${slug}/edit`}>Edit / កែប្រែ</Link>
-      <button className="danger-button" type="button" onClick={handleDelete} disabled={deleting}>{deleting ? "Deleting… / កំពុងលុប…" : "Delete / លុប"}</button>
-      {message ? <p className="form-message" role="alert">{message}</p> : null}
+    <div className="entry-actions" style={styles.actions}>
+      <Link className="secondary-button" style={{ ...styles.button, ...styles.secondary }} href={`/archive/${slug}/edit`}>Edit / កែប្រែ</Link>
+      <button className="danger-button" style={{ ...styles.button, ...styles.danger }} type="button" onClick={handleDelete} disabled={deleting}>{deleting ? "Deleting… / កំពុងលុប…" : "Delete / លុប"}</button>
+      {message ? <p className="form-message" style={styles.message} role="alert">{message}</p> : null}
     </div>
   );
 }

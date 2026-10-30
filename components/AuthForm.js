@@ -6,6 +6,8 @@ import { useState } from "react";
 import { createClient } from "../lib/supabase/client.js";
 import { getTranslation } from "../lib/translations.js";
 
+const styles = { shell: { minHeight: "68vh", display: "grid", placeItems: "center", padding: "72px 0" }, panel: { width: "min(100%, 520px)", padding: "34px", background: "var(--paper)", border: "2px solid var(--carbon)" }, title: { margin: "16px 0 0", fontSize: "var(--text-display)", lineHeight: 0.9, letterSpacing: "-0.04em" }, intro: { color: "var(--muted)", lineHeight: 1.7 }, form: { display: "grid", gap: "12px", marginTop: "28px" }, label: { fontFamily: "var(--font-interface)", fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase" }, input: { width: "100%", padding: "14px", border: "2px solid var(--carbon)", background: "var(--concrete)", color: "var(--carbon)", font: "inherit" }, button: { marginTop: "10px", padding: "14px 16px", border: "2px solid var(--carbon)", background: "var(--carbon)", color: "var(--paper)", fontFamily: "var(--font-interface)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em", cursor: "pointer" }, message: { margin: "2px 0 0", color: "var(--vermilion)" }, switch: { margin: "22px 0 0", color: "var(--muted)", fontFamily: "var(--font-interface)", fontSize: "0.9rem", lineHeight: 1.7 }, switchLink: { color: "var(--carbon)", fontWeight: 700 } };
+
 export default function AuthForm({ mode, language }) {
   const router = useRouter();
   const isSignup = mode === "signup";
@@ -42,17 +44,17 @@ export default function AuthForm({ mode, language }) {
   }
 
   return (
-    <main className="page-shell auth-shell">
-      <section className="auth-panel" aria-labelledby="auth-title">
-        <h1 id="auth-title">{isSignup ? t.signupTitle : t.loginTitle}</h1>
-        <p>
+    <main className="page-shell auth-shell" style={styles.shell}>
+      <section className="auth-panel" style={styles.panel} aria-labelledby="auth-title">
+        <h1 style={styles.title} id="auth-title">{isSignup ? t.signupTitle : t.loginTitle}</h1>
+        <p style={styles.intro}>
           {isSignup
             ? t.signupIntro
             : t.loginIntro}
         </p>
 
-        <form className="auth-form" onSubmit={handleSubmit}>
-          <label htmlFor="email">{t.email}</label>
+        <form className="auth-form" style={styles.form} onSubmit={handleSubmit}>
+          <label style={styles.label} htmlFor="email">{t.email}</label>
           <input
             id="email"
             name="email"
@@ -61,9 +63,10 @@ export default function AuthForm({ mode, language }) {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             required
+            style={styles.input}
           />
 
-          <label htmlFor="password">{t.password}</label>
+          <label style={styles.label} htmlFor="password">{t.password}</label>
           <input
             id="password"
             name="password"
@@ -73,18 +76,19 @@ export default function AuthForm({ mode, language }) {
             onChange={(event) => setPassword(event.target.value)}
             required
             minLength={6}
+            style={styles.input}
           />
 
-          {message ? <p className="auth-message" role="alert">{message}</p> : null}
+          {message ? <p className="auth-message" style={styles.message} role="alert">{message}</p> : null}
 
-          <button type="submit" disabled={isSubmitting}>
+          <button style={styles.button} type="submit" disabled={isSubmitting}>
             {isSubmitting ? t.working : isSignup ? t.signup : t.login}
           </button>
         </form>
 
-        <p className="auth-switch">
+        <p className="auth-switch" style={styles.switch}>
           {isSignup ? `${t.haveAccount} ` : `${t.needAccount} `}
-          <Link href={isSignup ? "/login" : "/signup"}>{isSignup ? t.login : t.signup}</Link>
+          <Link style={styles.switchLink} href={isSignup ? "/login" : "/signup"}>{isSignup ? t.login : t.signup}</Link>
         </p>
       </section>
     </main>

@@ -21,7 +21,6 @@ export default async function SiteHeader({ language }) {
     [t.header.archive, "/archive"],
     [t.header.contribute, "/contribute"],
     ...(user ? [[t.header.myEntries, "/my-entries"]] : []),
-    [t.header.interviews, "/interviews"],
     [t.header.about, "/about"],
   ];
 

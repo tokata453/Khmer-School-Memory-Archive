@@ -120,7 +120,7 @@ Site uses light mode only. Keep new colors within this token set.
 
 - Page shells use `--layout-wide` and align header, main content, and footer.
 - Detail and contribute pages pair a metadata rail with a reading column on desktop.
-- Archive listings use ruled index rows, not card grids.
+- Archive listings use image-led editorial card grids with landscape archive photos.
 - Gallery-paper surfaces need a reason: hero, temporary menu, or clear grouped content.
 
 ### Controls
@@ -161,7 +161,6 @@ Site uses light mode only. Keep new colors within this token set.
 - Desktop uses a strict max-width grid.
 - Header is a flat architectural bar with text navigation.
 - Home uses oversized title as the main visual object.
-- Archive uses index rows, not cards.
+- Archive uses image-led editorial cards.
 - Detail pages use a metadata rail and reading column.
-- Interview Collection uses name-led profiles, not avatar placeholders.
 - Mobile layouts are composed as compact reading blocks, not only stacked desktop columns.

@@ -8,7 +8,7 @@ import { normalizeLanguage } from "../../../lib/language.js";
 import { getTranslation } from "../../../lib/translations.js";
 
 const styles = {
-  shell: { paddingTop: "42px" }, detail: { borderTop: "2px solid var(--carbon)", paddingTop: "18px" }, title: { maxWidth: "980px", margin: "18px 0 0", fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 800, lineHeight: .82, letterSpacing: ".015em" }, photo: { display: "block", width: "100%", maxHeight: "680px", marginTop: "32px", padding: "5px", border: "1px solid var(--rule)", background: "var(--paper)", objectFit: "cover", filter: "saturate(.76) sepia(.15)" }, grid: { display: "grid", gridTemplateColumns: "var(--layout-rail) minmax(0, 1fr)", gap: "calc(var(--space-8) + 10px)", marginTop: "46px", borderTop: "1px solid var(--rule)", paddingTop: "28px" }, catalog: { display: "grid", gap: "18px", margin: 0 }, catalogItem: { borderTop: "1px solid var(--rule)", paddingTop: "10px" }, catalogValue: { margin: "7px 0 0", color: "var(--muted)" }, box: { marginTop: "32px", borderTop: "2px solid var(--carbon)", paddingTop: "14px" }, sectionTitle: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-section)", fontWeight: 800, lineHeight: .9 }, text: { marginBottom: 0, color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 }, story: { maxWidth: "var(--layout-reading)" }, storySection: { paddingBottom: "34px", marginBottom: "34px", borderBottom: "1px solid var(--rule)" }, block: { paddingTop: "56px" }, heading: { display: "grid", gridTemplateColumns: "max-content 1fr", gap: "30px", alignItems: "start", marginBottom: "18px", borderTop: "2px solid var(--carbon)", paddingTop: "16px" }, list: { borderTop: "1px solid var(--carbon)" },
+  shell: { paddingTop: "42px" }, detail: { borderTop: "2px solid var(--carbon)", paddingTop: "18px" }, title: { maxWidth: "980px", margin: "18px 0 0", fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 800, lineHeight: .82, letterSpacing: ".015em" }, photo: { display: "block", width: "100%", maxHeight: "680px", marginTop: "32px", padding: "5px", border: "1px solid var(--rule)", background: "var(--paper)", objectFit: "cover", filter: "saturate(.76) sepia(.15)" }, grid: { display: "grid", gridTemplateColumns: "var(--layout-rail) minmax(0, 1fr)", gap: "calc(var(--space-8) + 10px)", marginTop: "46px", borderTop: "1px solid var(--rule)", paddingTop: "28px" }, catalog: { display: "grid", gap: "18px", margin: 0 }, catalogItem: { borderTop: "1px solid var(--rule)", paddingTop: "10px" }, catalogValue: { margin: "7px 0 0", color: "var(--muted)" }, box: { marginTop: "32px", borderTop: "2px solid var(--carbon)", paddingTop: "14px" }, sectionTitle: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-section)", fontWeight: 800, lineHeight: .9 }, text: { marginBottom: 0, color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 }, story: { maxWidth: "var(--layout-reading)" }, storySection: { paddingBottom: "34px", marginBottom: "34px", borderBottom: "1px solid var(--rule)" }, block: { paddingTop: "56px" }, heading: { display: "grid", gridTemplateColumns: "max-content 1fr", gap: "30px", alignItems: "start", marginBottom: "18px", borderTop: "2px solid var(--carbon)", paddingTop: "16px" }, list: {},
 };
 
 export const dynamic = "force-dynamic";
@@ -84,12 +84,11 @@ export default async function MemoryDetailPage({ params }) {
         <div className="section-heading" style={styles.heading}>
           <h2 style={styles.sectionTitle}>{t.continue}</h2>
         </div>
-        <div className="record-list compact-list" style={styles.list}>
-          {relatedEntries.map((relatedEntry, index) => (
+        <div className="entry-card-grid" style={styles.list}>
+          {relatedEntries.map((relatedEntry) => (
             <EntryCard
               key={relatedEntry.slug}
               entry={relatedEntry}
-              recordNumber={index + 1}
               labels={translation.entryCard}
               form={translation.form}
             />

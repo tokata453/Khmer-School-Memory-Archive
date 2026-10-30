@@ -6,7 +6,7 @@ This file is approved design direction. Ask the user for explicit permission bef
 
 ## Direction
 
-Khmer Modernist Archive: a Cambodian oral-history site shaped by strong geometry, editorial restraint, and typography. The interface should feel like a professional cultural institution, not a blog, dashboard, or generic AI landing page.
+Khmer School Memory Ledger: a Cambodian oral-history archive shaped by school registers, editorial newspapers, and physical archive material. Interface should feel like a professional cultural institution, not a blog, dashboard, or generic AI landing page.
 
 ## Principles
 
@@ -19,13 +19,12 @@ Khmer Modernist Archive: a Cambodian oral-history site shaped by strong geometry
 
 ## Visual language
 
-- Flat warm concrete background.
-- Gallery-paper content surfaces.
-- Carbon text.
-- Vermilion accents for record numbers, active actions, and structural emphasis.
-- Deep indigo for institutional contrast.
-- Thin rules and column boundaries.
-- Large titles and numbered record rows.
+- Warm aged-paper background and archive-paper surfaces.
+- Dark ink text, muted ink supporting text, and restrained vermilion record marks.
+- Thin ledger rules, column boundaries, and double rules for publication endings.
+- Editorial mastheads use native condensed display fallback for English only.
+- Khmer uses Khmer-compatible type without compression, forced uppercase, or tight tracking.
+- Real school-memory photos appear in square archival frames with restrained sepia treatment.
 
 ## Avoid
 
@@ -41,7 +40,7 @@ Khmer Modernist Archive: a Cambodian oral-history site shaped by strong geometry
 Content stack:
 
 ```css
-"Noto Sans Khmer", "Khmer OS Siemreap", "Khmer Sangam MN", system-ui, sans-serif
+"Noto Sans Khmer", "Khmer OS Siemreap", "Khmer Sangam MN", Georgia, serif
 ```
 
 Interface stack:
@@ -77,15 +76,15 @@ Use CSS variables from `app/globals.css`. New UI must use semantic tokens instea
 
 | Token | Light value | Use |
 | --- | --- | --- |
-| `--concrete` | `#e8e0d0` | Site background |
-| `--paper` | `#f7f4ec` | Content surfaces |
-| `--carbon` | `#171815` | Primary text, strong borders, primary actions |
-| `--muted` | `#6d6659` | Supporting text |
-| `--vermilion` | `#c33d2e` | Active state, errors, structural emphasis |
+| `--concrete` | `#ded5c3` | Site background |
+| `--paper` | `#f3ead5` | Content surfaces |
+| `--carbon` | `#292521` | Primary text, strong borders, primary actions |
+| `--muted` | `#706858` | Supporting text |
+| `--vermilion` | `#a63d35` | Active state, errors, structural emphasis |
 | `--indigo` | `#18314a` | Institutional contrast and secondary emphasis |
-| `--rule` | `#bdb2a0` | Thin dividers and quiet borders |
+| `--rule` | `#aaa08d` | Thin dividers and quiet borders |
 
-Dark-mode values remain defined through the same tokens. Do not add light-only colors without a dark-mode pair.
+Site uses light mode only. Keep new colors within this token set.
 
 ### Spacing and layout
 
@@ -111,7 +110,7 @@ Dark-mode values remain defined through the same tokens. Do not add light-only c
 - Default divider: `--border-thin` with `--rule`.
 - Structural divider: `--border-strong` with `--carbon`.
 - Archive records, forms, metadata rails, buttons, and inputs use square corners.
-- Rounded shapes are limited to temporary controls and media: account controls, language/theme controls, mobile navigation controls, hero media, and status indicators.
+- Rounded shapes are limited to temporary controls and media: account controls, language controls, mobile navigation controls, hero media, and status indicators.
 - Shadows are limited to temporary elevated UI: account menu, mobile drawer, and hero surface. No shadow on archive rows, fields, or ordinary content panels.
 - Primary control height uses `--control-height`. Use `--focus-ring` for visible keyboard focus.
 
@@ -153,7 +152,7 @@ Dark-mode values remain defined through the same tokens. Do not add light-only c
 - Search labels stay explicit.
 - Error text must stay connected to its control through `aria-describedby`.
 - Color cannot be only status signal; use text, structure, or icons too.
-- Color contrast must remain readable in light and dark mode.
+- Color contrast must remain readable in light mode.
 - Honor `prefers-reduced-motion`.
 - Keep Khmer text intact. Never transliterate, strip, or uppercase it.
 

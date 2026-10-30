@@ -1,7 +1,7 @@
 import { entryFields, provinces, schoolLevels } from "../lib/entry-form.js";
 
 const styles = {
-  field: { display: "grid", gap: "var(--space-2)" }, label: { fontWeight: 700 }, control: { width: "100%", padding: "13px", border: "1px solid var(--rule)", borderRadius: 0, color: "var(--carbon)", background: "var(--paper)", font: "inherit" }, textarea: { resize: "vertical" }, help: { margin: 0, fontSize: "0.9rem", color: "var(--muted)" }, error: { margin: 0, fontSize: "0.9rem", color: "var(--vermilion)" },
+  field: { display: "grid", gap: "var(--space-2)" }, label: { fontFamily: "var(--font-interface)", fontSize: "var(--text-label)", fontWeight: 750, letterSpacing: ".035em" }, control: { width: "100%", padding: "13px", border: "1px solid var(--rule)", borderRadius: 0, color: "var(--carbon)", background: "var(--paper)", font: "inherit" }, textarea: { resize: "vertical" }, help: { margin: 0, fontSize: "0.9rem", color: "var(--muted)" }, error: { margin: 0, fontSize: "0.9rem", color: "var(--vermilion)" },
 };
 
 export default function EntryFields({ values, errors, form, onChange, names }) {

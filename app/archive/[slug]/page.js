@@ -7,6 +7,10 @@ import { getEntries, getEntryBySlug } from "../../../lib/entries.js";
 import { normalizeLanguage } from "../../../lib/language.js";
 import { getTranslation } from "../../../lib/translations.js";
 
+const styles = {
+  shell: { paddingTop: "42px" }, detail: { borderTop: "2px solid var(--carbon)", paddingTop: "18px" }, title: { maxWidth: "980px", margin: "18px 0 0", fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 800, lineHeight: .82, letterSpacing: ".015em" }, photo: { display: "block", width: "100%", maxHeight: "680px", marginTop: "32px", padding: "5px", border: "1px solid var(--rule)", background: "var(--paper)", objectFit: "cover", filter: "saturate(.76) sepia(.15)" }, grid: { display: "grid", gridTemplateColumns: "var(--layout-rail) minmax(0, 1fr)", gap: "calc(var(--space-8) + 10px)", marginTop: "46px", borderTop: "1px solid var(--rule)", paddingTop: "28px" }, catalog: { display: "grid", gap: "18px", margin: 0 }, catalogItem: { borderTop: "1px solid var(--rule)", paddingTop: "10px" }, catalogValue: { margin: "7px 0 0", color: "var(--muted)" }, box: { marginTop: "32px", borderTop: "2px solid var(--carbon)", paddingTop: "14px" }, sectionTitle: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-section)", fontWeight: 800, lineHeight: .9 }, text: { marginBottom: 0, color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 }, story: { maxWidth: "var(--layout-reading)" }, storySection: { paddingBottom: "34px", marginBottom: "34px", borderBottom: "1px solid var(--rule)" }, block: { paddingTop: "56px" }, heading: { display: "grid", gridTemplateColumns: "max-content 1fr", gap: "30px", alignItems: "start", marginBottom: "18px", borderTop: "2px solid var(--carbon)", paddingTop: "16px" }, list: { borderTop: "1px solid var(--carbon)" },
+};
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export const fetchCache = "force-no-store";
@@ -39,48 +43,48 @@ export default async function MemoryDetailPage({ params }) {
     .slice(0, 2);
 
   return (
-    <main className="page-shell detail-shell">
-      <article className="memory-detail">
-        <h1>{entry.title}</h1>
-        {entry.photo_url ? <img className="entry-photo" src={entry.photo_url} alt={entry.image_description} /> : null}
+    <main className="page-shell detail-shell" style={styles.shell}>
+      <article className="memory-detail" style={styles.detail}>
+        <h1 style={styles.title}>{entry.title}</h1>
+        {entry.photo_url ? <img className="entry-photo" style={styles.photo} src={entry.photo_url} alt={entry.image_description} /> : null}
         {user?.id === entry.owner_id ? <EntryActions id={entry.id} slug={entry.slug} language={language} /> : null}
-        <div className="detail-grid">
+        <div className="detail-grid" style={styles.grid}>
           <aside className="detail-rail">
-            <dl className="catalog-grid">
-              <div>
+            <dl className="catalog-grid" style={styles.catalog}>
+              <div style={styles.catalogItem}>
                 <dt>{t.sharedBy}</dt>
-                <dd>{entry.display_name || t.anonymous}</dd>
+                <dd style={styles.catalogValue}>{entry.display_name || t.anonymous}</dd>
               </div>
-              <div>
+              <div style={styles.catalogItem}>
                 <dt>{t.year}</dt>
-                <dd>{entry.memory_year}</dd>
+                <dd style={styles.catalogValue}>{entry.memory_year}</dd>
               </div>
-              <div>
+              <div style={styles.catalogItem}>
                 <dt>{t.province}</dt>
-                <dd>{entry.province}</dd>
+                <dd style={styles.catalogValue}>{entry.province}</dd>
               </div>
-              <div>
+              <div style={styles.catalogItem}>
                 <dt>{t.schoolLevel}</dt>
-                <dd>{translation.form.levels[entry.school_level] || entry.school_level?.replace("_", " ")}</dd>
+                <dd style={styles.catalogValue}>{translation.form.levels[entry.school_level] || entry.school_level?.replace("_", " ")}</dd>
               </div>
             </dl>
-            {entry.place_time_details ? <section className="object-box"><h2>{t.moreDetails}</h2><p>{entry.place_time_details}</p></section> : null}
+            {entry.place_time_details ? <section className="object-box" style={styles.box}><h2 style={styles.sectionTitle}>{t.moreDetails}</h2><p style={styles.text}>{entry.place_time_details}</p></section> : null}
           </aside>
 
-          <div className="detail-story">
-            <section className="story-section">
-              <h2>{t.memory}</h2>
-              <p>{entry.story}</p>
+          <div className="detail-story" style={styles.story}>
+            <section className="story-section" style={styles.storySection}>
+              <h2 style={styles.sectionTitle}>{t.memory}</h2>
+              <p style={styles.text}>{entry.story}</p>
             </section>
           </div>
         </div>
       </article>
 
-      <section className="section-block">
-        <div className="section-heading">
-          <h2>{t.continue}</h2>
+      <section className="section-block" style={styles.block}>
+        <div className="section-heading" style={styles.heading}>
+          <h2 style={styles.sectionTitle}>{t.continue}</h2>
         </div>
-        <div className="record-list compact-list">
+        <div className="record-list compact-list" style={styles.list}>
           {relatedEntries.map((relatedEntry, index) => (
             <EntryCard
               key={relatedEntry.slug}

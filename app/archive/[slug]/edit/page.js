@@ -7,6 +7,12 @@ import { normalizeLanguage } from "../../../../lib/language.js";
 import { createClient } from "../../../../lib/supabase/server.js";
 import { getTranslation } from "../../../../lib/translations.js";
 
+const styles = {
+  shell: { maxWidth: "var(--layout-form)", paddingBottom: "80px" },
+  header: { padding: "54px 0 36px" },
+  title: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 800, lineHeight: .82, letterSpacing: ".015em" },
+};
+
 export const metadata = { title: "Edit entry" };
 
 export default async function EditEntryPage({ params }) {
@@ -17,7 +23,7 @@ export default async function EditEntryPage({ params }) {
   const t = getTranslation(language).contributor;
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
   if (!data.user || data.user.id !== entry.owner_id) {
-    return <main className="page-shell form-shell"><h1>{t.entryUnavailable}</h1><p>{t.ownerOnly}</p><Link href={`/archive/${slug}`}>{t.returnToEntry}</Link></main>;
+    return <main className="page-shell form-shell" style={styles.shell}><header style={styles.header}><h1 style={styles.title}>{t.entryUnavailable}</h1></header><p>{t.ownerOnly}</p><Link href={`/archive/${slug}`}>{t.returnToEntry}</Link></main>;
   }
-  return <main className="page-shell form-shell"><h1>{t.editTitle}</h1><EntryForm entry={entry} language={language} /></main>;
+  return <main className="page-shell form-shell" style={styles.shell}><header style={styles.header}><h1 style={styles.title}>{t.editTitle}</h1></header><EntryForm entry={entry} language={language} /></main>;
 }

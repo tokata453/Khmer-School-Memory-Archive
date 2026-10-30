@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { getTranslation } from "../lib/translations.js";
 import { normalizeLanguage } from "../lib/language.js";
 
-const styles = { toggle: { display: "inline-flex", minHeight: "44px", overflow: "hidden", border: "1px solid var(--rule)", borderRadius: "16px", background: "var(--paper)", fontFamily: "var(--font-interface)", fontSize: "0.72rem", fontWeight: 800 }, button: { minHeight: "42px", border: 0, padding: "0 10px", background: "transparent", color: "var(--carbon)", font: "inherit", cursor: "pointer" }, secondButton: { borderLeft: "1px solid var(--rule)" }, active: { background: "var(--carbon)", color: "var(--paper)" } };
+const styles = { toggle: { display: "inline-flex", minHeight: "40px", overflow: "hidden", border: "1px solid var(--rule)", borderRadius: 0, background: "var(--paper)", fontFamily: "var(--font-interface)", fontSize: "0.72rem", fontWeight: 800 }, button: { minHeight: "38px", border: 0, padding: "0 10px", background: "transparent", color: "var(--carbon)", font: "inherit", cursor: "pointer" }, secondButton: { borderLeft: "1px solid var(--rule)" }, active: { background: "var(--carbon)", color: "var(--paper)" } };
 
 export default function LanguageToggle({ language = "en" }) {
   const router = useRouter();

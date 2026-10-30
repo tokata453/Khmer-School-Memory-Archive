@@ -6,9 +6,8 @@ import { useEffect, useId, useRef, useState } from "react";
 import NavLink from "./NavLink.js";
 import LanguageToggle from "./LanguageToggle.js";
 import LogoutButton from "./LogoutButton.js";
-import ThemeToggle from "./ThemeToggle.js";
 
-const styles = { nav: { display: "none" }, iconButton: { display: "grid", width: "44px", minHeight: "44px", placeItems: "center", border: 0, borderRadius: "16px", background: "transparent", color: "var(--carbon)", font: "inherit", cursor: "pointer" }, endButton: { justifySelf: "end" }, backdrop: { position: "fixed", inset: 0, zIndex: 30, border: 0, background: "rgba(23, 24, 21, 0.46)", cursor: "pointer" }, drawer: { position: "fixed", inset: "0 0 0 auto", zIndex: 31, display: "flex", width: "min(340px, 88vw)", flexDirection: "column", gap: "26px", padding: "18px", borderLeft: "1px solid var(--rule)", background: "var(--paper)", boxShadow: "-20px 0 60px rgba(23, 24, 21, 0.24)" }, links: { display: "grid", gap: "12px" }, tools: { display: "grid", gap: "12px", marginTop: "auto" }, account: { display: "inline-flex", width: "100%", minWidth: 0, minHeight: "44px", gap: "8px", alignItems: "center", padding: "0 18px", borderRadius: "16px", background: "var(--carbon)", color: "var(--paper)", fontSize: "0.86rem", fontWeight: 800, textDecoration: "none" }, status: { display: "flex", width: "100%", minWidth: 0, flexWrap: "nowrap", gap: "8px", alignItems: "center" }, chip: { display: "inline-flex", width: "100%", minWidth: 0, minHeight: "44px", gap: "8px", alignItems: "center", padding: "0 18px", borderRadius: "16px", fontSize: "0.86rem", fontWeight: 800 }, email: { maxWidth: "180px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } };
+const styles = { nav: { display: "none" }, iconButton: { display: "grid", width: "40px", minHeight: "40px", placeItems: "center", border: "1px solid transparent", borderRadius: 0, background: "transparent", color: "var(--carbon)", font: "inherit", cursor: "pointer" }, endButton: { justifySelf: "end" }, backdrop: { position: "fixed", inset: 0, zIndex: 30, border: 0, background: "rgba(41, 37, 33, .48)", cursor: "pointer" }, drawer: { position: "fixed", inset: "0 0 0 auto", zIndex: 31, display: "flex", width: "min(340px, 88vw)", flexDirection: "column", gap: "26px", padding: "18px", borderLeft: "2px solid var(--carbon)", background: "var(--paper)", boxShadow: "-10px 0 0 rgba(41, 37, 33, .14)" }, links: { display: "grid", gap: "12px" }, tools: { display: "grid", gap: "12px", marginTop: "auto" }, account: { display: "inline-flex", width: "100%", minWidth: 0, minHeight: "40px", gap: "8px", alignItems: "center", padding: "0 13px", borderRadius: 0, background: "var(--carbon)", color: "var(--paper)", fontSize: "0.86rem", fontWeight: 800, textDecoration: "none" }, status: { display: "flex", width: "100%", minWidth: 0, flexWrap: "nowrap", gap: "8px", alignItems: "center" }, chip: { display: "inline-flex", width: "100%", minWidth: 0, minHeight: "40px", gap: "8px", alignItems: "center", padding: "0 13px", borderRadius: 0, fontSize: "0.86rem", fontWeight: 800 }, email: { maxWidth: "180px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } };
 
 export default function MobileNav({ links, userEmail, language, labels }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -83,7 +82,6 @@ export default function MobileNav({ links, userEmail, language, labels }) {
                     </span>
                     <LogoutButton />
                   </span>
-                  <ThemeToggle variant="menu" />
                 </>
               ) : (
                 <Link className="account-button" style={styles.account} href="/login" onClick={closeDrawer}>

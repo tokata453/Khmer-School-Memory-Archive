@@ -3,10 +3,10 @@ import Link from "next/link";
 const styles = {
   card: { display: "grid", gridTemplateColumns: "70px 220px minmax(0, 1fr) 90px", gap: "24px", padding: "22px 0", borderBottom: "1px solid var(--rule)" },
   cardWithoutImage: { gridTemplateColumns: "70px minmax(0, 1fr) 90px" },
-  number: { margin: 0, color: "var(--vermilion)", fontSize: "var(--text-section)", lineHeight: 0.85, letterSpacing: "-0.025em" },
-  imageLink: { display: "block", aspectRatio: "4 / 3", background: "var(--paper)" },
+  number: { margin: 0, color: "var(--vermilion)", fontFamily: "var(--font-display)", fontSize: "calc(var(--text-section) * 1.15)", lineHeight: 0.85, letterSpacing: ".02em" },
+  imageLink: { display: "block", aspectRatio: "4 / 3", background: "var(--paper)", border: "1px solid var(--rule)", padding: "4px" },
   image: { display: "block", width: "100%", height: "100%", objectFit: "cover" },
-  content: { minWidth: 0 }, title: { margin: "8px 0 0", fontSize: "var(--text-section)", fontWeight: 500, lineHeight: 0.98, letterSpacing: "-0.02em" },
+  content: { minWidth: 0 }, title: { margin: "8px 0 0", fontSize: "var(--text-section)", fontWeight: 600, lineHeight: 1, letterSpacing: "-0.02em" },
   excerpt: { maxWidth: "690px", margin: "14px 0 0" }, meta: { display: "flex", flexWrap: "wrap", gap: "4px 14px", marginTop: "12px", alignContent: "flex-start", color: "var(--indigo)", fontFamily: "var(--font-interface)", fontSize: "var(--text-label)", fontWeight: 700, letterSpacing: "0.045em", textTransform: "uppercase" },
   action: { alignSelf: "start", textAlign: "right" }, textLink: { color: "var(--carbon)", borderBottom: "2px solid var(--carbon)", fontFamily: "var(--font-interface)", fontSize: "var(--text-label)", fontWeight: 700, letterSpacing: "0.045em", textTransform: "uppercase", textDecoration: "none" },
 };

@@ -39,8 +39,7 @@ const styles = {
 
 export const metadata = { title: "Contribute" };
 
-export default async function ContributePage({ searchParams }) {
-  const { submitted } = await searchParams;
+export default async function ContributePage() {
   const supabase = await createClient();
   const [{ data }, cookieStore] = await Promise.all([
     supabase ? supabase.auth.getUser() : { data: { user: null } },
@@ -57,11 +56,6 @@ export default async function ContributePage({ searchParams }) {
         <h1 style={styles.title}>{t.addTitle}</h1>
         <p style={styles.intro}>{t.addIntro}</p>
       </header> : null}
-      {submitted === "1" ? (
-        <p className="form-notice" style={styles.notice} role="status">
-          {t.submitted}
-        </p>
-      ) : null}
       {data.user ? (
         <EntryForm intro={t.addIntro} language={language} title={t.addTitle} />
       ) : (

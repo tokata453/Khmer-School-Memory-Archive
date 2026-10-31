@@ -355,6 +355,14 @@ button {
   z-index: 1;
   filter: sepia(0.12) saturate(0.84) contrast(0.96);
 }
+.detail-photo-frame {
+  background: #dfceb0;
+}
+.detail-photo-background {
+  filter: blur(14px) sepia(0.12) saturate(0.84) contrast(0.96);
+  opacity: 0.72;
+  transform: scale(1.08);
+}
 .entry-content {
   padding: 20px !important;
 }
@@ -547,6 +555,76 @@ button {
   border-radius: 2px !important;
   background: #fffdf5 !important;
 }
+.form-field.has-error label,
+.form-field.has-error .field-error {
+  color: var(--vermilion) !important;
+}
+.form-field.has-error input,
+.form-field.has-error textarea,
+.form-field.has-error .combo-box-input,
+.photo-upload.has-error .photo-upload-box {
+  border-color: var(--vermilion) !important;
+  background: #fff1eb !important;
+}
+.field-error,
+.form-validation-summary {
+  margin: 0;
+  color: var(--vermilion);
+  font-weight: 700;
+}
+.form-validation-summary {
+  padding: 12px 14px;
+  border-left: 4px solid var(--vermilion);
+  background: #fff1eb;
+}
+.toast {
+  position: fixed;
+  z-index: 100;
+  top: 88px;
+  left: 50%;
+  display: flex;
+  width: min(calc(100% - 32px), 960px);
+  align-items: center;
+  gap: var(--space-3);
+  padding: 12px 14px 12px 18px;
+  border: 1px solid var(--carbon);
+  border-left: 5px solid var(--gold);
+  background: var(--paper);
+  box-shadow: 4px 5px 0 rgba(117, 100, 77, 0.2);
+  transform: translateX(-50%);
+}
+.toast-error {
+  border-left-color: var(--vermilion);
+}
+.toast p {
+  flex: 1;
+  margin: 0;
+  line-height: 1.4;
+}
+.toast-action,
+.toast-close {
+  flex: none;
+  border: 1px solid var(--carbon);
+  color: var(--paper);
+  background: var(--carbon);
+  font: inherit;
+  font-family: var(--font-interface);
+  font-weight: 700;
+  text-decoration: none;
+}
+.toast-action {
+  padding: 7px 10px;
+  white-space: nowrap;
+}
+.toast-close {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  color: var(--carbon);
+  background: transparent;
+  font-size: 1.35rem;
+  line-height: 1;
+}
 .photo-upload-box {
   border: 1px dashed var(--gold) !important;
   border-radius: 2px !important;
@@ -557,6 +635,15 @@ button {
 .photo-upload-box:hover {
   border-color: var(--carbon) !important;
   background: var(--concrete) !important;
+}
+.photo-upload.has-error:focus-within .photo-upload-box,
+.photo-upload.has-error .photo-upload-box:hover {
+  border-color: var(--vermilion) !important;
+  background: #fff1eb !important;
+}
+.photo-upload.is-disabled .photo-upload-box {
+  cursor: not-allowed;
+  opacity: 0.68;
 }
 .photo-upload-background {
   position: absolute;
@@ -721,6 +808,22 @@ button {
   }
 }
 @media (max-width: 700px) {
+  .toast {
+    top: 82px;
+    align-items: start;
+    flex-wrap: wrap;
+  }
+  .toast p {
+    min-width: calc(100% - 44px);
+  }
+  .toast-action {
+    margin-left: auto;
+  }
+  .toast-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+  }
   .home-hero {
     min-height: 0;
     padding: 52px 14px;

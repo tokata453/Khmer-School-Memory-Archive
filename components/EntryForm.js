@@ -12,6 +12,7 @@ import {
 import { getTranslation } from "../lib/translations.js";
 import EntryFields from "./EntryFields.js";
 import PhotoUpload from "./PhotoUpload.js";
+import Toast from "./Toast.js";
 
 const styles = {
   heroContent: {
@@ -57,7 +58,6 @@ const styles = {
     letterSpacing: "0.045em",
     textTransform: "uppercase",
   },
-  message: { margin: 0, fontSize: "0.9rem", color: "var(--vermilion)" },
   button: {
     width: "fit-content",
     minHeight: "var(--control-height)",
@@ -79,10 +79,17 @@ export default function EntryForm({ entry = null, intro, language, title }) {
   const [values, setValues] = useState(() => entryValues(entry));
   const [photo, setPhoto] = useState(null);
   const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState("");
   const [saving, setSaving] = useState(false);
+  const [toast, setToast] = useState(null);
+  const [photoVersion, setPhotoVersion] = useState(0);
 
   function updateValue(event) {
+    setErrors((current) => {
+      if (!current[event.target.name]) return current;
+      const next = { ...current };
+      delete next[event.target.name];
+      return next;
+    });
     setValues((current) => ({
       ...current,
       [event.target.name]: event.target.value,
@@ -106,10 +113,14 @@ export default function EntryForm({ entry = null, intro, language, title }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (saving) return;
     const nextErrors = validateEntry(values, photo, !entry?.photo_url, form);
     setErrors(nextErrors);
-    setMessage("");
-    if (Object.keys(nextErrors).length) return;
+    if (Object.keys(nextErrors).length) {
+      const firstError = Object.keys(nextErrors)[0];
+      requestAnimationFrame(() => document.getElementById(firstError === "photo" ? "photo-upload" : firstError)?.focus());
+      return;
+    }
     setSaving(true);
     try {
       const supabase = createClient();
@@ -157,14 +168,27 @@ export default function EntryForm({ entry = null, intro, language, title }) {
       if (error) throw error;
       if (!data) {
         console.error("Entry change returned no row; RLS may have refused it.");
-        setMessage(form.notSaved);
+        setToast({ type: "error", message: form.notSaved, closeLabel: form.closeToast });
         return;
       }
-      router.push(entryRedirectPath(data));
-      router.refresh();
+      if (entry) {
+        router.push(entryRedirectPath(data));
+        router.refresh();
+      } else {
+        setValues(entryValues(null));
+        setPhoto(null);
+        setPhotoVersion((current) => current + 1);
+        setErrors({});
+        setToast({
+          type: "success",
+          message: getTranslation(language).contributor.submitted,
+          action: { href: "/my-entries", label: form.viewMyEntries },
+          closeLabel: form.closeToast,
+        });
+      }
     } catch (error) {
       console.error("Could not save entry", error);
-      setMessage(form.saveFailed);
+      setToast({ type: "error", message: form.saveFailed, closeLabel: form.closeToast });
     } finally {
       setSaving(false);
     }
@@ -175,7 +199,9 @@ export default function EntryForm({ entry = null, intro, language, title }) {
       className={`entry-form${title ? " entry-form-create" : ""}`}
       onSubmit={handleSubmit}
       noValidate
+      aria-busy={saving}
     >
+      <Toast toast={toast} onClose={() => setToast(null)} />
       {title ? (
         <header className="page-hero compact-hero archive-hero form-hero form-action-hero">
           <div className="form-action-hero-content" style={styles.heroContent}>
@@ -205,10 +231,20 @@ export default function EntryForm({ entry = null, intro, language, title }) {
             style={{ ...styles.column, ...styles.leftColumn }}
           >
             <PhotoUpload
+              key={photoVersion}
               entry={entry}
               error={errors.photo}
               form={form}
-              onChange={setPhoto}
+              onChange={(file) => {
+                setErrors((current) => {
+                  if (!current.photo) return current;
+                  const next = { ...current };
+                  delete next.photo;
+                  return next;
+                });
+                setPhoto(file);
+              }}
+              disabled={saving}
             />
             <EntryFields
               language={language}
@@ -217,6 +253,7 @@ export default function EntryForm({ entry = null, intro, language, title }) {
               form={form}
               onChange={updateValue}
               names={["image_description"]}
+              disabled={saving}
             />
             <p className="form-section-label" style={styles.label}>
               {form.archiveDetails}
@@ -228,6 +265,7 @@ export default function EntryForm({ entry = null, intro, language, title }) {
               errors={errors}
               form={form}
               onChange={updateValue}
+              disabled={saving}
               names={[
                 "province",
                 "school_level",
@@ -248,12 +286,9 @@ export default function EntryForm({ entry = null, intro, language, title }) {
               form={form}
               onChange={updateValue}
               names={["title", "story"]}
+              disabled={saving}
             />
-            {message ? (
-              <p className="form-message" style={styles.message} role="alert">
-                {message}
-              </p>
-            ) : null}
+            {Object.keys(errors).length ? <p className="form-validation-summary" role="alert">{form.validationSummary}</p> : null}
             {title ? null : (
               <button
                 className="primary-button"

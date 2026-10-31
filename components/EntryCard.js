@@ -3,8 +3,8 @@ import Link from "next/link";
 const styles = {
   card: { display: "flex", flexDirection: "column", minWidth: 0 },
   imageLink: { display: "grid", height: "260px" },
-  background: { gridArea: "1 / 1", backgroundImage: "var(--entry-image)", backgroundPosition: "center", backgroundSize: "cover" },
-  image: { gridArea: "1 / 1", display: "block", width: "100%", height: "100%", objectFit: "contain" },
+  background: { position: "absolute", inset: 0, backgroundImage: "var(--entry-image)", backgroundPosition: "center", backgroundSize: "cover" },
+  image: { position: "absolute", inset: 0, zIndex: 1, display: "block", width: "100%", height: "100%", maxWidth: "100%", maxHeight: "100%", objectFit: "contain", objectPosition: "center" },
   content: { display: "flex", flex: 1, flexDirection: "column", minWidth: 0 },
   catalog: { display: "flex", justifyContent: "space-between", gap: "12px" },
   title: { margin: "10px 0 0" },

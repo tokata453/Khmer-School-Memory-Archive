@@ -74,7 +74,7 @@ const styles = {
   error: { margin: 0, fontSize: "0.9rem", color: "var(--vermilion)" },
 };
 
-export default function PhotoUpload({ entry, error, form, onChange }) {
+export default function PhotoUpload({ entry, error, form, onChange, disabled }) {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [dragging, setDragging] = useState(false);
 
@@ -94,12 +94,14 @@ export default function PhotoUpload({ entry, error, form, onChange }) {
   }
 
   function selectPhoto(event) {
+    if (disabled) return;
     setPhoto(event.target.files?.[0] || null);
   }
 
   function handleDrop(event) {
     event.preventDefault();
     setDragging(false);
+    if (disabled) return;
     setPhoto(event.dataTransfer.files?.[0] || null);
   }
 
@@ -107,7 +109,7 @@ export default function PhotoUpload({ entry, error, form, onChange }) {
   const helpId = error ? "photo-error" : "photo-help";
 
   return (
-    <section className="photo-upload" style={styles.upload}>
+    <section className={`photo-upload${error ? " has-error" : ""}${disabled ? " is-disabled" : ""}`} style={styles.upload} id="photo-upload" tabIndex={error ? -1 : undefined}>
       <label
         className="photo-upload-label"
         style={styles.label}
@@ -124,10 +126,11 @@ export default function PhotoUpload({ entry, error, form, onChange }) {
         required={!entry?.photo_url}
         aria-invalid={Boolean(error)}
         aria-describedby={helpId}
+        disabled={disabled}
         onChange={selectPhoto}
       />
       <label className="photo-upload-box" style={{ ...styles.box, ...(dragging ? styles.activeBox : {}) }} htmlFor="photo"
-        onDragEnter={(event) => { event.preventDefault(); setDragging(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={() => setDragging(false)} onDrop={handleDrop}>
+        onDragEnter={(event) => { event.preventDefault(); if (!disabled) setDragging(true); }} onDragOver={(event) => event.preventDefault()} onDragLeave={() => setDragging(false)} onDrop={handleDrop}>
         {imageUrl ? (
           <>
             <span className="photo-upload-background" style={{ "--photo-image": `url("${imageUrl}")` }} aria-hidden="true" />

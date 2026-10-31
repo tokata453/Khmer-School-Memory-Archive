@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { filterComboBoxOptions } from "../lib/combo-box.js";
 
-export default function ComboBox({ id, name, value, options, placeholder, noResultsLabel, required, ariaInvalid, ariaDescribedBy, onChange }) {
+export default function ComboBox({ id, name, value, options, placeholder, noResultsLabel, required, disabled, ariaInvalid, ariaDescribedBy, onChange }) {
   const listboxId = useId();
   const root = useRef(null);
   const selected = options.find((option) => option.value === value);
@@ -13,13 +13,14 @@ export default function ComboBox({ id, name, value, options, placeholder, noResu
   const filtered = filterComboBoxOptions(options, text);
 
   useEffect(() => setText(selected?.label || ""), [selected?.label]);
+  useEffect(() => { if (disabled) setOpen(false); }, [disabled]);
   useEffect(() => {
     function close(event) { if (!root.current?.contains(event.target)) setOpen(false); }
     document.addEventListener("mousedown", close);
     return () => document.removeEventListener("mousedown", close);
   }, []);
 
-  function choose(option) { onChange(option.value); setText(option.label); setOpen(false); setActive(-1); }
+  function choose(option) { if (disabled) return; onChange(option.value); setText(option.label); setOpen(false); setActive(-1); }
   function handleChange(event) { const next = event.target.value; setText(next); setOpen(true); setActive(-1); if (!next) onChange(""); }
   function handleKeyDown(event) {
     if (event.key === "Escape") { setOpen(false); setText(selected?.label || ""); return; }
@@ -32,7 +33,7 @@ export default function ComboBox({ id, name, value, options, placeholder, noResu
 
   return <div className="combo-box" ref={root}>
     <input type="hidden" name={name} value={value} />
-    <input id={id} className="combo-box-input" role="combobox" aria-autocomplete="list" aria-controls={listboxId} aria-expanded={open} aria-activedescendant={active >= 0 ? `${listboxId}-${active}` : undefined} aria-invalid={ariaInvalid || undefined} aria-describedby={ariaDescribedBy} value={text} placeholder={placeholder} required={required} onChange={handleChange} onFocus={() => setOpen(true)} onClick={() => setOpen(true)} onKeyDown={handleKeyDown} onBlur={handleBlur} />
+    <input id={id} className="combo-box-input" role="combobox" aria-autocomplete="list" aria-controls={listboxId} aria-expanded={open} aria-activedescendant={active >= 0 ? `${listboxId}-${active}` : undefined} aria-invalid={ariaInvalid || undefined} aria-describedby={ariaDescribedBy} value={text} placeholder={placeholder} required={required} disabled={disabled} onChange={handleChange} onFocus={() => setOpen(true)} onClick={() => setOpen(true)} onKeyDown={handleKeyDown} onBlur={handleBlur} />
     {open ? <ul id={listboxId} className="combo-box-list" role="listbox">
       {filtered.length ? filtered.map((option, index) => <li id={`${listboxId}-${index}`} className={index === active ? "is-active" : ""} role="option" aria-selected={option.value === value} key={option.value} onMouseDown={(event) => event.preventDefault()} onClick={() => choose(option)}>{option.label}</li>) : <li className="combo-box-empty" role="status">{noResultsLabel}</li>}
     </ul> : null}

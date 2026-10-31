@@ -320,6 +320,151 @@ button {
 .section-link:hover {
   color: var(--gold);
 }
+.home-section {
+  padding-top: 64px;
+}
+.home-section-intro {
+  max-width: 720px;
+  margin-bottom: 24px;
+}
+.home-section-kicker {
+  margin: 0 0 8px;
+  color: var(--gold);
+  font-family: var(--font-interface);
+  font-size: var(--text-caption);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.home-section h2,
+.home-invitation h2 {
+  margin: 0;
+  color: var(--carbon);
+  font-family: var(--font-display);
+  font-size: var(--text-section);
+  line-height: 1.08;
+}
+.home-section-intro > p:last-child,
+.home-invitation p {
+  color: var(--muted);
+  font-size: var(--text-lead);
+  line-height: 1.7;
+}
+.home-explore-grid,
+.home-process-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--rule);
+  background: var(--rule);
+  list-style: none;
+}
+.home-explore-link,
+.home-process-list li {
+  min-height: 142px;
+  padding: 20px;
+  background: var(--paper);
+}
+.home-explore-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--carbon);
+  text-decoration: none;
+}
+.home-explore-link:hover {
+  background: #fffdf5;
+}
+.home-explore-link span,
+.home-process-list h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-section);
+  line-height: 1.1;
+}
+.home-explore-link strong,
+.home-process-list span {
+  color: var(--gold);
+  font-family: var(--font-interface);
+  font-size: var(--text-label);
+  letter-spacing: 0.05em;
+}
+.home-records-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(220px, 0.6fr);
+  gap: 28px;
+  align-items: start;
+}
+.home-records-grid ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0 0 0 20px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.home-process-list li {
+  min-height: 186px;
+}
+.home-process-list h3 {
+  margin: 40px 0 10px;
+}
+.home-process-list p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.home-action-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 11px 14px;
+  text-decoration: none;
+}
+.home-invitation {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  align-items: center;
+  margin-top: 64px;
+  padding: 32px;
+  border: 1px solid var(--carbon);
+  border-top: 3px double var(--gold);
+  background: var(--carbon);
+}
+.home-invitation h2,
+.home-invitation p {
+  color: var(--paper);
+}
+.home-invitation .home-section-kicker {
+  color: #e7bb75;
+}
+.home-invitation p {
+  max-width: 720px;
+  margin-bottom: 0;
+}
+.home-invitation-actions {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.home-invitation .primary-link {
+  padding: 11px 14px;
+  background: var(--paper) !important;
+  color: var(--carbon) !important;
+  text-decoration: none;
+}
+.secondary-link {
+  padding: 10px 13px;
+  border: 1px solid var(--paper);
+  color: var(--paper);
+  font-family: var(--font-interface);
+  font-weight: 700;
+  text-decoration: none;
+}
+.secondary-link:hover {
+  background: rgba(255, 248, 232, 0.12);
+}
 html[lang="km"] .home-hero-title,
 html[lang="km"] .section-heading h1,
 html[lang="km"] .section-heading h2,
@@ -330,6 +475,13 @@ html[lang="km"] .detail-story h2,
 html[lang="km"] .entry-title {
   font-family: var(--font-content) !important;
   letter-spacing: 0 !important;
+}
+html[lang="km"] .home-section h2,
+html[lang="km"] .home-invitation h2,
+html[lang="km"] .home-explore-link span,
+html[lang="km"] .home-process-list h3 {
+  font-family: var(--font-content);
+  letter-spacing: 0;
 }
 .archive-panel,
 .entry-card,
@@ -902,6 +1054,23 @@ html[lang="km"] .entry-title {
   }
   .home-fact:nth-child(-n + 2) {
     border-bottom: 1px solid var(--rule);
+  }
+  .home-section {
+    padding-top: 48px;
+  }
+  .home-explore-grid,
+  .home-process-list {
+    grid-template-columns: 1fr;
+  }
+  .home-invitation {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 48px;
+    padding: 24px;
+  }
+  .home-records-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
   .filter-row,
   .my-entries-filter-row,

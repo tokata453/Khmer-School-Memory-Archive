@@ -131,14 +131,12 @@ button {
   box-shadow: inset 0 -2px var(--gold);
 }
 .icon-button,
-.language-toggle,
 .account-menu-toggle {
   color: var(--carbon) !important;
   border-color: transparent !important;
   border-radius: 2px !important;
 }
 .icon-button:hover,
-.language-toggle:hover,
 .account-menu-toggle:hover {
   border-color: var(--rule) !important;
   background: rgba(183, 123, 39, 0.1) !important;

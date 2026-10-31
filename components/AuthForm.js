@@ -67,7 +67,7 @@ const styles = {
   switchLink: { color: "var(--carbon)", fontWeight: 700 },
 };
 
-export default function AuthForm({ mode, language }) {
+export default function AuthForm({ mode, language, nextPath = "/" }) {
   const router = useRouter();
   const isSignup = mode === "signup";
   const t = getTranslation(language).auth;
@@ -119,7 +119,7 @@ export default function AuthForm({ mode, language }) {
         document.cookie = `language=${preferredLanguage}; path=/; max-age=31536000; samesite=lax`;
       }
 
-      router.push("/");
+      router.push(nextPath);
       router.refresh();
     } catch {
       setMessage(t.unavailable);
@@ -221,7 +221,7 @@ export default function AuthForm({ mode, language }) {
           {isSignup ? `${t.haveAccount} ` : `${t.needAccount} `}
           <Link
             style={styles.switchLink}
-            href={isSignup ? "/login" : "/signup"}
+            href={`${isSignup ? "/login" : "/signup"}?next=${encodeURIComponent(nextPath)}`}
           >
             {isSignup ? t.login : t.signup}
           </Link>

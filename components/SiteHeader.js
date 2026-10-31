@@ -2,7 +2,6 @@ import Link from "next/link";
 import { LogIn } from "lucide-react";
 import collection from "../collection.config.js";
 import AccountMenu from "./AccountMenu.js";
-import LanguageToggle from "./LanguageToggle.js";
 import MobileNav from "./MobileNav.js";
 import NavLink from "./NavLink.js";
 import { createClient } from "../lib/supabase/server.js";
@@ -48,10 +47,9 @@ export default async function SiteHeader({ language }) {
             {t.header.login}
           </Link>
         )}
-        <LanguageToggle language={language} />
       </section>
 
-      <MobileNav links={links} userEmail={user?.email || ""} userName={user?.user_metadata?.user_name || ""} avatarUrl={user?.user_metadata?.avatar_url || ""} language={language} labels={t.header} />
+      <MobileNav links={links} userEmail={user?.email || ""} userName={user?.user_metadata?.user_name || ""} avatarUrl={user?.user_metadata?.avatar_url || ""} labels={t.header} />
     </header>
   );
 }

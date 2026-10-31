@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import MyEntriesBrowser from "../../components/MyEntriesBrowser.js";
 import { getEntriesByOwner } from "../../lib/entries.js";
@@ -28,6 +29,13 @@ const styles = {
     fontSize: "var(--text-lead)",
     lineHeight: 1.75,
   },
+  heroContent: {
+    display: "grid",
+    gridTemplateColumns: "minmax(0, 1fr) auto",
+    gap: "var(--space-2)",
+    alignItems: "start",
+  },
+  addEntry: { alignSelf: "end", padding: "10px 14px", textDecoration: "none" },
 };
 
 export const metadata = { title: "My entries" };
@@ -48,14 +56,18 @@ export default async function MyEntriesPage() {
 
   return (
     <main className="page-shell">
-      <header
-        className="page-hero compact-hero archive-hero"
-        style={styles.hero}
-      >
-        <h1 style={styles.heroTitle}>
-          {translation.contributor.myEntriesTitle}
-        </h1>
-        <p style={styles.intro}>{translation.contributor.myEntriesIntro}</p>
+      <header className="page-hero compact-hero archive-hero my-entries-action-hero" style={styles.hero}>
+        <div className="my-entries-action-hero-content" style={styles.heroContent}>
+          <h1 className="my-entries-action-title" style={styles.heroTitle}>
+            {translation.contributor.myEntriesTitle}
+          </h1>
+          <p className="my-entries-action-intro" style={styles.intro}>
+            {translation.contributor.myEntriesIntro}
+          </p>
+          <Link className="primary-link my-entries-add-link" style={styles.addEntry} href="/contribute">
+            {translation.form.addEntry}
+          </Link>
+        </div>
       </header>
       <MyEntriesBrowser
         entries={entries}

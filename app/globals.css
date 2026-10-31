@@ -268,7 +268,7 @@ button {
 }
 .home-fact strong {
   color: var(--gold);
-  font-family: var(--font-display);
+  font-family: var(--font-interface);
   font-size: clamp(1.45rem, 2vw, 1.85rem);
 }
 .home-fact span {
@@ -409,17 +409,20 @@ button {
   border-color: var(--rule) !important;
   background: rgba(255, 248, 232, 0.62);
 }
-.my-entries-controls {
+.my-entries-controls,
+.archive-controls {
   display: flex !important;
   flex-wrap: wrap;
   gap: 12px !important;
   align-items: flex-end;
 }
-.my-entries-controls > label {
+.my-entries-controls > label,
+.archive-controls > label {
   flex: 2 1 360px;
   min-width: min(100%, 260px);
 }
-.my-entries-filter-row {
+.my-entries-filter-row,
+.archive-filter-row {
   display: flex !important;
   flex: 3 1 600px;
   flex-wrap: wrap;
@@ -427,16 +430,19 @@ button {
   border: 0 !important;
   background: transparent !important;
 }
-.my-entries-filter-row label {
+.my-entries-filter-row label,
+.archive-filter-row label {
   flex: 1 1 150px;
   min-width: 140px;
 }
 .filter-row label,
-.my-entries-filter-row label {
+.my-entries-filter-row label,
+.archive-filter-row label {
   border-color: var(--rule) !important;
 }
 .filter-row select,
-.my-entries-filter-row select {
+.my-entries-filter-row select,
+.archive-filter-row select {
   background: transparent !important;
 }
 .clear-search:disabled {
@@ -525,6 +531,15 @@ button {
 .form-action-hero .primary-button {
   grid-column: 2;
   align-self: end;
+}
+.my-entries-action-title {
+  grid-column: 1 / -1;
+}
+.my-entries-action-intro {
+  grid-column: 1;
+}
+.my-entries-add-link {
+  grid-column: 2;
 }
 .contribute-grid {
   border-top: 0 !important;
@@ -800,7 +815,8 @@ button {
   .process-grid > div:last-child {
     border-bottom: 0;
   }
-  .my-entries-filter-row {
+  .my-entries-filter-row,
+  .archive-filter-row {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
   .search-controls {
@@ -851,6 +867,7 @@ button {
   }
   .filter-row,
   .my-entries-filter-row,
+  .archive-filter-row,
   .entry-card-grid {
     grid-template-columns: 1fr !important;
   }
@@ -867,9 +884,16 @@ button {
     gap: var(--space-3) !important;
     grid-template-columns: 1fr !important;
   }
+  .my-entries-action-hero-content {
+    gap: var(--space-3) !important;
+    grid-template-columns: 1fr !important;
+  }
   .form-action-title,
   .form-action-intro,
-  .form-action-hero .primary-button {
+  .form-action-hero .primary-button,
+  .my-entries-action-title,
+  .my-entries-action-intro,
+  .my-entries-add-link {
     grid-column: 1;
   }
   .form-action-hero .primary-button {

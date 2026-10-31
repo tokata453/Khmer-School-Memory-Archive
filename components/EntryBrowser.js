@@ -1,85 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import EntryCard from "./EntryCard.js";
 import ComboBox from "./ComboBox.js";
 import { provinces, schoolLevels } from "../lib/entry-form.js";
+import { sortArchiveEntries } from "../lib/archive-browser.js";
 
 const styles = {
   panel: { paddingTop: "0px" },
-  header: {
-    display: "grid",
-    gridTemplateColumns: "1fr auto",
-    gap: "20px",
-    alignItems: "end",
-  },
-  kicker: { display: "none" },
-  title: {
-    margin: "18px 0 0",
-    fontFamily: "var(--font-display)",
-    fontSize: "var(--text-display)",
-    fontWeight: 800,
-    lineHeight: 0.82,
-    letterSpacing: ".015em",
-  },
-  count: {
-    color: "var(--vermilion)",
-    fontFamily: "var(--font-interface)",
-    fontSize: "var(--text-label)",
-    fontWeight: 700,
-    letterSpacing: "0.045em",
-    textTransform: "uppercase",
-  },
-  searchRow: {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "12px",
-    alignItems: "end",
-    margin: "28px 0 34px",
-    padding: "18px 0",
-    borderTop: "2px solid var(--carbon)",
-    borderBottom: "1px solid var(--rule)",
-  },
-  searchGroup: {
-    flex: "2 1 360px",
-    minWidth: "min(100%, 260px)",
-  },
-  searchLabel: {
-    display: "block",
-    marginBottom: "4px",
-    color: "var(--carbon)",
-    fontFamily: "var(--font-interface)",
-    fontSize: "0.9rem",
-    fontWeight: 700,
-  },
-  searchInput: {
-    width: "100%",
-    minHeight: "44px",
-    padding: "10px 0",
-    border: 0,
-    borderBottom: "2px solid var(--carbon)",
-    borderRadius: 0,
-    color: "var(--carbon)",
-    background: "transparent",
-    font: "inherit",
-  },
-  filterLabel: {
-    display: "grid",
-    flex: "1 1 180px",
-    gap: "4px",
-    minWidth: "160px",
-    padding: "0",
-    fontWeight: 700,
-  },
-  select: {
-    width: "100%",
-    padding: "10px 0",
-    border: 0,
-    borderRadius: 0,
-    color: "var(--carbon)",
-    background: "transparent",
-    font: "inherit",
-  },
+  controls: { display: "grid", gap: "16px", margin: "28px 0" },
+  filters: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", border: "1px solid var(--rule)" },
+  label: { display: "grid", gap: "8px", fontFamily: "var(--font-interface)", fontSize: "var(--text-label)", fontWeight: 750, letterSpacing: "0.045em", textTransform: "uppercase" },
+  input: { width: "100%", minHeight: "48px", padding: "10px", border: "1px solid var(--rule)", borderRadius: 0, color: "var(--carbon)", background: "var(--paper)", font: "inherit" },
   list: {},
   empty: {
     padding: "28px 0",
@@ -88,6 +21,7 @@ const styles = {
   },
   emptyTitle: { margin: "0 0 8px", fontSize: "var(--text-section)" },
   emptyText: { color: "var(--muted)" },
+  emptyAction: { display: "inline-block", marginTop: "16px", padding: "10px 14px", textDecoration: "none" },
 };
 
 export default function EntryBrowser({ entries, labels, form, comboBox }) {
@@ -95,6 +29,7 @@ export default function EntryBrowser({ entries, labels, form, comboBox }) {
   const [province, setProvince] = useState("");
   const [schoolLevel, setSchoolLevel] = useState("");
   const [decade, setDecade] = useState("");
+  const [sort, setSort] = useState("newest");
   const normalizedQuery = query.trim().toLowerCase();
 
   useEffect(() => {
@@ -134,10 +69,11 @@ export default function EntryBrowser({ entries, labels, form, comboBox }) {
     );
   });
 
+  const sortedEntries = sortArchiveEntries(filteredEntries, sort);
   const resultLabel =
-    filteredEntries.length === 1
+    sortedEntries.length === 1
       ? labels.oneResult
-      : labels.manyResults.replace("{count}", filteredEntries.length);
+      : labels.manyResults.replace("{count}", sortedEntries.length);
 
   return (
     <section
@@ -145,29 +81,22 @@ export default function EntryBrowser({ entries, labels, form, comboBox }) {
       style={styles.panel}
       aria-labelledby="browse-heading"
     >
-      <div className="search-row archive-search-row" style={styles.searchRow}>
-        <div style={styles.searchGroup}>
-          <label
-            className="search-label"
-            style={styles.searchLabel}
-            htmlFor="entry-search"
-          >
-            {labels.searchLabel}
-          </label>
+      <div className="archive-controls search-row" style={styles.controls}>
+        <label style={styles.label} htmlFor="entry-search">
+          {labels.searchLabel}
           <input
             id="entry-search"
-            className="search-input"
-            style={styles.searchInput}
+            style={styles.input}
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={labels.placeholder}
           />
-        </div>
-
-        <label style={styles.filterLabel}>
-          {labels.province}
-          <ComboBox
+        </label>
+        <div className="archive-filter-row" style={styles.filters}>
+          <label style={styles.label}>
+            {labels.province}
+            <ComboBox
             id="archive-province"
             value={province}
             options={[
@@ -177,11 +106,11 @@ export default function EntryBrowser({ entries, labels, form, comboBox }) {
             placeholder={labels.allProvinces}
             noResultsLabel={comboBox.noOptions}
             onChange={setProvince}
-          />
-        </label>
-        <label style={styles.filterLabel}>
-          {labels.schoolLevel}
-          <ComboBox
+            />
+          </label>
+          <label style={styles.label}>
+            {labels.schoolLevel}
+            <ComboBox
             id="archive-school-level"
             value={schoolLevel}
             options={[
@@ -194,11 +123,11 @@ export default function EntryBrowser({ entries, labels, form, comboBox }) {
             placeholder={labels.allSchoolLevels}
             noResultsLabel={comboBox.noOptions}
             onChange={setSchoolLevel}
-          />
-        </label>
-        <label style={styles.filterLabel}>
-          {labels.decade}
-          <ComboBox
+            />
+          </label>
+          <label style={styles.label}>
+            {labels.decade}
+            <ComboBox
             id="archive-decade"
             value={decade}
             options={[
@@ -216,17 +145,32 @@ export default function EntryBrowser({ entries, labels, form, comboBox }) {
             placeholder={labels.allDecades}
             noResultsLabel={comboBox.noOptions}
             onChange={setDecade}
-          />
-        </label>
+            />
+          </label>
+          <label style={styles.label}>
+            {labels.sort}
+            <ComboBox
+            id="archive-sort"
+            value={sort}
+            options={[
+              { value: "newest", label: labels.newest },
+              { value: "oldest", label: labels.oldest },
+            ]}
+            placeholder={labels.sort}
+            noResultsLabel={comboBox.noOptions}
+            onChange={setSort}
+            />
+          </label>
+        </div>
       </div>
 
-      {filteredEntries.length > 0 ? (
+      {sortedEntries.length > 0 ? (
         <div
           className="entry-card-grid"
           style={styles.list}
           aria-label={labels.entries}
         >
-          {filteredEntries.map((entry) => (
+          {sortedEntries.map((entry) => (
             <EntryCard
               key={entry.slug}
               entry={entry}
@@ -243,6 +187,9 @@ export default function EntryBrowser({ entries, labels, form, comboBox }) {
           <p className="empty-text" style={styles.emptyText}>
             {labels.emptyText}
           </p>
+          <Link className="primary-link" style={styles.emptyAction} href="/contribute">
+            {form.addEntry}
+          </Link>
         </div>
       )}
     </section>

@@ -8,6 +8,7 @@ Khmer School Memory Archive uses a logo-led heritage archive language adapted fo
 
 - Parchment `#f3e6c8` page background, archive paper `#fff8e8` surfaces, ink navy `#173342`, antique gold `#b77b27`, and ledger-brown `#cbb993` rules. Vermilion `#a63d35` remains errors and destructive actions.
 - English display headings use Georgia serif. Interface uses system sans-serif. Khmer text uses Khmer-compatible system fallbacks with normal tracking and generous line height.
+- Data counts and prominent numerals use system interface sans-serif with tabular figures for clean alignment; display headings remain Georgia serif.
 - Sticky translucent archive-paper header, square catalog controls, archive-paper image cards, restrained paper shadows.
 - Page shells fill available screen width with `24px` desktop gutters and `14px` mobile gutters. Listing grids: three columns, then one column below `880px`.
 - Inputs, buttons, cards, and panels use `2px` radius. Thin ledger rules and selected double rules replace rounded UI.

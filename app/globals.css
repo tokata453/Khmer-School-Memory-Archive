@@ -339,9 +339,9 @@ button {
 }
 .entry-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 420px));
-  gap: 28px;
-  justify-content: space-between;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: clamp(16px, 1.5vw, 24px);
+  align-items: start;
 }
 .entry-card {
   overflow: hidden;
@@ -784,7 +784,6 @@ button {
   .header-tools {
     display: none !important;
   }
-  .entry-card-grid,
   .contribute-grid,
   .detail-grid,
   .profile-grid,

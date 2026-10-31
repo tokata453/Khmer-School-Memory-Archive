@@ -42,7 +42,9 @@ const styles = {
     background: "var(--concrete)",
   },
   totalNumber: {
-    fontFamily: "var(--font-display)",
+    fontFamily: "var(--font-interface)",
+    fontVariantNumeric: "tabular-nums",
+    letterSpacing: "-0.03em",
     fontSize: "2.5rem",
     fontWeight: 700,
     lineHeight: 0.9,
@@ -51,7 +53,9 @@ const styles = {
   stat: { display: "flex", gap: "8px", alignItems: "baseline" },
   count: {
     minWidth: "1.5em",
-    fontFamily: "var(--font-display)",
+    fontFamily: "var(--font-interface)",
+    fontVariantNumeric: "tabular-nums",
+    letterSpacing: "-0.03em",
     fontSize: "1.25rem",
     fontWeight: 700,
   },

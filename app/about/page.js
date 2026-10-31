@@ -51,7 +51,9 @@ const styles = {
   lastStep: { borderRight: 0 },
   number: {
     color: "var(--gold)",
-    fontFamily: "var(--font-display)",
+    fontFamily: "var(--font-interface)",
+    fontVariantNumeric: "tabular-nums",
+    letterSpacing: "-0.03em",
     fontSize: "1.25rem",
     fontWeight: 800,
   },
@@ -75,6 +77,7 @@ const styles = {
     display: "block",
     marginBottom: "12px",
     color: "var(--muted)",
+    fontFamily: "var(--font-interface)",
     fontSize: "var(--text-label)",
     fontWeight: 700,
     letterSpacing: ".08em",
@@ -82,7 +85,7 @@ const styles = {
   },
   creditValue: {
     margin: 0,
-    fontFamily: "var(--font-display)",
+    fontFamily: "var(--font-interface)",
     fontSize: "1.2rem",
     fontWeight: 700,
     lineHeight: 1.4,

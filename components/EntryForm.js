@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "../lib/supabase/client.js";
 import {
   entryRedirectPath,
+  entryHasChanges,
   entryValues,
   makeSlug,
   validateEntry,
@@ -71,12 +72,15 @@ const styles = {
     cursor: "pointer",
     textDecoration: "none",
   },
+  actions: { display: "flex", width: "100%", flexWrap: "wrap", gap: "10px", alignItems: "center", justifyContent: "flex-end" },
+  revertButton: { color: "var(--carbon)", background: "var(--paper)" },
 };
 
 export default function EntryForm({ defaultDisplayName = "", entry = null, intro, language, title }) {
   const router = useRouter();
   const form = getTranslation(language).form;
-  const [values, setValues] = useState(() => entryValues(entry, defaultDisplayName));
+  const originalValues = entryValues(entry, defaultDisplayName);
+  const [values, setValues] = useState(originalValues);
   const [photo, setPhoto] = useState(null);
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
@@ -95,6 +99,15 @@ export default function EntryForm({ defaultDisplayName = "", entry = null, intro
       [event.target.name]: event.target.value,
     }));
   }
+
+  function revertChanges() {
+    setValues(originalValues);
+    setPhoto(null);
+    setPhotoVersion((current) => current + 1);
+    setErrors({});
+  }
+
+  const hasChanges = entryHasChanges(values, originalValues, photo);
 
   async function uploadPhoto(supabase, userId) {
     if (!photo) return entry?.photo_url || null;
@@ -213,14 +226,6 @@ export default function EntryForm({ defaultDisplayName = "", entry = null, intro
                 {intro}
               </p>
             ) : null}
-            <button
-              className="primary-button"
-              style={styles.button}
-              type="submit"
-              disabled={saving}
-            >
-              {saving ? form.saving : entry ? form.saveChanges : form.addEntry}
-            </button>
           </div>
         </header>
       ) : null}
@@ -289,20 +294,17 @@ export default function EntryForm({ defaultDisplayName = "", entry = null, intro
               disabled={saving}
             />
             {Object.keys(errors).length ? <p className="form-validation-summary" role="alert">{form.validationSummary}</p> : null}
-            {title ? null : (
+            <div style={styles.actions}>
+              {hasChanges ? <button style={{ ...styles.button, ...styles.revertButton }} type="button" disabled={saving} onClick={revertChanges}>{entry ? form.revert : form.clear}</button> : null}
               <button
                 className="primary-button"
                 style={styles.button}
                 type="submit"
                 disabled={saving}
               >
-                {saving
-                  ? form.saving
-                  : entry
-                    ? form.saveChanges
-                    : form.addEntry}
+                {saving ? form.saving : entry ? form.saveChanges : form.save}
               </button>
-            )}
+            </div>
           </div>
         </div>
       </div>

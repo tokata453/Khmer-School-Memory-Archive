@@ -41,7 +41,7 @@ export default async function SiteHeader({ language }) {
 
       <section className="header-tools" style={styles.tools} aria-label={t.header.tools}>
         {user ? (
-          <AccountMenu userEmail={user.email} />
+          <AccountMenu userEmail={user.email} userName={user.user_metadata?.user_name || ""} avatarUrl={user.user_metadata?.avatar_url || ""} labels={t.header} />
         ) : (
           <Link className="account-button" style={styles.account} href="/login">
             <LogIn size={18} strokeWidth={2.2} aria-hidden="true" />
@@ -51,7 +51,7 @@ export default async function SiteHeader({ language }) {
         <LanguageToggle language={language} />
       </section>
 
-      <MobileNav links={links} userEmail={user?.email || ""} language={language} labels={t.header} />
+      <MobileNav links={links} userEmail={user?.email || ""} userName={user?.user_metadata?.user_name || ""} avatarUrl={user?.user_metadata?.avatar_url || ""} language={language} labels={t.header} />
     </header>
   );
 }

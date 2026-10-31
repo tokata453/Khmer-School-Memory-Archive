@@ -71,20 +71,38 @@ export default function AuthForm({ mode, language }) {
   const router = useRouter();
   const isSignup = mode === "signup";
   const t = getTranslation(language).auth;
+  const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
     setMessage("");
+    if (isSignup && !userName.trim()) {
+      setMessage(t.userNameRequired);
+      return;
+    }
+    if (isSignup && userName.trim().length > 120) {
+      setMessage(t.userNameMaximum);
+      return;
+    }
+    if (isSignup && password !== confirmPassword) {
+      setMessage(t.passwordMismatch);
+      return;
+    }
     setIsSubmitting(true);
 
     try {
       const supabase = createClient();
-      const { error } = isSignup
-        ? await supabase.auth.signUp({ email, password })
+      const { data, error } = isSignup
+        ? await supabase.auth.signUp({
+            email,
+            password,
+            options: { data: { user_name: userName.trim() } },
+          })
         : await supabase.auth.signInWithPassword({ email, password });
 
       if (error) {
@@ -94,6 +112,11 @@ export default function AuthForm({ mode, language }) {
         );
         setMessage(isSignup ? t.signupError : t.loginError);
         return;
+      }
+
+      const preferredLanguage = data?.user?.user_metadata?.preferred_language;
+      if (preferredLanguage === "en" || preferredLanguage === "km") {
+        document.cookie = `language=${preferredLanguage}; path=/; max-age=31536000; samesite=lax`;
       }
 
       router.push("/");
@@ -107,18 +130,34 @@ export default function AuthForm({ mode, language }) {
 
   return (
     <main className="page-shell auth-shell" style={styles.shell}>
-      <header className="page-hero compact-hero archive-hero auth-hero">
-        <h1 style={styles.title} id="auth-title">
-          {isSignup ? t.signupTitle : t.loginTitle}
-        </h1>
-        <p style={styles.intro}>{isSignup ? t.signupIntro : t.loginIntro}</p>
-      </header>
       <section
         className="auth-panel"
         style={styles.panel}
         aria-labelledby="auth-title"
       >
+        <h1 style={styles.title} id="auth-title">
+          {isSignup ? t.signupTitle : t.loginTitle}
+        </h1>
+        <p style={styles.intro}>{isSignup ? t.signupIntro : t.loginIntro}</p>
         <form className="auth-form" style={styles.form} onSubmit={handleSubmit}>
+          {isSignup ? (
+            <>
+              <label style={styles.label} htmlFor="user-name">
+                {t.userName}
+              </label>
+              <input
+                id="user-name"
+                name="user-name"
+                type="text"
+                autoComplete="name"
+                value={userName}
+                onChange={(event) => setUserName(event.target.value)}
+                required
+                maxLength={120}
+                style={styles.input}
+              />
+            </>
+          ) : null}
           <label style={styles.label} htmlFor="email">
             {t.email}
           </label>
@@ -147,6 +186,25 @@ export default function AuthForm({ mode, language }) {
             minLength={6}
             style={styles.input}
           />
+
+          {isSignup ? (
+            <>
+              <label style={styles.label} htmlFor="confirm-password">
+                {t.confirmPassword}
+              </label>
+              <input
+                id="confirm-password"
+                name="confirm-password"
+                type="password"
+                autoComplete="new-password"
+                value={confirmPassword}
+                onChange={(event) => setConfirmPassword(event.target.value)}
+                required
+                minLength={6}
+                style={styles.input}
+              />
+            </>
+          ) : null}
 
           {message ? (
             <p className="auth-message" style={styles.message} role="alert">

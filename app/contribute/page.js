@@ -2,6 +2,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import EntryForm from "../../components/EntryForm.js";
 import { normalizeLanguage } from "../../lib/language.js";
+import { defaultDisplayName } from "../../lib/profile.js";
 import { createClient } from "../../lib/supabase/server.js";
 import { getTranslation } from "../../lib/translations.js";
 
@@ -57,7 +58,12 @@ export default async function ContributePage() {
         <p style={styles.intro}>{t.addIntro}</p>
       </header> : null}
       {data.user ? (
-        <EntryForm intro={t.addIntro} language={language} title={t.addTitle} />
+        <EntryForm
+          defaultDisplayName={defaultDisplayName(data.user.user_metadata)}
+          intro={t.addIntro}
+          language={language}
+          title={t.addTitle}
+        />
       ) : (
         <section className="form-notice" style={styles.notice}>
           <p>{t.loginFirst}</p>

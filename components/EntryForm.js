@@ -73,10 +73,10 @@ const styles = {
   },
 };
 
-export default function EntryForm({ entry = null, intro, language, title }) {
+export default function EntryForm({ defaultDisplayName = "", entry = null, intro, language, title }) {
   const router = useRouter();
   const form = getTranslation(language).form;
-  const [values, setValues] = useState(() => entryValues(entry));
+  const [values, setValues] = useState(() => entryValues(entry, defaultDisplayName));
   const [photo, setPhoto] = useState(null);
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
@@ -175,7 +175,7 @@ export default function EntryForm({ entry = null, intro, language, title }) {
         router.push(entryRedirectPath(data));
         router.refresh();
       } else {
-        setValues(entryValues(null));
+        setValues(entryValues(null, defaultDisplayName));
         setPhoto(null);
         setPhotoVersion((current) => current + 1);
         setErrors({});

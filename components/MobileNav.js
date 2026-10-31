@@ -1,15 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { LogIn, Menu, Search, User, X } from "lucide-react";
+import { LogIn, Menu, Search, X } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import NavLink from "./NavLink.js";
 import LanguageToggle from "./LanguageToggle.js";
 import LogoutButton from "./LogoutButton.js";
+import AccountAvatar from "./AccountAvatar.js";
 
 const styles = { nav: { display: "none" }, iconButton: { display: "grid", width: "40px", minHeight: "40px", placeItems: "center", border: "1px solid transparent", borderRadius: 0, background: "transparent", color: "var(--carbon)", font: "inherit", cursor: "pointer" }, endButton: { justifySelf: "end" }, backdrop: { position: "fixed", inset: 0, zIndex: 30, border: 0, background: "rgba(41, 37, 33, .48)", cursor: "pointer" }, drawer: { position: "fixed", inset: "0 0 0 auto", zIndex: 31, display: "flex", width: "min(340px, 88vw)", flexDirection: "column", gap: "26px", padding: "18px", borderLeft: "2px solid var(--carbon)", background: "var(--paper)", boxShadow: "-10px 0 0 rgba(41, 37, 33, .14)" }, links: { display: "grid", gap: "12px" }, tools: { display: "grid", gap: "12px", marginTop: "auto" }, account: { display: "inline-flex", width: "100%", minWidth: 0, minHeight: "40px", gap: "8px", alignItems: "center", padding: "0 13px", borderRadius: 0, background: "var(--carbon)", color: "var(--paper)", fontSize: "0.86rem", fontWeight: 800, textDecoration: "none" }, status: { display: "flex", width: "100%", minWidth: 0, flexWrap: "nowrap", gap: "8px", alignItems: "center" }, chip: { display: "inline-flex", width: "100%", minWidth: 0, minHeight: "40px", gap: "8px", alignItems: "center", padding: "0 13px", borderRadius: 0, fontSize: "0.86rem", fontWeight: 800 }, email: { maxWidth: "180px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } };
 
-export default function MobileNav({ links, userEmail, language, labels }) {
+export default function MobileNav({ links, userEmail, userName, avatarUrl, language, labels }) {
   const [isOpen, setIsOpen] = useState(false);
   const drawerId = useId();
   const closeButtonRef = useRef(null);
@@ -77,10 +78,11 @@ export default function MobileNav({ links, userEmail, language, labels }) {
                 <>
                   <span className="auth-status" style={styles.status}>
                     <span className="account-chip" style={styles.chip} title={userEmail}>
-                      <User size={18} strokeWidth={2.2} aria-hidden="true" />
-                      <span style={styles.email}>{userEmail}</span>
+                      <AccountAvatar url={avatarUrl} name={userName} size={28} />
+                      <span style={styles.email}>{userName || userEmail}</span>
                     </span>
-                    <LogoutButton />
+                    <Link className="account-button" style={styles.account} href="/profile" onClick={closeDrawer}>{labels.profile}</Link>
+                    <LogoutButton labels={labels} />
                   </span>
                 </>
               ) : (

@@ -164,6 +164,16 @@ button {
   background: var(--paper) !important;
   box-shadow: 4px 5px 0 rgba(117, 100, 77, 0.16) !important;
 }
+.account-avatar {
+  display: block;
+  flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profile-grid input[type="file"] {
+  display: block;
+  margin-top: 6px;
+}
 .home-hero {
   display: grid;
   min-height: 600px;
@@ -780,6 +790,7 @@ button {
   .entry-card-grid,
   .contribute-grid,
   .detail-grid,
+  .profile-grid,
   .process-grid {
     grid-template-columns: 1fr !important;
   }

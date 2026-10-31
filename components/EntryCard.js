@@ -17,7 +17,9 @@ export default function EntryCard({
   labels = { credit: "Shared by", anonymous: "Anonymous" },
   form,
   statusLabel,
+  headingLevel = "h2",
 }) {
+  const Heading = headingLevel;
   const schoolLevel =
     form?.levels[entry.school_level] || entry.school_level?.replace("_", " ");
   const credit = statusLabel || `${labels.credit} ${entry.display_name || labels.anonymous}`;
@@ -44,9 +46,9 @@ export default function EntryCard({
           <span>{schoolLevel}</span>
           <span>{entry.memory_year}</span>
         </div>
-        <h2 className="entry-title" style={styles.title}>
+        <Heading className="entry-title" style={styles.title}>
           <Link href={`/archive/${entry.slug}`}>{entry.title}</Link>
-        </h2>
+        </Heading>
         {entry.image_description ? (
           <p className="entry-excerpt" style={styles.excerpt}>
             {entry.image_description}

@@ -179,7 +179,7 @@ button {
   color: var(--carbon);
   text-align: center;
   background:
-    linear-gradient(rgba(255, 248, 232, 0.79), rgba(243, 230, 200, 0.88)),
+    linear-gradient(rgba(255, 248, 232, 0.72), rgba(243, 230, 200, 0.82)),
     url("/hero-image.jpg") center / cover;
   background-blend-mode: screen, normal;
   border-bottom: 1px solid var(--rule);
@@ -307,6 +307,29 @@ button {
   font-weight: 700 !important;
   letter-spacing: -0.02em !important;
   line-height: 1.08 !important;
+}
+.section-link {
+  flex: none;
+  color: var(--carbon);
+  font-family: var(--font-interface);
+  font-size: var(--text-nav);
+  font-weight: 700;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 4px;
+}
+.section-link:hover {
+  color: var(--gold);
+}
+html[lang="km"] .home-hero-title,
+html[lang="km"] .section-heading h1,
+html[lang="km"] .section-heading h2,
+html[lang="km"] .page-hero h1,
+html[lang="km"] .browser-title,
+html[lang="km"] .archive-panel h2,
+html[lang="km"] .detail-story h2,
+html[lang="km"] .entry-title {
+  font-family: var(--font-content) !important;
+  letter-spacing: 0 !important;
 }
 .archive-panel,
 .entry-card,

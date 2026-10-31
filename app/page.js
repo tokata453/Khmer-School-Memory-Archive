@@ -16,13 +16,13 @@ const styles = {
 };
 
 export default async function Home() {
-  const [entries, featuredEntries, cookieStore] = await Promise.all([
+  const [entries, cookieStore] = await Promise.all([
     getPublishedEntries(),
-    getPublishedEntries({ order: "newest", limit: 4 }),
     cookies(),
   ]);
   const language = normalizeLanguage(cookieStore.get("language")?.value);
   const t = getTranslation(language);
+  const featuredEntries = entries.slice(-4).reverse();
   const memoryYears = entries
     .map((entry) => Number(entry.memory_year))
     .filter((year) => Number.isInteger(year) && year >= 1900);

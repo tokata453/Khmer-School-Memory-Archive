@@ -38,6 +38,8 @@ export default function EntryCard({
             style={styles.image}
             src={entry.photo_url}
             alt={entry.image_description || ""}
+            loading="lazy"
+            decoding="async"
           />
         </Link>
       ) : null}

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "../lib/supabase/client.js";
 import {
   ownPhotoPath,
+  profileHasChanges,
   profileValues,
   validateProfile,
   validateProfileImage,
@@ -41,6 +42,7 @@ const styles = {
   },
   choices: { display: "grid", gap: "8px" },
   message: { margin: 0, fontWeight: 700 },
+  actions: { display: "flex", width: "100%", flexWrap: "wrap", gap: "10px", justifyContent: "flex-end" },
   button: {
     width: "fit-content",
     minHeight: "44px",
@@ -51,6 +53,7 @@ const styles = {
     font: "inherit",
     fontWeight: 700,
   },
+  revertButton: { border: "1px solid var(--carbon)", background: "var(--paper)", color: "var(--carbon)" },
 };
 
 function extensionFor(file) {
@@ -61,14 +64,26 @@ function extensionFor(file) {
 
 export default function ProfileForm({ metadata, email, labels }) {
   const router = useRouter();
-  const [values, setValues] = useState(() => profileValues(metadata));
+  const [originalValues, setOriginalValues] = useState(() => profileValues(metadata));
+  const [values, setValues] = useState(originalValues);
   const [photo, setPhoto] = useState(null);
+  const [photoRemoved, setPhotoRemoved] = useState(false);
+  const [photoVersion, setPhotoVersion] = useState(0);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [saving, setSaving] = useState(false);
   function update(name, value) {
     setValues((current) => ({ ...current, [name]: value }));
   }
+  function revertChanges() {
+    setValues(originalValues);
+    setPhoto(null);
+    setPhotoRemoved(false);
+    setPhotoVersion((current) => current + 1);
+    setErrors({});
+    setMessage("");
+  }
+  const hasChanges = profileHasChanges(values, originalValues, photo, photoRemoved);
   async function save(event) {
     event.preventDefault();
     const nextErrors = { ...validateProfile(values, labels) };
@@ -87,7 +102,7 @@ export default function ProfileForm({ metadata, email, labels }) {
       } = await supabase.auth.getUser();
       if (userError || !user)
         throw userError || new Error("No authenticated user");
-      let avatarUrl = values.avatarUrl;
+      let avatarUrl = photoRemoved ? "" : values.avatarUrl;
       if (photo) {
         uploadedPath = `${user.id}/profile-${crypto.randomUUID()}.${extensionFor(photo)}`;
         const { error } = await supabase.storage
@@ -108,7 +123,7 @@ export default function ProfileForm({ metadata, email, labels }) {
       });
       if (error) throw error;
       const oldPath = ownPhotoPath(values.avatarUrl, user.id);
-      if (photo && oldPath) {
+      if ((photo || photoRemoved) && oldPath) {
         const { error: removeError } = await supabase.storage
           .from("photos")
           .remove([oldPath]);
@@ -117,8 +132,11 @@ export default function ProfileForm({ metadata, email, labels }) {
       }
       document.cookie = `language=${values.preferredLanguage}; path=/; max-age=31536000; samesite=lax`;
       document.documentElement.lang = values.preferredLanguage;
-      setValues((current) => ({ ...current, avatarUrl }));
+      const savedValues = { ...values, userName: values.userName.trim(), avatarUrl };
+      setValues(savedValues);
+      setOriginalValues(savedValues);
       setPhoto(null);
+      setPhotoRemoved(false);
       setMessage(labels.saved);
       router.refresh();
     } catch (error) {
@@ -133,47 +151,23 @@ export default function ProfileForm({ metadata, email, labels }) {
       setSaving(false);
     }
   }
-  async function removePhoto() {
-    setSaving(true);
+  function removePhoto() {
     setMessage("");
-    try {
-      const supabase = createClient();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) throw new Error("No authenticated user");
-      const path = ownPhotoPath(values.avatarUrl, user.id);
-      const { error } = await supabase.auth.updateUser({
-        data: { ...user.user_metadata, avatar_url: null },
-      });
-      if (error) throw error;
-      if (path) {
-        const { error: removeError } = await supabase.storage
-          .from("photos")
-          .remove([path]);
-        if (removeError)
-          console.error("Could not remove old profile photo", removeError);
-      }
-      setValues((current) => ({ ...current, avatarUrl: "" }));
-      setMessage(labels.photoRemoved);
-      router.refresh();
-    } catch (error) {
-      console.error("Could not remove profile photo", error);
-      setMessage(labels.saveFailed);
-    } finally {
-      setSaving(false);
-    }
+    setPhoto(null);
+    setPhotoRemoved(true);
+    setPhotoVersion((current) => current + 1);
   }
   return (
     <form className="profile-form" style={styles.form} onSubmit={save}>
       <div className="profile-identity" style={styles.identity}>
         <ProfilePhotoUpload
-          avatarUrl={values.avatarUrl}
+          key={photoVersion}
+          avatarUrl={photoRemoved ? "" : values.avatarUrl}
           name={values.userName}
           labels={labels}
           error={errors.photo}
           disabled={saving}
-          onChange={setPhoto}
+          onChange={(file) => { setPhoto(file); setPhotoRemoved(false); }}
           onRemove={removePhoto}
         />
         <section style={{ ...styles.section, ...styles.details }}>
@@ -260,9 +254,12 @@ export default function ProfileForm({ metadata, email, labels }) {
           {message}
         </p>
       ) : null}
-      <button style={styles.button} type="submit" disabled={saving}>
-        {saving ? labels.saving : labels.save}
-      </button>
+      <div style={styles.actions}>
+        {hasChanges ? <button style={{ ...styles.button, ...styles.revertButton }} type="button" disabled={saving} onClick={revertChanges}>{labels.revert}</button> : null}
+        <button style={styles.button} type="submit" disabled={saving}>
+          {saving ? labels.saving : labels.save}
+        </button>
+      </div>
     </form>
   );
 }

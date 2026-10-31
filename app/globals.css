@@ -775,6 +775,7 @@ button {
     grid-template-columns: minmax(0, 1fr) auto !important;
     gap: 14px !important;
     padding: 10px 14px !important;
+    backdrop-filter: none;
   }
   .mobile-nav {
     display: block !important;
@@ -834,6 +835,9 @@ button {
   .profile-identity,
   .profile-settings {
     grid-template-columns: 1fr !important;
+  }
+  .profile-photo-upload {
+    justify-self: center;
   }
   .toast {
     top: 82px;

@@ -22,6 +22,7 @@ const collection = {
 
   // Where does your knowledge come from? A person, a place, a community.
   source: "Cambodian students, families, teachers, and community members",
+  sourceKhmer: "សិស្សកម្ពុជា គ្រួសារ គ្រូបង្រៀន និងសមាជិកសហគមន៍",
 };
 
 export default collection;

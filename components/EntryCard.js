@@ -2,8 +2,9 @@ import Link from "next/link";
 
 const styles = {
   card: { display: "flex", flexDirection: "column", minWidth: 0 },
-  imageLink: { display: "block", aspectRatio: "4 / 3" },
-  image: { display: "block", width: "100%", height: "100%", objectFit: "cover" },
+  imageLink: { display: "grid", height: "260px" },
+  background: { gridArea: "1 / 1", backgroundImage: "var(--entry-image)", backgroundPosition: "center", backgroundSize: "cover" },
+  image: { gridArea: "1 / 1", display: "block", width: "100%", height: "100%", objectFit: "contain" },
   content: { display: "flex", flex: 1, flexDirection: "column", minWidth: 0 },
   catalog: { display: "flex", justifyContent: "space-between", gap: "12px" },
   title: { margin: "10px 0 0" },
@@ -29,6 +30,7 @@ export default function EntryCard({
           style={styles.imageLink}
           href={`/archive/${entry.slug}`}
         >
+          <span className="entry-image-background" style={{ ...styles.background, "--entry-image": `url("${entry.photo_url}")` }} aria-hidden="true" />
           <img
             className="entry-image"
             style={styles.image}

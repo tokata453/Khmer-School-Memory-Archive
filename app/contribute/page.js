@@ -50,20 +50,20 @@ export default async function ContributePage({ searchParams }) {
   const t = getTranslation(language).contributor;
   return (
     <main className="page-shell form-shell" style={styles.shell}>
-      <header
+      {!data.user ? <header
         className="page-hero compact-hero archive-hero form-hero"
         style={styles.header}
       >
         <h1 style={styles.title}>{t.addTitle}</h1>
         <p style={styles.intro}>{t.addIntro}</p>
-      </header>
+      </header> : null}
       {submitted === "1" ? (
         <p className="form-notice" style={styles.notice} role="status">
           {t.submitted}
         </p>
       ) : null}
       {data.user ? (
-        <EntryForm language={language} />
+        <EntryForm intro={t.addIntro} language={language} title={t.addTitle} />
       ) : (
         <section className="form-notice" style={styles.notice}>
           <p>{t.loginFirst}</p>

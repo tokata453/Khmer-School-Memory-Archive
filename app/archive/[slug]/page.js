@@ -8,7 +8,7 @@ import { normalizeLanguage } from "../../../lib/language.js";
 import { getTranslation } from "../../../lib/translations.js";
 
 const styles = {
-  shell: { paddingTop: "42px" }, detail: { borderTop: "2px solid var(--carbon)", paddingTop: "18px" }, title: { maxWidth: "980px", margin: "18px 0 0", fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 800, lineHeight: .82, letterSpacing: ".015em" }, photo: { display: "block", width: "100%", maxHeight: "680px", marginTop: "32px", padding: "5px", border: "1px solid var(--rule)", background: "var(--paper)", objectFit: "cover", filter: "saturate(.76) sepia(.15)" }, grid: { display: "grid", gridTemplateColumns: "var(--layout-rail) minmax(0, 1fr)", gap: "calc(var(--space-8) + 10px)", marginTop: "46px", borderTop: "1px solid var(--rule)", paddingTop: "28px" }, catalog: { display: "grid", gap: "18px", margin: 0 }, catalogItem: { borderTop: "1px solid var(--rule)", paddingTop: "10px" }, catalogValue: { margin: "7px 0 0", color: "var(--muted)" }, box: { marginTop: "32px", borderTop: "2px solid var(--carbon)", paddingTop: "14px" }, sectionTitle: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-section)", fontWeight: 800, lineHeight: .9 }, text: { marginBottom: 0, color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 }, story: { maxWidth: "var(--layout-reading)" }, storySection: { paddingBottom: "34px", marginBottom: "34px", borderBottom: "1px solid var(--rule)" }, block: { paddingTop: "56px" }, heading: { display: "grid", gridTemplateColumns: "max-content 1fr", gap: "30px", alignItems: "start", marginBottom: "18px", borderTop: "2px solid var(--carbon)", paddingTop: "16px" }, list: {},
+  shell: { paddingTop: 0 }, detail: {}, heroContent: { display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: "var(--space-5)", alignItems: "start" }, title: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 800, lineHeight: .82, letterSpacing: ".015em" }, intro: { maxWidth: "720px", margin: "14px 0 0", color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 }, photo: { display: "block", width: "100%", height: "280px", objectFit: "contain", background: "var(--paper)", filter: "saturate(.76) sepia(.15)" }, grid: { display: "grid", gridTemplateColumns: "var(--layout-rail) minmax(0, 1fr)", gap: "var(--space-8)" }, catalog: { display: "grid", gap: "18px", margin: 0 }, catalogItem: { borderTop: "1px solid var(--rule)", paddingTop: "10px" }, catalogValue: { margin: "7px 0 0", color: "var(--muted)" }, box: { marginTop: "32px", borderTop: "2px solid var(--carbon)", paddingTop: "14px" }, sectionTitle: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-section)", fontWeight: 800, lineHeight: .9 }, text: { marginBottom: 0, color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 }, story: { maxWidth: "var(--layout-reading)" }, storySection: {}, block: { paddingTop: "56px" }, heading: { display: "grid", gridTemplateColumns: "max-content 1fr", gap: "30px", alignItems: "start", marginBottom: "18px", borderTop: "2px solid var(--carbon)", paddingTop: "16px" }, list: {},
 };
 
 export const dynamic = "force-dynamic";
@@ -45,11 +45,10 @@ export default async function MemoryDetailPage({ params }) {
   return (
     <main className="page-shell detail-shell" style={styles.shell}>
       <article className="memory-detail" style={styles.detail}>
-        <h1 style={styles.title}>{entry.title}</h1>
-        {entry.photo_url ? <img className="entry-photo" style={styles.photo} src={entry.photo_url} alt={entry.image_description} /> : null}
-        {user?.id === entry.owner_id ? <EntryActions id={entry.id} slug={entry.slug} language={language} /> : null}
+        <header className="page-hero compact-hero archive-hero detail-hero"><div className="detail-hero-content" style={styles.heroContent}><div><h1 style={styles.title}>{entry.title}</h1><p style={styles.intro}>{entry.image_description}</p></div>{user?.id === entry.owner_id ? <EntryActions id={entry.id} slug={entry.slug} language={language} /> : null}</div></header>
         <div className="detail-grid" style={styles.grid}>
           <aside className="detail-rail">
+            {entry.photo_url ? <img className="entry-photo" style={styles.photo} src={entry.photo_url} alt={entry.image_description} /> : null}
             <dl className="catalog-grid" style={styles.catalog}>
               <div style={styles.catalogItem}>
                 <dt>{t.sharedBy}</dt>
@@ -74,13 +73,13 @@ export default async function MemoryDetailPage({ params }) {
           <div className="detail-story" style={styles.story}>
             <section className="story-section" style={styles.storySection}>
               <h2 style={styles.sectionTitle}>{t.memory}</h2>
-              <p style={styles.text}>{entry.story}</p>
+              <p className="detail-story-text" style={styles.text}>{entry.story}</p>
             </section>
           </div>
         </div>
       </article>
 
-      <section className="section-block" style={styles.block}>
+      {relatedEntries.length ? <section className="section-block" style={styles.block}>
         <div className="section-heading" style={styles.heading}>
           <h2 style={styles.sectionTitle}>{t.continue}</h2>
         </div>
@@ -95,6 +94,7 @@ export default async function MemoryDetailPage({ params }) {
           ))}
         </div>
       </section>
+      : null}
     </main>
   );
 }

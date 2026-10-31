@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createClient } from "../lib/supabase/client.js";
 
-const styles = { button: { display: "inline-flex", minWidth: 0, minHeight: "44px", gap: "8px", alignItems: "center", padding: "0 18px", border: 0, borderRadius: "16px", background: "transparent", color: "var(--carbon)", font: "inherit", fontSize: "0.86rem", fontWeight: 800, cursor: "pointer" } };
+const styles = { button: { display: "inline-flex", minWidth: 0, minHeight: "44px", gap: "8px", alignItems: "center", padding: "0 18px", border: 0, borderRadius: "16px", background: "transparent", color: "var(--carbon)", font: "inherit", fontSize: "0.86rem", fontWeight: 700, cursor: "pointer" } };
 
 export default function LogoutButton({ labels = {} }) {
   const router = useRouter();

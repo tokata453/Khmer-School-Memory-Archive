@@ -24,9 +24,9 @@ const styles = {
   },
   title: {
     margin: 0,
-    fontFamily: "var(--font-display)",
+    fontFamily: "var(--font-primary)",
     fontSize: "var(--text-display)",
-    fontWeight: 800,
+    fontWeight: 700,
     lineHeight: 0.82,
     letterSpacing: ".015em",
   },
@@ -53,7 +53,7 @@ const styles = {
   },
   label: {
     margin: 0,
-    fontFamily: "var(--font-interface)",
+    fontFamily: "var(--font-primary)",
     fontSize: "var(--text-label)",
     fontWeight: 700,
     letterSpacing: "0.045em",

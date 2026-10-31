@@ -13,7 +13,7 @@ const styles = {
   hero: { padding: "34px 0 20px", borderBottom: "1px solid var(--rule)" },
   title: {
     margin: 0,
-    fontFamily: "var(--font-display)",
+    fontFamily: "var(--font-primary)",
     fontSize: "var(--text-display)",
     lineHeight: 0.9,
   },
@@ -42,7 +42,7 @@ const styles = {
     background: "var(--concrete)",
   },
   totalNumber: {
-    fontFamily: "var(--font-interface)",
+    fontFamily: "var(--font-primary)",
     fontVariantNumeric: "tabular-nums",
     letterSpacing: "-0.03em",
     fontSize: "2.5rem",
@@ -53,7 +53,7 @@ const styles = {
   stat: { display: "flex", gap: "8px", alignItems: "baseline" },
   count: {
     minWidth: "1.5em",
-    fontFamily: "var(--font-interface)",
+    fontFamily: "var(--font-primary)",
     fontVariantNumeric: "tabular-nums",
     letterSpacing: "-0.03em",
     fontSize: "1.25rem",

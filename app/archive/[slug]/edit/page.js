@@ -10,7 +10,7 @@ import { getTranslation } from "../../../../lib/translations.js";
 const styles = {
   shell: { paddingBottom: "80px" },
   header: { padding: "54px 0 36px" },
-  title: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 800, lineHeight: .82, letterSpacing: ".015em" },
+  title: { margin: 0, fontFamily: "var(--font-primary)", fontSize: "var(--text-display)", fontWeight: 700, lineHeight: .82, letterSpacing: ".015em" },
 };
 
 export const metadata = { title: "Edit entry" };

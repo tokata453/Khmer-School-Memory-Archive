@@ -7,7 +7,7 @@ const styles = {
   upload: { display: "grid", width: "100%", minWidth: 0, gap: "10px" },
   label: {
     margin: 0,
-    fontFamily: "var(--font-interface)",
+    fontFamily: "var(--font-primary)",
     fontSize: "var(--text-label)",
     fontWeight: 700,
     letterSpacing: "0.045em",
@@ -60,7 +60,7 @@ const styles = {
   },
   emptyTitle: {
     color: "var(--carbon)",
-    fontFamily: "var(--font-interface)",
+    fontFamily: "var(--font-primary)",
     fontSize: "1rem",
   },
   emptyHelp: {

@@ -4,11 +4,12 @@ import EntryCard from "../../../components/EntryCard.js";
 import EntryActions from "../../../components/EntryActions.js";
 import { createClient } from "../../../lib/supabase/server.js";
 import { getEntries, getEntryBySlug } from "../../../lib/entries.js";
+import { getRelatedEntries } from "../../../lib/related-entries.js";
 import { normalizeLanguage } from "../../../lib/language.js";
 import { getTranslation } from "../../../lib/translations.js";
 
 const styles = {
-  shell: { paddingTop: 0 }, detail: {}, heroContent: { display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: "var(--space-5)", alignItems: "start" }, title: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-display)", fontWeight: 800, lineHeight: .82, letterSpacing: ".015em" }, intro: { maxWidth: "720px", margin: "14px 0 0", color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 }, photoFrame: { position: "relative", height: "280px", overflow: "hidden" }, photoBackground: { position: "absolute", inset: 0, backgroundImage: "var(--detail-image)", backgroundPosition: "center", backgroundSize: "cover" }, photo: { position: "relative", zIndex: 1, display: "block", width: "100%", height: "100%", objectFit: "contain", filter: "saturate(.76) sepia(.15)" }, grid: { display: "grid", gridTemplateColumns: "var(--layout-rail) minmax(0, 1fr)", gap: "var(--space-8)" }, catalog: { display: "grid", gap: "18px", margin: 0 }, catalogItem: { borderTop: "1px solid var(--rule)", paddingTop: "10px" }, catalogValue: { margin: "7px 0 0", color: "var(--muted)" }, box: { marginTop: "32px", borderTop: "2px solid var(--carbon)", paddingTop: "14px" }, sectionTitle: { margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-section)", fontWeight: 800, lineHeight: .9 }, text: { marginBottom: 0, color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 }, story: { maxWidth: "var(--layout-reading)" }, storySection: {}, block: { paddingTop: "56px" }, heading: { display: "grid", gridTemplateColumns: "max-content 1fr", gap: "30px", alignItems: "start", marginBottom: "18px", borderTop: "2px solid var(--carbon)", paddingTop: "16px" }, list: {},
+  shell: { paddingTop: 0 }, detail: {}, heroContent: { display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: "var(--space-5)", alignItems: "start" }, title: { margin: 0, fontFamily: "var(--font-primary)", fontSize: "var(--text-display)", fontWeight: 700, lineHeight: .82, letterSpacing: ".015em" }, intro: { maxWidth: "720px", margin: "14px 0 0", color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 }, photoFrame: { position: "relative", height: "280px", overflow: "hidden" }, photoBackground: { position: "absolute", inset: 0, backgroundImage: "var(--detail-image)", backgroundPosition: "center", backgroundSize: "cover" }, photo: { position: "relative", zIndex: 1, display: "block", width: "100%", height: "100%", objectFit: "contain", filter: "saturate(.76) sepia(.15)" }, grid: { display: "grid", gridTemplateColumns: "var(--layout-rail) minmax(0, 1fr)", gap: "var(--space-8)" }, catalog: { display: "grid", gap: "18px", margin: 0 }, catalogItem: { borderTop: "1px solid var(--rule)", paddingTop: "10px" }, catalogValue: { margin: "7px 0 0", color: "var(--muted)" }, box: { marginTop: "32px", borderTop: "2px solid var(--carbon)", paddingTop: "14px" }, sectionTitle: { margin: 0, fontFamily: "var(--font-primary)", fontSize: "var(--text-section)", fontWeight: 700, lineHeight: .9 }, text: { marginBottom: 0, color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 }, story: { maxWidth: "var(--layout-reading)" }, storySection: {}, block: { paddingTop: "56px" }, heading: { display: "grid", gridTemplateColumns: "max-content 1fr", gap: "30px", alignItems: "start", marginBottom: "18px", borderTop: "2px solid var(--carbon)", paddingTop: "16px" }, list: {},
 };
 
 export const dynamic = "force-dynamic";
@@ -38,9 +39,7 @@ export default async function MemoryDetailPage({ params }) {
   const translation = getTranslation(language);
   const t = translation.detail;
 
-  const relatedEntries = entries
-    .filter((item) => item.slug !== entry.slug && item.status === "published")
-    .slice(0, 2);
+  const relatedEntries = getRelatedEntries(entry, entries);
 
   return (
     <main className="page-shell detail-shell" style={styles.shell}>
@@ -84,7 +83,7 @@ export default async function MemoryDetailPage({ params }) {
 
       {relatedEntries.length ? <section className="section-block" style={styles.block}>
         <div className="section-heading" style={styles.heading}>
-          <h2 style={styles.sectionTitle}>{t.continue}</h2>
+          <h2 style={styles.sectionTitle}>{t.moreMemories}</h2>
         </div>
         <div className="entry-card-grid" style={styles.list}>
           {relatedEntries.map((relatedEntry) => (

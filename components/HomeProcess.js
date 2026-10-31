@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function HomeProcess({ labels }) {
   return (
     <section className="page-shell home-section home-process" aria-labelledby="process-heading">
@@ -17,7 +15,6 @@ export default function HomeProcess({ labels }) {
           </li>
         ))}
       </ol>
-      <Link className="primary-link home-action-link" href="/contribute">{labels.action}</Link>
     </section>
   );
 }

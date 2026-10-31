@@ -1,11 +1,5 @@
 :root {
-  --font-content:
-    "Noto Sans Khmer", "Khmer OS Siemreap", "Khmer Sangam MN", ui-sans-serif,
-    system-ui, sans-serif;
-  --font-interface:
-    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  --font-display: Georgia, "Times New Roman", serif;
+  --font-primary: var(--font-noto-khmer), ui-sans-serif, system-ui, sans-serif;
   --text-caption: 0.75rem;
   --text-label: 0.78rem;
   --text-nav: 0.875rem;
@@ -59,7 +53,7 @@ body {
       transparent 27rem
     ),
     var(--concrete);
-  font-family: var(--font-content);
+  font-family: var(--font-primary);
 }
 body > main {
   flex: 1;
@@ -107,7 +101,7 @@ button {
 }
 .site-mark strong {
   color: var(--carbon);
-  font-family: var(--font-display) !important;
+  font-family: var(--font-primary) !important;
   font-size: 1.4rem !important;
   font-weight: 700 !important;
   letter-spacing: 0 !important;
@@ -192,15 +186,15 @@ button {
   margin: 0 0 18px;
   padding: 5px 12px;
   color: var(--gold);
-  font-family: var(--font-interface);
+  font-family: var(--font-primary);
   font-size: var(--text-caption);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.1em;
 }
 .home-hero-title {
   max-width: 760px;
   margin: 0 auto;
-  font-family: var(--font-display);
+  font-family: var(--font-primary);
   font-size: var(--text-display);
   font-weight: 700;
   letter-spacing: -0.035em;
@@ -248,8 +242,8 @@ button {
   padding: 0 22px;
   background: var(--carbon);
   color: var(--paper);
-  font-family: var(--font-interface);
-  font-weight: 750;
+  font-family: var(--font-primary);
+  font-weight: 700;
 }
 .home-search button:hover {
   background: var(--gold);
@@ -275,12 +269,12 @@ button {
 }
 .home-fact strong {
   color: var(--gold);
-  font-family: var(--font-interface);
+  font-family: var(--font-primary);
   font-size: clamp(1.45rem, 2vw, 1.85rem);
 }
 .home-fact span {
   color: var(--muted);
-  font-family: var(--font-interface);
+  font-family: var(--font-primary);
   font-size: var(--text-caption);
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -303,7 +297,7 @@ button {
 .archive-panel h2,
 .detail-story h2 {
   color: var(--carbon) !important;
-  font-family: var(--font-display) !important;
+  font-family: var(--font-primary) !important;
   font-weight: 700 !important;
   letter-spacing: -0.02em !important;
   line-height: 1.08 !important;
@@ -311,7 +305,7 @@ button {
 .section-link {
   flex: none;
   color: var(--carbon);
-  font-family: var(--font-interface);
+  font-family: var(--font-primary);
   font-size: var(--text-nav);
   font-weight: 700;
   text-decoration-color: var(--gold);
@@ -330,9 +324,9 @@ button {
 .home-section-kicker {
   margin: 0 0 8px;
   color: var(--gold);
-  font-family: var(--font-interface);
+  font-family: var(--font-primary);
   font-size: var(--text-caption);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -340,7 +334,7 @@ button {
 .home-invitation h2 {
   margin: 0;
   color: var(--carbon);
-  font-family: var(--font-display);
+  font-family: var(--font-primary);
   font-size: var(--text-section);
   line-height: 1.08;
 }
@@ -350,7 +344,15 @@ button {
   font-size: var(--text-lead);
   line-height: 1.7;
 }
-.home-explore-grid,
+.home-explore-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--rule);
+  background: var(--rule);
+}
 .home-process-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -368,7 +370,9 @@ button {
 }
 .home-explore-link {
   display: flex;
+  flex: 1 1 240px;
   flex-direction: column;
+  min-width: min(100%, 220px);
   justify-content: space-between;
   color: var(--carbon);
   text-decoration: none;
@@ -378,16 +382,21 @@ button {
 }
 .home-explore-link span,
 .home-process-list h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-primary);
   font-size: var(--text-section);
   line-height: 1.1;
 }
 .home-explore-link strong,
 .home-process-list span {
   color: var(--gold);
-  font-family: var(--font-interface);
+  font-family: var(--font-primary);
   font-size: var(--text-label);
   letter-spacing: 0.05em;
+}
+.home-process-list > li > span {
+  font-size: clamp(1.45rem, 2vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1;
 }
 .home-records-grid {
   display: grid;
@@ -413,12 +422,6 @@ button {
   margin: 0;
   color: var(--muted);
   line-height: 1.55;
-}
-.home-action-link {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 11px 14px;
-  text-decoration: none;
 }
 .home-invitation {
   display: flex;
@@ -458,30 +461,12 @@ button {
   padding: 10px 13px;
   border: 1px solid var(--paper);
   color: var(--paper);
-  font-family: var(--font-interface);
+  font-family: var(--font-primary);
   font-weight: 700;
   text-decoration: none;
 }
 .secondary-link:hover {
   background: rgba(255, 248, 232, 0.12);
-}
-html[lang="km"] .home-hero-title,
-html[lang="km"] .section-heading h1,
-html[lang="km"] .section-heading h2,
-html[lang="km"] .page-hero h1,
-html[lang="km"] .browser-title,
-html[lang="km"] .archive-panel h2,
-html[lang="km"] .detail-story h2,
-html[lang="km"] .entry-title {
-  font-family: var(--font-content) !important;
-  letter-spacing: 0 !important;
-}
-html[lang="km"] .home-section h2,
-html[lang="km"] .home-invitation h2,
-html[lang="km"] .home-explore-link span,
-html[lang="km"] .home-process-list h3 {
-  font-family: var(--font-content);
-  letter-spacing: 0;
 }
 .archive-panel,
 .entry-card,
@@ -555,7 +540,7 @@ html[lang="km"] .home-process-list h3 {
   color: var(--gold) !important;
 }
 .entry-title {
-  font-family: var(--font-display) !important;
+  font-family: var(--font-primary) !important;
   font-weight: 700 !important;
   line-height: 1.08 !important;
   letter-spacing: -0.015em !important;
@@ -576,9 +561,9 @@ html[lang="km"] .home-process-list h3 {
 }
 .search-label {
   color: var(--carbon) !important;
-  font-family: var(--font-interface);
+  font-family: var(--font-primary);
   font-size: var(--text-label);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.05em;
 }
 .search-input {
@@ -805,7 +790,7 @@ html[lang="km"] .home-process-list h3 {
   color: var(--paper);
   background: var(--carbon);
   font: inherit;
-  font-family: var(--font-interface);
+  font-family: var(--font-primary);
   font-weight: 700;
   text-decoration: none;
 }
@@ -894,7 +879,7 @@ html[lang="km"] .home-process-list h3 {
 .auth-hero h1,
 .auth-panel h1 {
   color: var(--carbon) !important;
-  font-family: var(--font-display) !important;
+  font-family: var(--font-primary) !important;
   line-height: 1 !important;
   letter-spacing: -0.025em !important;
 }
@@ -1058,7 +1043,6 @@ html[lang="km"] .home-process-list h3 {
   .home-section {
     padding-top: 48px;
   }
-  .home-explore-grid,
   .home-process-list {
     grid-template-columns: 1fr;
   }
@@ -1234,9 +1218,9 @@ html[lang="km"] .home-process-list h3 {
 }
 .entry-catalog {
   color: var(--gold);
-  font-family: var(--font-interface);
+  font-family: var(--font-primary);
   font-size: var(--text-caption);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.045em;
 }
 .entry-catalog span:last-child {

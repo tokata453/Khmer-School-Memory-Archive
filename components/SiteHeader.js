@@ -16,10 +16,16 @@ export default async function SiteHeader({ language }) {
   const supabase = await createClient();
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
   const user = data.user;
+  // Only reviewers receive a navigation link to the private review queue.
+  const { data: isReviewer } = user && supabase
+    ? await supabase.rpc("is_reviewer")
+    : { data: false };
   const links = [
     [t.header.archive, "/archive"],
     [t.header.contribute, "/contribute"],
     ...(user ? [[t.header.myEntries, "/my-entries"]] : []),
+    // The server checks this again on /review; hiding the link is not security.
+    ...(isReviewer ? [[t.header.review, "/review"]] : []),
     [t.header.about, "/about"],
   ];
 

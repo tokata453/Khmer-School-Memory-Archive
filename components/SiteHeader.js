@@ -4,6 +4,8 @@ import collection from "../collection.config.js";
 import AccountMenu from "./AccountMenu.js";
 import MobileNav from "./MobileNav.js";
 import NavLink from "./NavLink.js";
+import NotificationBell from "./NotificationBell.js";
+import { getUnreadNotificationCount } from "../lib/notifications.js";
 import { createClient } from "../lib/supabase/server.js";
 import { getTranslation } from "../lib/translations.js";
 
@@ -20,6 +22,9 @@ export default async function SiteHeader({ language }) {
   const { data: isReviewer } = user && supabase
     ? await supabase.rpc("is_reviewer")
     : { data: false };
+  // The count is loaded on the server, so the bell never exposes another
+  // account's notifications to the browser.
+  const unreadCount = user ? await getUnreadNotificationCount(user.id, supabase) : 0;
   const links = [
     [t.header.archive, "/archive"],
     [t.header.contribute, "/contribute"],
@@ -46,7 +51,7 @@ export default async function SiteHeader({ language }) {
 
       <section className="header-tools" style={styles.tools} aria-label={t.header.tools}>
         {user ? (
-          <AccountMenu userEmail={user.email} userName={user.user_metadata?.user_name || ""} avatarUrl={user.user_metadata?.avatar_url || ""} labels={t.header} />
+          <><NotificationBell unreadCount={unreadCount} labels={t.header} /><AccountMenu userEmail={user.email} userName={user.user_metadata?.user_name || ""} avatarUrl={user.user_metadata?.avatar_url || ""} labels={t.header} /></>
         ) : (
           <Link className="account-button" style={styles.account} href="/login">
             <LogIn size={18} strokeWidth={2.2} aria-hidden="true" />
@@ -55,7 +60,7 @@ export default async function SiteHeader({ language }) {
         )}
       </section>
 
-      <MobileNav links={links} userEmail={user?.email || ""} userName={user?.user_metadata?.user_name || ""} avatarUrl={user?.user_metadata?.avatar_url || ""} labels={t.header} />
+      <MobileNav links={links} userEmail={user?.email || ""} userName={user?.user_metadata?.user_name || ""} avatarUrl={user?.user_metadata?.avatar_url || ""} unreadCount={unreadCount} labels={t.header} />
     </header>
   );
 }

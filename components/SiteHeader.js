@@ -18,10 +18,10 @@ export default async function SiteHeader({ language }) {
   const supabase = await createClient();
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
   const user = data.user;
-  // Only reviewers receive a navigation link to the private review queue.
-  const { data: isReviewer } = user && supabase
-    ? await supabase.rpc("is_reviewer")
-    : { data: false };
+  // These links are only convenience; their pages enforce the same checks.
+  const [{ data: isReviewer }, { data: isAdmin }] = user && supabase
+    ? await Promise.all([supabase.rpc("is_reviewer"), supabase.rpc("is_admin")])
+    : [{ data: false }, { data: false }];
   // The count is loaded on the server, so the bell never exposes another
   // account's notifications to the browser.
   const unreadCount = user ? await getUnreadNotificationCount(user.id, supabase) : 0;
@@ -31,6 +31,7 @@ export default async function SiteHeader({ language }) {
     ...(user ? [[t.header.myEntries, "/my-entries"]] : []),
     // The server checks this again on /review; hiding the link is not security.
     ...(isReviewer ? [[t.header.review, "/review"]] : []),
+    ...(isAdmin ? [[t.header.admin, "/admin"]] : []),
     [t.header.about, "/about"],
   ];
 

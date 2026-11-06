@@ -22,7 +22,8 @@ export default async function EditEntryPage({ params }) {
   const language = normalizeLanguage(cookieStore.get("language")?.value);
   const t = getTranslation(language).contributor;
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
-  if (!data.user || data.user.id !== entry.owner_id) {
+  const { data: isAdmin } = data.user && supabase ? await supabase.rpc("is_admin") : { data: false };
+  if (!data.user || (data.user.id !== entry.owner_id && !isAdmin)) {
     return <main className="page-shell form-shell" style={styles.shell}><header className="page-hero compact-hero archive-hero form-hero" style={styles.header}><h1 style={styles.title}>{t.entryUnavailable}</h1></header><p>{t.ownerOnly}</p><Link href={`/archive/${slug}`}>{t.returnToEntry}</Link></main>;
   }
   return <main className="page-shell form-shell" style={styles.shell}><header className="page-hero compact-hero archive-hero form-hero" style={styles.header}><h1 style={styles.title}>{t.editTitle}</h1></header><EntryForm entry={entry} language={language} /></main>;

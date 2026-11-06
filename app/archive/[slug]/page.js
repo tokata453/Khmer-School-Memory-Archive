@@ -36,9 +36,9 @@ export default async function MemoryDetailPage({ params }) {
     notFound();
   }
   // Reviewers can read non-public entries through the entries RLS policy.
-  const { data: isReviewer } = user && supabase
-    ? await supabase.rpc("is_reviewer")
-    : { data: false };
+  const [{ data: isReviewer }, { data: isAdmin }] = user && supabase
+    ? await Promise.all([supabase.rpc("is_reviewer"), supabase.rpc("is_admin")])
+    : [{ data: false }, { data: false }];
   // Returned feedback is private to the entry owner and reviewers.
   const reviewFeedback = entry.status === "returned" && (isReviewer || user?.id === entry.owner_id)
     ? await getEntryReviewFeedback(entry.id, supabase)
@@ -52,7 +52,7 @@ export default async function MemoryDetailPage({ params }) {
   return (
     <main className="page-shell detail-shell" style={styles.shell}>
       <article className="memory-detail" style={styles.detail}>
-        <header className="page-hero compact-hero archive-hero detail-hero"><div className="detail-hero-content" style={styles.heroContent}><div><h1 style={styles.title}>{entry.title}</h1><p style={styles.intro}>{entry.image_description}</p></div>{user?.id === entry.owner_id ? <EntryActions id={entry.id} slug={entry.slug} language={language} /> : null}</div>{isReviewer && user.id !== entry.owner_id && entry.status === "pending" ? <EntryReviewActions entryId={entry.id} labels={translation.review} /> : null}{reviewFeedback ? <section className="review-feedback" aria-label={translation.review.feedbackTitle}><h2 style={styles.sectionTitle}>{translation.review.feedbackTitle}</h2><p style={styles.text}>{reviewFeedback.feedback}</p></section> : null}</header>
+        <header className="page-hero compact-hero archive-hero detail-hero"><div className="detail-hero-content" style={styles.heroContent}><div><h1 style={styles.title}>{entry.title}</h1><p style={styles.intro}>{entry.image_description}</p></div>{user?.id === entry.owner_id || isAdmin ? <EntryActions id={entry.id} slug={entry.slug} language={language} /> : null}</div>{isReviewer && user.id !== entry.owner_id && entry.status === "pending" ? <EntryReviewActions entryId={entry.id} labels={translation.review} /> : null}{reviewFeedback ? <section className="review-feedback" aria-label={translation.review.feedbackTitle}><h2 style={styles.sectionTitle}>{translation.review.feedbackTitle}</h2><p style={styles.text}>{reviewFeedback.feedback}</p></section> : null}</header>
         <div className="detail-grid" style={styles.grid}>
           <aside className="detail-rail">
             {entry.photo_url ? <div className="detail-photo-frame" style={styles.photoFrame}>

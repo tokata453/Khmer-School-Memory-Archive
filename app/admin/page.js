@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import AdminDirectory from "../../components/AdminDirectory.js";
 import AdminEntryBrowser from "../../components/AdminEntryBrowser.js";
 import DashboardStats from "../../components/DashboardStats.js";
+import ReviewHistory from "../../components/ReviewHistory.js";
 import { getAdminDirectory } from "../../lib/admin.js";
 import { getReviewHistory } from "../../lib/dashboard.js";
 import { dashboardCounts } from "../../lib/dashboard-utils.js";

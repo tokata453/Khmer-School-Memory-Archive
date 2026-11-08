@@ -74,7 +74,7 @@ export default function MobileNav({ links, userEmail, userName, avatarUrl, unrea
             </nav>
 
             <div className="mobile-drawer-tools" style={styles.tools} aria-label={labels.tools}>
-              {userEmail ? (
+               {userEmail ? (
                   <span className="auth-status" style={styles.status}>
                     <Link className="account-chip" style={styles.chip} href="/notifications" onClick={closeDrawer}>
                       {labels.notifications}{unreadCount ? ` (${unreadCount > 99 ? "99+" : unreadCount})` : ""}

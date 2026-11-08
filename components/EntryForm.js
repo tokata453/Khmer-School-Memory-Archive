@@ -302,7 +302,7 @@ export default function EntryForm({ defaultDisplayName = "", entry = null, intro
                 type="submit"
                 disabled={saving}
               >
-                {saving ? form.saving : entry ? form.saveChanges : form.save}
+                {saving ? form.saving : entry ? form.resubmit : form.submit}
               </button>
             </div>
           </div>

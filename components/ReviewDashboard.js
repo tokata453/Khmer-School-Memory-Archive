@@ -6,7 +6,7 @@ import ComboBox from "./ComboBox.js";
 import { provinces, schoolLevels } from "../lib/entry-form.js";
 import { filterDashboardEntries } from "../lib/dashboard-utils.js";
 
-const styles = { controls: { display: "grid", gap: "16px", margin: "28px 0" }, filters: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", border: "1px solid var(--rule)" }, label: { display: "grid", gap: "8px", fontFamily: "var(--font-primary)", fontSize: "var(--text-label)", fontWeight: 700, letterSpacing: ".045em", textTransform: "uppercase" }, input: { width: "100%", minHeight: "48px", padding: "10px", border: "1px solid var(--rule)", background: "var(--paper)", color: "var(--carbon)" }, empty: { padding: "28px 0", borderTop: "2px solid var(--carbon)", color: "var(--muted)" } };
+const styles = { controls: { display: "grid", gap: "16px", margin: "var(--space-6) 0" }, filters: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", border: "1px solid var(--rule)" }, label: { display: "grid", gap: "8px", fontFamily: "var(--font-primary)", fontSize: "var(--text-label)", fontWeight: 700, letterSpacing: ".045em", textTransform: "uppercase" }, input: { width: "100%", minHeight: "48px", padding: "10px", border: "1px solid var(--rule)", background: "var(--paper)", color: "var(--carbon)" }, empty: { padding: "var(--space-6) 0", borderTop: "2px solid var(--carbon)", color: "var(--muted)" } };
 
 export default function ReviewDashboard({ entries, labels, form, cardLabels, comboBox }) {
   const [query, setQuery] = useState(""); const [province, setProvince] = useState(""); const [schoolLevel, setSchoolLevel] = useState(""); const [sort, setSort] = useState("oldest");

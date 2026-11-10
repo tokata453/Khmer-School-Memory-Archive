@@ -8,8 +8,8 @@ import { createClient } from "../../../../lib/supabase/server.js";
 import { getTranslation } from "../../../../lib/translations.js";
 
 const styles = {
-  shell: { paddingBottom: "80px" },
-  header: { padding: "54px 0 36px" },
+  shell: { paddingBottom: "var(--space-10)" },
+  header: { padding: "var(--space-10) 0 36px" },
   title: { margin: 0, fontFamily: "var(--font-primary)", fontSize: "var(--text-display)", fontWeight: 700, lineHeight: .82, letterSpacing: ".015em" },
 };
 

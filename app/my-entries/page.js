@@ -10,7 +10,7 @@ import { getTranslation } from "../../lib/translations.js";
 const styles = {
   hero: {
     display: "block",
-    padding: "34px 0 16px",
+    padding: "var(--space-6) 0 16px",
     borderBottom: "1px solid var(--rule)",
   },
   heroTitle: {

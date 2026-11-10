@@ -6,7 +6,7 @@ import { getNotifications } from "../../lib/notifications.js";
 import { createClient } from "../../lib/supabase/server.js";
 import { getTranslation } from "../../lib/translations.js";
 
-const styles = { hero: { padding: "34px 0 24px", borderBottom: "1px solid var(--rule)" }, title: { margin: 0, fontFamily: "var(--font-primary)", fontSize: "var(--text-display)", fontWeight: 700, lineHeight: .82 }, intro: { margin: "14px 0 0", color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 }, content: { padding: "28px 0 64px" } };
+const styles = { hero: { padding: "var(--space-6) 0 var(--space-5)", borderBottom: "1px solid var(--rule)" }, title: { margin: 0, fontFamily: "var(--font-primary)", fontSize: "var(--text-display)", fontWeight: 700, lineHeight: .82 }, intro: { margin: "14px 0 0", color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 }, content: { padding: "var(--space-6) 0 var(--space-10)" } };
 
 export const metadata = { title: "Notifications" };
 export const dynamic = "force-dynamic";

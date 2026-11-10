@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const styles = { section: { marginTop: "48px" }, list: { borderTop: "2px solid var(--carbon)" }, item: { display: "flex", justifyContent: "space-between", gap: "16px", padding: "14px 0", borderBottom: "1px solid var(--rule)", textDecoration: "none" }, meta: { flex: "none", color: "var(--muted)", fontSize: "0.86rem" }, decision: { color: "var(--muted)", fontSize: "0.86rem", fontWeight: 700 } };
+const styles = { section: { marginTop: "var(--space-8)" }, list: { borderTop: "2px solid var(--carbon)" }, item: { display: "flex", justifyContent: "space-between", gap: "16px", padding: "14px 0", borderBottom: "1px solid var(--rule)", textDecoration: "none" }, meta: { flex: "none", color: "var(--muted)", fontSize: "0.86rem" }, decision: { color: "var(--muted)", fontSize: "0.86rem", fontWeight: 700 } };
 
 export default function ReviewHistory({ history, labels, language, reviewerNames = {} }) {
   if (!history.length) return null;

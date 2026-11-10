@@ -12,7 +12,7 @@ import HomeInvitation from "../components/HomeInvitation.js";
 import { schoolLevels } from "../lib/entry-form.js";
 
 const styles = {
-  block: { paddingTop: "64px" }, heading: { display: "flex", justifyContent: "space-between", gap: "20px", alignItems: "center", marginBottom: "20px" }, sectionTitle: { margin: 0, color: "var(--indigo)", fontFamily: "var(--font-primary)", fontSize: "var(--text-section)", fontWeight: 700, lineHeight: 1.08 }, list: {}, panel: { display: "grid", gap: "14px", padding: "32px", border: "1px solid var(--rule)", borderRadius: "2px", background: "var(--paper)" }, panelTitle: { margin: 0, color: "var(--indigo)", fontFamily: "var(--font-primary)", fontSize: "var(--text-section)", fontWeight: 700, lineHeight: 1.08 }, panelText: { maxWidth: "720px", margin: 0, color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 },
+  block: { paddingTop: "var(--space-10)" }, heading: { display: "flex", justifyContent: "space-between", gap: "var(--space-5)", alignItems: "center", marginBottom: "var(--space-5)" }, sectionTitle: { margin: 0, color: "var(--indigo)", fontFamily: "var(--font-primary)", fontSize: "var(--text-section)", fontWeight: 700, lineHeight: 1.08 }, list: {}, panel: { display: "grid", gap: "14px", padding: "var(--space-6)", border: "1px solid var(--rule)", borderRadius: "2px", background: "var(--paper)" }, panelTitle: { margin: 0, color: "var(--indigo)", fontFamily: "var(--font-primary)", fontSize: "var(--text-section)", fontWeight: 700, lineHeight: 1.08 }, panelText: { maxWidth: "720px", margin: 0, color: "var(--muted)", fontSize: "var(--text-lead)", lineHeight: 1.75 },
 };
 
 export default async function Home() {

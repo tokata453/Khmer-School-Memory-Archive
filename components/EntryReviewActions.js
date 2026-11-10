@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "../lib/supabase/client.js";
 
 const styles = {
-  shell: { display: "grid", gap: "12px", marginTop: "24px", padding: "16px", border: "1px solid var(--rule)", background: "var(--paper)" },
+  shell: { display: "grid", gap: "12px", marginTop: "var(--space-5)", padding: "16px", border: "1px solid var(--rule)", background: "var(--paper)" },
   actions: { display: "flex", flexWrap: "wrap", gap: "12px" },
   button: { minHeight: "var(--control-height)", padding: "10px 14px", border: "1px solid var(--carbon)", background: "var(--carbon)", color: "var(--paper)", font: "inherit", fontWeight: 700 },
   secondary: { background: "transparent", color: "var(--carbon)" },

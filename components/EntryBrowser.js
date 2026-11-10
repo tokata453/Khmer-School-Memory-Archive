@@ -9,13 +9,13 @@ import { sortArchiveEntries } from "../lib/archive-browser.js";
 
 const styles = {
   panel: { paddingTop: "0px" },
-  controls: { display: "grid", gap: "16px", margin: "28px 0" },
+  controls: { display: "grid", gap: "16px", margin: "var(--space-6) 0" },
   filters: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", border: "1px solid var(--rule)" },
   label: { display: "grid", gap: "8px", fontFamily: "var(--font-primary)", fontSize: "var(--text-label)", fontWeight: 700, letterSpacing: "0.045em", textTransform: "uppercase" },
   input: { width: "100%", minHeight: "48px", padding: "10px", border: "1px solid var(--rule)", borderRadius: 0, color: "var(--carbon)", background: "var(--paper)", font: "inherit" },
   list: {},
   empty: {
-    padding: "28px 0",
+    padding: "var(--space-6) 0",
     borderTop: "2px solid var(--carbon)",
     borderBottom: "1px solid var(--rule)",
   },

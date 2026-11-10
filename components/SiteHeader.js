@@ -10,7 +10,7 @@ import { createClient } from "../lib/supabase/server.js";
 import { getTranslation } from "../lib/translations.js";
 
 const styles = {
-  header: { width: "var(--layout-wide)", margin: "0 auto", display: "grid", gridTemplateColumns: "auto minmax(0, 1fr) auto", gap: "28px", alignItems: "center", minHeight: "76px", padding: "12px 0", borderBottom: "2px solid var(--carbon)" }, mark: { display: "inline-flex", minWidth: 0, gap: "10px", alignItems: "center", textDecoration: "none", fontFamily: "var(--font-primary)" }, logo: { display: "block", width: "40px", height: "40px", objectFit: "contain" }, name: { fontFamily: "var(--font-primary)", fontSize: "1.3rem", fontWeight: 700, lineHeight: 1, letterSpacing: ".015em", whiteSpace: "nowrap" }, nav: { display: "flex", minWidth: 0, flexWrap: "nowrap", gap: "24px", alignItems: "center", justifyContent: "center", color: "var(--muted)", fontFamily: "var(--font-primary)", fontSize: "var(--text-nav)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.025em" }, tools: { display: "flex", minWidth: 0, flexWrap: "nowrap", gap: "6px", alignItems: "center", justifyContent: "flex-end" }, account: { display: "inline-flex", minWidth: 0, minHeight: "40px", gap: "8px", alignItems: "center", padding: "0 13px", borderRadius: 0, background: "var(--carbon)", color: "var(--paper)", fontSize: "0.8rem", fontWeight: 700, textDecoration: "none" },
+  header: { width: "var(--layout-wide)", margin: "0 auto", display: "grid", gridTemplateColumns: "auto minmax(0, 1fr) auto", gap: "var(--space-6)", alignItems: "center", minHeight: "76px", padding: "12px 0", borderBottom: "2px solid var(--carbon)" }, mark: { display: "inline-flex", minWidth: 0, gap: "10px", alignItems: "center", textDecoration: "none", fontFamily: "var(--font-primary)" }, logo: { display: "block", width: "40px", height: "40px", objectFit: "contain" }, name: { fontFamily: "var(--font-primary)", fontSize: "1.3rem", fontWeight: 700, lineHeight: 1, letterSpacing: ".015em", whiteSpace: "nowrap" }, nav: { display: "flex", minWidth: 0, flexWrap: "nowrap", gap: "var(--space-5)", alignItems: "center", justifyContent: "center", color: "var(--muted)", fontFamily: "var(--font-primary)", fontSize: "var(--text-nav)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.025em" }, tools: { display: "flex", minWidth: 0, flexWrap: "nowrap", gap: "6px", alignItems: "center", justifyContent: "flex-end" }, account: { display: "inline-flex", minWidth: 0, minHeight: "40px", gap: "8px", alignItems: "center", padding: "0 13px", borderRadius: 0, background: "var(--carbon)", color: "var(--paper)", fontSize: "0.8rem", fontWeight: 700, textDecoration: "none" },
 };
 
 export default async function SiteHeader({ language }) {
@@ -19,9 +19,9 @@ export default async function SiteHeader({ language }) {
   const { data } = supabase ? await supabase.auth.getUser() : { data: { user: null } };
   const user = data.user;
   // These links are only convenience; their pages enforce the same checks.
-  const [{ data: isReviewer }, { data: isAdmin }] = user && supabase
-    ? await Promise.all([supabase.rpc("is_reviewer"), supabase.rpc("is_admin")])
-    : [{ data: false }, { data: false }];
+  const { data: isReviewer } = user && supabase
+    ? await supabase.rpc("is_reviewer")
+    : { data: false };
   // The count is loaded on the server, so the bell never exposes another
   // account's notifications to the browser.
   const unreadCount = user ? await getUnreadNotificationCount(user.id, supabase) : 0;
@@ -29,11 +29,10 @@ export default async function SiteHeader({ language }) {
     [t.header.archive, "/archive"],
     [t.header.contribute, "/contribute"],
     ...(user ? [[t.header.myEntries, "/my-entries"]] : []),
-    // The server checks this again on /review; hiding the link is not security.
-    ...(isReviewer ? [[t.header.review, "/review"]] : []),
-    ...(isAdmin ? [[t.header.admin, "/admin"]] : []),
     [t.header.about, "/about"],
   ];
+  // Keep the dashboard in the mobile menu while desktop users access its button.
+  const mobileLinks = isReviewer ? [...links.slice(0, -1), [t.header.dashboard, "/admin"], links.at(-1)] : links;
 
   return (
     <header className="site-header" style={styles.header}>
@@ -52,7 +51,7 @@ export default async function SiteHeader({ language }) {
 
       <section className="header-tools" style={styles.tools} aria-label={t.header.tools}>
         {user ? (
-          <><NotificationBell unreadCount={unreadCount} labels={t.header} /><AccountMenu userEmail={user.email} userName={user.user_metadata?.user_name || ""} avatarUrl={user.user_metadata?.avatar_url || ""} labels={t.header} /></>
+          <>{isReviewer ? <Link className="dashboard-button" href="/admin">{t.header.dashboard}</Link> : null}<NotificationBell unreadCount={unreadCount} labels={t.header} /><AccountMenu userEmail={user.email} userName={user.user_metadata?.user_name || ""} avatarUrl={user.user_metadata?.avatar_url || ""} labels={t.header} /></>
         ) : (
           <Link className="account-button" style={styles.account} href="/login">
             <LogIn size={18} strokeWidth={2.2} aria-hidden="true" />
@@ -61,7 +60,7 @@ export default async function SiteHeader({ language }) {
         )}
       </section>
 
-      <MobileNav links={links} userEmail={user?.email || ""} userName={user?.user_metadata?.user_name || ""} avatarUrl={user?.user_metadata?.avatar_url || ""} unreadCount={unreadCount} labels={t.header} />
+      <MobileNav links={mobileLinks} userEmail={user?.email || ""} userName={user?.user_metadata?.user_name || ""} avatarUrl={user?.user_metadata?.avatar_url || ""} unreadCount={unreadCount} labels={t.header} />
     </header>
   );
 }

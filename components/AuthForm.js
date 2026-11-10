@@ -11,11 +11,11 @@ const styles = {
     minHeight: "68vh",
     display: "grid",
     placeItems: "center",
-    padding: "72px 0",
+    padding: "var(--space-10) 0",
   },
   panel: {
     width: "min(100%, 520px)",
-    padding: "34px",
+    padding: "var(--space-6)",
     background: "var(--paper)",
     border: "2px solid var(--carbon)",
     boxShadow: "8px 8px 0 rgba(41, 37, 33, .14)",
@@ -28,7 +28,7 @@ const styles = {
     lineHeight: 0.82,
   },
   intro: { color: "var(--muted)", lineHeight: 1.7 },
-  form: { display: "grid", gap: "12px", marginTop: "28px" },
+  form: { display: "grid", gap: "12px", marginTop: "var(--space-6)" },
   label: {
     fontFamily: "var(--font-primary)",
     fontSize: "0.78rem",

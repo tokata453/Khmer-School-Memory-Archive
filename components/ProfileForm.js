@@ -13,24 +13,24 @@ import {
 import ProfilePhotoUpload from "./ProfilePhotoUpload.js";
 
 const styles = {
-  form: { display: "grid", gap: "24px" },
+  form: { display: "grid", gap: "var(--space-5)" },
   identity: {
     display: "grid",
     gridTemplateColumns: "240px minmax(0, 1fr)",
-    gap: "48px",
+    gap: "var(--space-8)",
     alignItems: "start",
   },
   section: {
     display: "grid",
     gap: "10px",
-    paddingTop: "20px",
+    paddingTop: "var(--space-5)",
     borderTop: "1px solid var(--rule)",
   },
   details: { paddingTop: 0, borderTop: 0 },
   settings: {
     display: "grid",
     gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-    gap: "24px",
+    gap: "var(--space-5)",
   },
   field: { display: "grid", width: "min(100%, 560px)", gap: "6px" },
   input: {

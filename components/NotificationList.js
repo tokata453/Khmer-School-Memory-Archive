@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "../lib/supabase/client.js";
 
 const styles = {
-  actions: { display: "flex", justifyContent: "flex-end", margin: "24px 0 16px" },
+  actions: { display: "flex", justifyContent: "flex-end", margin: "var(--space-5) 0 16px" },
   button: { minHeight: "40px", padding: "8px 12px", border: "1px solid var(--carbon)", background: "transparent", color: "var(--carbon)", font: "inherit", fontWeight: 700, cursor: "pointer" },
   list: { display: "grid", borderTop: "2px solid var(--carbon)" },
   item: { display: "grid", gridTemplateColumns: "112px minmax(0, 1fr)", gap: "16px", padding: "18px 0", borderBottom: "1px solid var(--rule)", color: "inherit", textDecoration: "none" },
@@ -18,7 +18,7 @@ const styles = {
   unreadBadge: { borderColor: "var(--vermilion)", color: "var(--vermilion)" },
   title: { overflow: "hidden", fontSize: "var(--text-lead)", fontWeight: 700, textOverflow: "ellipsis", whiteSpace: "nowrap" },
   meta: { color: "var(--muted)", fontSize: "0.86rem" },
-  empty: { padding: "28px 0", borderTop: "2px solid var(--carbon)", color: "var(--muted)" },
+  empty: { padding: "var(--space-6) 0", borderTop: "2px solid var(--carbon)", color: "var(--muted)" },
 };
 
 export default function NotificationList({ notifications, labels, language }) {

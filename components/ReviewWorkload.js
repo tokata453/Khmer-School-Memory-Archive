@@ -1,4 +1,4 @@
-const styles = { section: { marginTop: "28px" }, list: { display: "flex", flexWrap: "wrap", gap: "8px", margin: "12px 0 0", padding: 0, listStyle: "none" }, item: { padding: "7px 10px", border: "1px solid var(--rule)", background: "var(--paper)", fontWeight: 700 } };
+const styles = { section: { marginTop: "var(--space-6)" }, list: { display: "flex", flexWrap: "wrap", gap: "8px", margin: "12px 0 0", padding: 0, listStyle: "none" }, item: { padding: "7px 10px", border: "1px solid var(--rule)", background: "var(--paper)", fontWeight: 700 } };
 
 export default function ReviewWorkload({ entries, labels }) {
   const provinces = entries.reduce((counts, entry) => ({ ...counts, [entry.province]: (counts[entry.province] || 0) + 1 }), {});

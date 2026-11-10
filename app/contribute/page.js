@@ -8,7 +8,7 @@ import { getTranslation } from "../../lib/translations.js";
 
 const styles = {
   shell: {
-    paddingBottom: "80px",
+    paddingBottom: "var(--space-10)",
     paddingTop: "0",
   },
 };

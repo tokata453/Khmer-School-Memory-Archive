@@ -7,7 +7,7 @@ import { createClient } from "../lib/supabase/client.js";
 import { getTranslation } from "../lib/translations.js";
 
 const styles = {
-  actions: { display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center", marginTop: "24px" }, button: { width: "fit-content", minHeight: "var(--control-height)", padding: "11px 18px", border: "var(--border-thin) solid var(--carbon)", borderRadius: 0, font: "inherit", fontWeight: 700, cursor: "pointer", textDecoration: "none" }, secondary: { color: "var(--carbon)", background: "transparent" }, danger: { color: "var(--paper)", background: "var(--vermilion)", borderColor: "var(--vermilion)" }, message: { flexBasis: "100%", margin: 0, fontSize: "0.9rem", color: "var(--vermilion)" },
+  actions: { display: "flex", flexWrap: "wrap", gap: "12px", alignItems: "center", marginTop: "var(--space-5)" }, button: { width: "fit-content", minHeight: "var(--control-height)", padding: "11px 18px", border: "var(--border-thin) solid var(--carbon)", borderRadius: 0, font: "inherit", fontWeight: 700, cursor: "pointer", textDecoration: "none" }, secondary: { color: "var(--carbon)", background: "transparent" }, danger: { color: "var(--paper)", background: "var(--vermilion)", borderColor: "var(--vermilion)" }, message: { flexBasis: "100%", margin: 0, fontSize: "0.9rem", color: "var(--vermilion)" },
 };
 
 export default function EntryActions({ id, slug, language }) {

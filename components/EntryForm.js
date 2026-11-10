@@ -42,7 +42,7 @@ const styles = {
     gridTemplateColumns: "minmax(320px, 7fr) minmax(0, 13fr)",
     gap: "var(--space-8)",
     borderTop: "var(--border-thin) solid var(--rule)",
-    paddingTop: "28px",
+    paddingTop: "var(--space-6)",
   },
   column: { display: "grid", alignContent: "start", gap: "var(--space-5)" },
   leftColumn: {

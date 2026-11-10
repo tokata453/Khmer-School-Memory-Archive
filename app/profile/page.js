@@ -9,8 +9,8 @@ import { createClient } from "../../lib/supabase/server.js";
 import { getTranslation } from "../../lib/translations.js";
 
 const styles = {
-  shell: { paddingBottom: "64px" },
-  hero: { padding: "34px 0 20px", borderBottom: "1px solid var(--rule)" },
+  shell: { paddingBottom: "var(--space-10)" },
+  hero: { padding: "var(--space-6) 0 var(--space-5)", borderBottom: "1px solid var(--rule)" },
   title: {
     margin: 0,
     fontFamily: "var(--font-primary)",
@@ -21,14 +21,14 @@ const styles = {
   grid: {
     display: "grid",
     gridTemplateColumns: "minmax(0, 1fr) 280px",
-    gap: "24px",
-    paddingTop: "24px",
+    gap: "var(--space-5)",
+    paddingTop: "var(--space-5)",
   },
   panel: {
     display: "grid",
     alignContent: "start",
     gap: "16px",
-    padding: "20px",
+    padding: "var(--space-5)",
     border: "1px solid var(--rule)",
     borderLeft: "4px solid var(--gold)",
     background: "var(--paper)",

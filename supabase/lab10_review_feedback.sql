@@ -43,31 +43,30 @@ begin
   -- This is the authorization boundary. The browser cannot publish its own
   -- entry, return an entry without feedback, or decide an entry twice.
   if not public.is_reviewer()
-    or decision not in ('published', 'returned')
+    or $2 not in ('published', 'returned')
     or not exists (
       select 1 from public.entries
-      -- Qualifying entry_id identifies the function argument, not a table column.
-      where entries.id = review_entry.entry_id
+      where entries.id = $1
         and entries.owner_id <> (select auth.uid())
     )
     or (
-      decision = 'returned'
-      and char_length(trim(coalesce(return_feedback, ''))) not between 5 and 1000
+      $2 = 'returned'
+      and char_length(trim(coalesce($3, ''))) not between 5 and 1000
     ) then
     return false;
   end if;
 
   update public.entries as archive_entry
-  set status = decision
-  where archive_entry.id = review_entry.entry_id
+  set status = $2
+  where archive_entry.id = $1
     and archive_entry.status = 'pending';
 
   if not found then return false; end if;
 
-  if decision = 'returned' then
+  if $2 = 'returned' then
     -- Keep the latest return note for this entry so its owner knows what to fix.
     insert into public.entry_review_feedback (entry_id, reviewer_id, feedback)
-    values (review_entry.entry_id, (select auth.uid()), trim(return_feedback))
+    values ($1, (select auth.uid()), trim($3))
     on conflict on constraint entry_review_feedback_pkey do update
       set reviewer_id = excluded.reviewer_id,
           feedback = excluded.feedback,
@@ -75,7 +74,7 @@ begin
   else
     -- Once published, an old return note is no longer needed.
     delete from public.entry_review_feedback as review_feedback
-    where review_feedback.entry_id = review_entry.entry_id;
+    where review_feedback.entry_id = $1;
   end if;
 
   return true;

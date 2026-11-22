@@ -36,32 +36,32 @@ set search_path = ''
 as $$
 begin
   if not public.is_reviewer()
-    or decision not in ('published', 'returned')
+    or $2 not in ('published', 'returned')
     or not exists (
       select 1 from public.entries
-      where entries.id = review_entry.entry_id
+      where entries.id = $1
         and entries.owner_id <> (select auth.uid())
     )
-    or (decision = 'returned' and char_length(trim(coalesce(return_feedback, ''))) not between 5 and 1000) then
+    or ($2 = 'returned' and char_length(trim(coalesce($3, ''))) not between 5 and 1000) then
     return false;
   end if;
 
   update public.entries as archive_entry
-  set status = decision
-  where archive_entry.id = review_entry.entry_id and archive_entry.status = 'pending';
+  set status = $2
+  where archive_entry.id = $1 and archive_entry.status = 'pending';
   if not found then return false; end if;
 
   insert into public.entry_review_history (entry_id, reviewer_id, decision, entry_slug, entry_title)
-  select id, (select auth.uid()), decision, slug, title
-  from public.entries where id = review_entry.entry_id;
+  select id, (select auth.uid()), $2, slug, title
+  from public.entries where id = $1;
 
-  if decision = 'returned' then
+  if $2 = 'returned' then
     insert into public.entry_review_feedback (entry_id, reviewer_id, feedback)
-    values (review_entry.entry_id, (select auth.uid()), trim(return_feedback))
+    values ($1, (select auth.uid()), trim($3))
     on conflict on constraint entry_review_feedback_pkey do update
       set reviewer_id = excluded.reviewer_id, feedback = excluded.feedback, returned_at = now();
   else
-    delete from public.entry_review_feedback where entry_id = review_entry.entry_id;
+    delete from public.entry_review_feedback where entry_id = $1;
   end if;
   return true;
 end;

@@ -122,7 +122,7 @@ node --test lib/*.test.js
 - [x] `git grep` history scan found no committed `.env` file, JWT, Supabase secret key, or `service_role` assignment on November 22, 2026.
 - [x] At least eight real entries each have a credited source: 10 published entries are listed above.
 - [x] The live project responded on November 22, 2026.
-- [ ] Apply `supabase/lab14_ownership_and_province_patch.sql` in the Supabase SQL Editor and record the verification-query result.
+- [ ] Apply `supabase/lab14_ownership_and_province_patch.sql` and `supabase/lab15_review_entry_parameter_patch.sql` in the Supabase SQL Editor; record both verification-query results.
 - [ ] Use separate contributor, reviewer, administrator, and stranger accounts to test contribution, review, ownership, and console attacks; record the date and results.
 - [ ] Test Khmer on public, contributor, reviewer, and administrator pages.
 - [ ] Test the live site at a phone width, check primary pages for console errors, and record the device or browser width.

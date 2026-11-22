@@ -32,7 +32,7 @@ const styles = {
     border: "1px solid var(--rule)",
     borderLeft: "4px solid var(--gold)",
     background: "var(--paper)",
-    boxShadow: "4px 5px 0 rgba(117, 100, 77, .12)",
+    boxShadow: "var(--shadow-surface)",
   },
   total: {
     display: "grid",
@@ -45,7 +45,7 @@ const styles = {
     fontFamily: "var(--font-primary)",
     fontVariantNumeric: "tabular-nums",
     letterSpacing: "-0.03em",
-    fontSize: "2.5rem",
+    fontSize: "2rem",
     fontWeight: 700,
     lineHeight: 0.9,
   },

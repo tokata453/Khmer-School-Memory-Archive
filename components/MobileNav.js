@@ -80,7 +80,7 @@ export default function MobileNav({ links, userEmail, userName, avatarUrl, unrea
                       {labels.notifications}{unreadCount ? ` (${unreadCount > 99 ? "99+" : unreadCount})` : ""}
                     </Link>
                     <Link className="account-chip" style={styles.chip} href="/profile" title={userEmail} onClick={closeDrawer}>
-                      <AccountAvatar url={avatarUrl} name={userName} size={28} />
+                      <AccountAvatar url={avatarUrl} label={labels.profilePhoto} size={28} />
                       <span style={styles.email}>{userName || userEmail}</span>
                     </Link>
                     <LogoutButton labels={labels} />

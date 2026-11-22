@@ -46,13 +46,13 @@ export default function AccountMenu({ userEmail, userName, avatarUrl, labels }) 
         onClick={() => setIsOpen((open) => !open)}
         ref={toggleRef}
       >
-        <AccountAvatar url={avatarUrl} name={userName} size={28} />
+        <AccountAvatar url={avatarUrl} label={labels.profilePhoto} size={28} />
       </button>
 
       {isOpen ? (
         <div className="account-menu-panel" style={styles.panel} id={menuId} aria-label={labels.accountOptions}>
           <Link className="account-chip" style={styles.chip} href="/profile" title={userEmail} onClick={() => setIsOpen(false)}>
-            <AccountAvatar url={avatarUrl} name={userName} size={28} />
+            <AccountAvatar url={avatarUrl} label={labels.profilePhoto} size={28} />
             <span style={styles.email}>{userName || userEmail}</span>
           </Link>
           <LogoutButton labels={labels} />

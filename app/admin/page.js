@@ -64,14 +64,14 @@ export default async function AdminPage({ searchParams }) {
         <AdminSidebar activeTab={tab} isAdmin={isAdmin} labels={labels} />
         <section className="admin-tab-panel" aria-labelledby={`admin-${tab}-title`}>
           {tab === "queue" ? <>
-            <DashboardStats items={[{ value: queueEntries.length, label: translation.review.pendingCount }, { value: oldestDays, label: translation.review.oldestDays }, { value: history.filter((item) => item.decision === "published").length, label: translation.review.published }, { value: history.filter((item) => item.decision === "returned").length, label: translation.review.returned }]} />
+            <DashboardStats label={labels.dashboardStatistics} items={[{ value: queueEntries.length, label: translation.review.pendingCount }, { value: oldestDays, label: translation.review.oldestDays }, { value: history.filter((item) => item.decision === "published").length, label: translation.review.published }, { value: history.filter((item) => item.decision === "returned").length, label: translation.review.returned }]} />
             <ReviewWorkload entries={queueEntries} labels={translation.review} />
             <h2 id="admin-queue-title" className="admin-panel-title">{translation.review.queueTitle}</h2>
             <ReviewDashboard entries={queueEntries} labels={translation.review} form={translation.form} cardLabels={translation.entryCard} comboBox={translation.comboBox} />
           </> : null}
           {tab === "activity" ? <><h2 id="admin-activity-title">{isAdmin ? labels.historyTitle : translation.review.historyTitle}</h2><ReviewHistory history={history} labels={isAdmin ? labels : translation.review} language={language} reviewerNames={reviewerNames} /></> : null}
-          {tab === "accounts" ? <><DashboardStats items={[{ value: profiles.length, label: labels.accounts }, { value: reviewers, label: labels.reviewers }, { value: admins, label: labels.admins }]} /><h2 id="admin-accounts-title" className="admin-panel-title">{labels.directoryTitle}</h2><AdminDirectory profiles={profiles} labels={labels} /></> : null}
-          {tab === "entries" ? <><DashboardStats items={[{ value: counts.pending, label: labels.pending }, { value: counts.published, label: labels.published }, { value: counts.returned, label: labels.returned }]} /><h2 id="admin-entries-title" className="admin-panel-title">{labels.entriesTitle}</h2><AdminEntryBrowser entries={entries} labels={labels} comboBox={translation.comboBox} /></> : null}
+          {tab === "accounts" ? <><DashboardStats label={labels.dashboardStatistics} items={[{ value: profiles.length, label: labels.accounts }, { value: reviewers, label: labels.reviewers }, { value: admins, label: labels.admins }]} /><h2 id="admin-accounts-title" className="admin-panel-title">{labels.directoryTitle}</h2><AdminDirectory profiles={profiles} labels={labels} /></> : null}
+          {tab === "entries" ? <><DashboardStats label={labels.dashboardStatistics} items={[{ value: counts.pending, label: labels.pending }, { value: counts.published, label: labels.published }, { value: counts.returned, label: labels.returned }]} /><h2 id="admin-entries-title" className="admin-panel-title">{labels.entriesTitle}</h2><AdminEntryBrowser entries={entries} labels={labels} comboBox={translation.comboBox} /></> : null}
         </section>
       </div>
     </main>

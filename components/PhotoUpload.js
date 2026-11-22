@@ -47,7 +47,7 @@ const styles = {
     maxHeight: "100%",
     objectFit: "contain",
     objectPosition: "center",
-    filter: "saturate(.78) sepia(.12)",
+    filter: "none",
   },
   empty: {
     display: "grid",

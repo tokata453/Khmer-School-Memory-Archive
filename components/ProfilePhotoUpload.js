@@ -16,7 +16,7 @@ export default function ProfilePhotoUpload({ avatarUrl, name, labels, error, dis
   }
   return <section className="profile-photo-upload" style={styles.shell} aria-labelledby="profile-photo-label">
     <strong id="profile-photo-label">{labels.photo}</strong>
-    <span style={styles.preview}><AccountAvatar url={preview || avatarUrl} name={name} size={176} />{avatarUrl ? <button style={styles.remove} type="button" aria-label={labels.removePhoto} disabled={disabled} onClick={onRemove}><X size={16} aria-hidden="true" /></button> : null}</span>
+    <span style={styles.preview}><AccountAvatar url={preview || avatarUrl} label={labels.photo} size={176} />{avatarUrl ? <button style={styles.remove} type="button" aria-label={labels.removePhoto} disabled={disabled} onClick={onRemove}><X size={16} aria-hidden="true" /></button> : null}</span>
     <label style={styles.picker}><Upload size={16} aria-hidden="true" />{labels.choosePhoto}<input style={styles.input} type="file" accept="image/jpeg,image/png,image/webp" disabled={disabled} onChange={choose} /></label>
     <small style={styles.help}>{labels.photoHelp}</small>
     {error ? <p style={styles.error} role="alert">{error}</p> : null}

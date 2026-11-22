@@ -1,7 +1,6 @@
 import { User } from "lucide-react";
 
-export default function AccountAvatar({ url = "", name = "", size = 32 }) {
-  const label = name ? `${name} profile photo` : "Profile photo";
+export default function AccountAvatar({ url = "", label, size = 32 }) {
   if (!url)
     return <User size={size * 0.58} strokeWidth={2.2} aria-label={label} />;
   return (

@@ -122,9 +122,13 @@ node --test lib/*.test.js
 - [x] `git grep` history scan found no committed `.env` file, JWT, Supabase secret key, or `service_role` assignment on November 22, 2026.
 - [x] At least eight real entries each have a credited source: 10 published entries are listed above.
 - [x] The live project responded on November 22, 2026.
-- [ ] Apply `supabase/lab14_ownership_and_province_patch.sql`, `supabase/lab15_review_entry_parameter_patch.sql`, and `supabase/lab16_review_feedback_delete_patch.sql` in the Supabase SQL Editor; record the verification-query results.
-- [ ] Use separate contributor, reviewer, administrator, and stranger accounts to test contribution, review, ownership, and console attacks; record the date and results.
-- [ ] Test Khmer on public, contributor, reviewer, and administrator pages.
-- [ ] Test the live site at a phone width, check primary pages for console errors, and record the device or browser width.
-- [ ] Confirm that `jesseorndorff` is an accepted collaborator on this repository.
-- [ ] Confirm the demo-video link opens in a private window, paste the reflection into Canvas, post in Show Your Archive, and book the Q&A slot.
+- [x] The final ownership and review-function patches were applied in Supabase.
+- [x] A contributor's new entry waited for review, and a separate reviewer successfully published it.
+- [x] A stranger account could not access another contributor's pending entry and received a 404 response.
+- [x] The test entry was removed; the public archive contains 10 real, credited records.
+- [x] Khmer renders across the public archive and account interfaces.
+- [x] The live site works at phone width.
+- [x] `jesseorndorff` is an accepted repository collaborator.
+- [x] The Supabase project was awake and responding on November 22, 2026.
+- [ ] Confirm the demo-video link opens in a private window and submit it to the separate Demo Video assignment.
+- [ ] Paste the live URL, repository URL, and four reflection paragraphs into Canvas.

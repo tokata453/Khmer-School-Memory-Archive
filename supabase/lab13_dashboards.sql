@@ -61,7 +61,8 @@ begin
     on conflict on constraint entry_review_feedback_pkey do update
       set reviewer_id = excluded.reviewer_id, feedback = excluded.feedback, returned_at = now();
   else
-    delete from public.entry_review_feedback where entry_id = $1;
+    delete from public.entry_review_feedback as review_feedback
+    where review_feedback.entry_id = $1;
   end if;
   return true;
 end;
